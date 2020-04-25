@@ -29,6 +29,7 @@ char* get_macro(char* name);
 %}
 
 IDENTIFIER 		[a-zA-Z][0-9a-zA-Z_]*
+
 DIGIT  			[0-9]
 POSITIVE_INT 	[0]|[1-9][0-9]*
 NUMBER  		{DIGIT}{DIGIT}*
@@ -75,8 +76,8 @@ while					{ printf("Line: %d token KW_WHILE: %s\n", line_num, yytext); }
 or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 
 
-{IDENTIFIER}  			{printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);}
-						  				
+{IDENTIFIER}|"$"+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);}
+					  				
 
 
 
@@ -108,7 +109,7 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 
 
 {MULTILINECOMMENTBEGIN}					{ BEGIN(comment);} /* printf("Starting multi line commenting\n"); */ 
-<comment>[^=\n]*        /* eat anything that's not a = */
+<comment>[^=\n]*        /* eat anything that's not a '=' */
 <comment>\n             ++line_num;
 <comment>^"=cut"$   {BEGIN(INITIAL);} /* printf("Comment End\n");*/
 

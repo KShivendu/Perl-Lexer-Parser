@@ -11,4 +11,8 @@ This is a Multi line comment
 qweq
 =cut
 
-print("ewq\n");
+$a = 5;
+$b = 15;
+
+print($a + $b);
+print("\n");
