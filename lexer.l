@@ -75,6 +75,9 @@ real					{ printf("Line: %d token KW_REAL: %s\n", line_num, yytext); }
 while					{ printf("Line: %d token KW_WHILE: %s\n", line_num, yytext); }
 or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 
+foreach					{ printf("Line: %d token KW_FOR_EACH: %s\n", line_num, yytext); }
+until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); }
+
 
 {IDENTIFIER}|[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);}
 
