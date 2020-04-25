@@ -77,8 +77,6 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 
 
 {IDENTIFIER}|[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);}
-					  				
-
 
 
 {CONSTANT_STRING}		{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext);}
@@ -109,7 +107,10 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 
 "{"         			{printf("Line: %d token LEFT_CURLY_BRACKET: %s\n", line_num, yytext); }
 "}"         			{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); }
-
+"=~"					{printf("Line: %d token REGEX_OPERATOR: %s\n", line_num, yytext); }
+"!~"					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); }
+"."						{printf("Line: %d token DOT_OPERATOR: %s\n", line_num, yytext); }
+"$_"					{printf("Line: %d token SPL_LIST_ARR_VAR: %s\n", line_num, yytext); } /* Not sure how to handle this one */
 
 {MULTILINECOMMENTBEGIN}					{ BEGIN(comment);} /* printf("Starting multi line commenting\n"); */ 
 <comment>[^=\n]*        /* eat anything that's not a '=' */
