@@ -42,7 +42,7 @@ CONSTANT_STRING "\""(({COMMON_CHARS}|{ESCAPE_CHARS})*)"\""|"'"(({COMMON_CHARS}|{
 WHITESPACE 		[ \t\r]
 
 MULTILINECOMMENTBEGIN ^=[a-zA-Z]
-MULTILINECOMMENTEND cut
+MULTILINECOMMENTEND ^"=cut"$
 
 %x comment
 %x line_comment
@@ -107,11 +107,10 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 "!" 					{printf("Line: %d token not: %s\n", line_num, yytext); }
 
 
-{MULTILINECOMMENTBEGIN}					{printf("Starting multi line commenting\n"); BEGIN(comment);}
-<comment>[^=\n]*        /* eat anything that's not a '*' */
-<comment>"*"+[^*/\n]*   /* eat up '*'s not followed by '/'s */
+{MULTILINECOMMENTBEGIN}					{ BEGIN(comment);} /* printf("Starting multi line commenting\n"); */ 
+<comment>[^=\n]*        /* eat anything that's not a = */
 <comment>\n             ++line_num;
-{MULTILINECOMMENTEND}   {printf("Comment End\n");BEGIN(INITIAL);}
+<comment>^"=cut"$   {BEGIN(INITIAL);} /* printf("Comment End\n");*/
 
 
 "#"					BEGIN(line_comment);

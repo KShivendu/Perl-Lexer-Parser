@@ -8,6 +8,7 @@ use warnings;
 print("Hello World\n"); # Prints hello world 
 =s
 This is a Multi line comment
+qweq
 =cut
 
 print("ewq\n");
