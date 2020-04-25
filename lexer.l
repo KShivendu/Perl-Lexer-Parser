@@ -111,7 +111,7 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 <comment>\n             ++line_num;
 <comment>"*"+"/"        BEGIN(INITIAL);
 
-"//"					BEGIN(line_comment);
+"#"					BEGIN(line_comment);
 <line_comment>[^\n]*        /* eat anything in that row */
 <line_comment>\n           ++line_num;  BEGIN(INITIAL);
    
