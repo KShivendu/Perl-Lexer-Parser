@@ -16,3 +16,11 @@ $b = 15;
 
 print($a + $b);
 print("\n");
+
+print "Geeks       for
+                Geeks\n";
+
+{
+    print "hi-";
+    print("bye\n");
+}

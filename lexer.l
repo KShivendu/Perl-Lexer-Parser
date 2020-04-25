@@ -107,6 +107,9 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 "||" 					{printf("Line: %d token or: %s\n", line_num, yytext); }
 "!" 					{printf("Line: %d token not: %s\n", line_num, yytext); }
 
+"{"         			{printf("Line: %d token LEFT_CURLY_BRACKET: %s\n", line_num, yytext); }
+"}"         			{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); }
+
 
 {MULTILINECOMMENTBEGIN}					{ BEGIN(comment);} /* printf("Starting multi line commenting\n"); */ 
 <comment>[^=\n]*        /* eat anything that's not a '=' */
