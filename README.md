@@ -1,11 +1,17 @@
 # Perl2C
 
+# Compiling Lexer Code :
+```bash
+flex lexer.l
+gcc -o perl2c lex.yy.c -lfl
+./perl2c < <FILE_NAME.pl>
+```
 
-## Using Clas Demo code:
+
+## Using Flex Demo(from Amit Sir) code:
 ```bash
 flex classDemo.l
-gcc lex.yy.c -lfl
-./a.out
+gcc -o flexDemo lex.yy.c -lfl
+./flexDemo
 ```
 - Now, type whatever you want. Press `Ctrl + D` to get output
-
