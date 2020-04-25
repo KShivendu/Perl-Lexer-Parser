@@ -41,6 +41,9 @@ CONSTANT_STRING "\""(({COMMON_CHARS}|{ESCAPE_CHARS})*)"\""|"'"(({COMMON_CHARS}|{
 
 WHITESPACE 		[ \t\r]
 
+MULTILINECOMMENTBEGIN ^=[a-zA-Z]
+MULTILINECOMMENTEND cut
+
 %x comment
 %x line_comment
 
@@ -86,8 +89,8 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 "-"        				{printf("Line: %d token OP_MINUS: %s\n", line_num, yytext); }
 "*"         			{printf("Line: %d token OP_MULT: %s\n", line_num, yytext); }
 "/"         			{printf("Line: %d token OP_DIVIS: %s\n", line_num, yytext); }
-"="         			{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); }
 ">="        			{printf("Line: %d token OP_GREATEROREQUAL: %s\n", line_num, yytext); }
+"="         			{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); }
 "<="        			{printf("Line: %d token OP_LESSOREQUAL: %s\n", line_num, yytext); }
 "<"						{printf("Line: %d token OP_LESS: %s\n", line_num, yytext); }
 ">"         			{printf("Line: %d token OP_GREATER: %s\n", line_num, yytext); }
@@ -104,12 +107,12 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 "!" 					{printf("Line: %d token not: %s\n", line_num, yytext); }
 
 
-
-"/*"					BEGIN(comment);
-<comment>[^*\n]*        /* eat anything that's not a '*' */
+{MULTILINECOMMENTBEGIN}					{printf("Starting multi line commenting\n"); BEGIN(comment);}
+<comment>[^=\n]*        /* eat anything that's not a '*' */
 <comment>"*"+[^*/\n]*   /* eat up '*'s not followed by '/'s */
 <comment>\n             ++line_num;
-<comment>"*"+"/"        BEGIN(INITIAL);
+{MULTILINECOMMENTEND}   {printf("Comment End\n");BEGIN(INITIAL);}
+
 
 "#"					BEGIN(line_comment);
 <line_comment>[^\n]*        /* eat anything in that row */
@@ -126,11 +129,7 @@ or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
 
 
 %%
-
-
-
-	
-		/*user code*/
+/*user code*/
 int main ()
 {
 

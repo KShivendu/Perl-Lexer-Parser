@@ -20,3 +20,9 @@ gcc -o flexDemo lex.yy.c -lfl
 ./flexDemo
 ```
 - Now, type whatever you want. Press `Ctrl + D` to get output
+
+
+
+## Target for Lexer :
+- reserved constants, string constants, {}, , ; 
+- multiple line comment
