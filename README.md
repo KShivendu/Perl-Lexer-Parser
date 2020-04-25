@@ -2,8 +2,7 @@
 
 ## Compiling Lexer Code :
 ```bash
-flex lexer.l
-gcc -o perl2c.bin lex.yy.c -lfl
+./buildLexer.sh
 ./perl2c.bin < <FILE_NAME.pl>
 ```
 
