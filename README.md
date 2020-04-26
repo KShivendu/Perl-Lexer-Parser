@@ -23,9 +23,8 @@ gcc -o flexDemo lex.yy.c -lfl
 
 
 
-## Target for Lexer :
-- reserved constants, string constants, {}, , ; 
-- multiple line comment
+## Todo for Lexer :
+- reserved constants of perl
 
 
 # References : 
