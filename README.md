@@ -26,3 +26,9 @@ gcc -o flexDemo lex.yy.c -lfl
 ## Target for Lexer :
 - reserved constants, string constants, {}, , ; 
 - multiple line comment
+
+
+# References : 
+- Geeksforgeeks
+- `info flex`
+- [Flex Notes](https://github.com/ifding/flex-bison/blob/master/flex-learning-notes.md)
