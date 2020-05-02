@@ -1,0 +1,9 @@
+============ ======== ================
+ Identifier    Type     Line Numbers
+============ ======== ================
+printf       UNDEF    19 
+$side        VARIABLE  10   12   12 
+return       UNDEF    12 
+$totalArea   VARIABLE  16   19 
+sub area     FUNCTION   7 
+area         UNDEF    16 
