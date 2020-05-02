@@ -1132,7 +1132,7 @@ YY_RULE_SETUP
 case 43:
 YY_RULE_SETUP
 #line 101 "lexer.l"
-{printf("Line: %d token FUNCTION: %s\n", line_num, yytext);
+{yytext += 3; printf("Line: %d token FUNCTION: %s\n", line_num, yytext);
                     					insert(yytext, strlen(yytext), FUNCTION, line_num);}
 	YY_BREAK
 case 44:

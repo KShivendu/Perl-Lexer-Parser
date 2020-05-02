@@ -98,7 +98,7 @@ y										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
 return									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
 
 
-"sub"{WHITESPACE}+{IDENTIFIER}			{printf("Line: %d token FUNCTION: %s\n", line_num, yytext);
+"sub"{WHITESPACE}+{IDENTIFIER}			{yytext += 4; printf("Line: %d token FUNCTION: %s\n", line_num, yytext);
                     					insert(yytext, strlen(yytext), FUNCTION, line_num);}
 [$@%]+{IDENTIFIER} 						{printf("Line: %d token VARIABLE: %s\n", line_num, yytext);
                     					insert(yytext, strlen(yytext), VARIABLE, line_num);}

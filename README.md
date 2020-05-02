@@ -2,7 +2,7 @@
 
 ## Compiling Lexer Code :
 ```bash
-./buildLexer.sh
+./rebuildLexer.sh
 ./perl2c.bin < <FILE_NAME.pl>
 ```
 
@@ -31,3 +31,4 @@ gcc -o flexDemo lex.yy.c -lfl
 - Geeksforgeeks
 - `info flex`
 - [Flex Notes](https://github.com/ifding/flex-bison/blob/master/flex-learning-notes.md)
+
