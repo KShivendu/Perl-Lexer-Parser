@@ -4,6 +4,7 @@
 #include <string.h>
 /*#include "ptucc_parser.tab.h"*/
 #include "cgen.h"
+#include "symtab.c"
 
 int line_num = 1;
 #define KW_PROGRAM 300
@@ -80,6 +81,8 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); }
 
 
 {IDENTIFIER}|[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);}
+                    			insert(yytext, strlen(yytext), UNDEF, lineno);
+                    			ret_print("ID");
 
 
 {CONSTANT_STRING}		{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext);}
