@@ -1,8 +1,13 @@
 ------------ ------ ------------
 Name         Type   Line Numbers
 ------------ ------ -------------
-printf       undef    10 
-a            undef     6    7    9 
-b            undef     6    8    9 
-c            undef     6    9   10 
-main         undef     4 
+warnings     undef     5 
+use          undef     5 
+$a           undef    14   16   28 
+$b           undef    15   16   28 
+$c           undef    28 
+print        undef     8   16   17   20   23   24 
+$d           undef    29 
+$e           undef    29 
+$f           undef    29 
+$x           undef    28 

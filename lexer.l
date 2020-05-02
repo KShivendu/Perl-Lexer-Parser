@@ -50,6 +50,8 @@ MULTILINECOMMENTEND ^"=cut"$
 %x line_comment
 
 
+
+
 %%
 
 
@@ -80,9 +82,8 @@ foreach					{ printf("Line: %d token KW_FOR_EACH: %s\n", line_num, yytext); }
 until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); }
 
 
-{IDENTIFIER}|[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);}
-                    			insert(yytext, strlen(yytext), UNDEF, lineno);
-                    			ret_print("ID");
+{IDENTIFIER}|[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);
+                    			insert(yytext, strlen(yytext), UNDEF, line_num);}
 
 
 {CONSTANT_STRING}		{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext);}
@@ -136,13 +137,12 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); }
 
 .        				return ERROR_MESSAGE;
 
-
-
 %%
 /*user code*/
-int main ()
+int main (int argc, char *argv[])
 {
-
+	init_hash_table();
+	yyin = fopen(argv[1], "r");
 	int token;
 	while ( (token = yylex()) != TK_EOF )
 	{	
@@ -153,4 +153,10 @@ int main ()
 			exit(1);
 		}
 	}
+	fclose(yyin);
+
+	// symbol table dump
+    yyout = fopen("symtab_dump.out", "w");
+    symtab_dump(yyout);
+    fclose(yyout); 
 }
