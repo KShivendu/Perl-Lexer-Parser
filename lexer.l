@@ -54,32 +54,46 @@ MULTILINECOMMENTEND ^"=cut"$
 
 %%
 
-
-static 					{ printf("Line: %d token KW_STATIC: %s\n", line_num, yytext); }
-true|false				{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext);}
-do 						{ printf("Line: %d token KW_DO: %s\n", line_num, yytext); }
-if 						{ printf("Line: %d token KW_IF: %s\n", line_num, yytext); }
-not						{ printf("Line: %d token KW_NOT: %s\n", line_num, yytext); }
-boolean					{ printf("Line: %d token KW_BOOLEAN: %s\n", line_num, yytext); }
-break					{ printf("Line: %d token KW_BREAK: %s\n", line_num, yytext); }
-else					{ printf("Line: %d token KW_ELSE: %s\n", line_num, yytext); }
-and						{ printf("Line: %d token KW_AND: %s\n", line_num, yytext); }
-integer 				{ printf("Line: %d token KW_INTEGER: %s\n", line_num, yytext); }
-string 					{ printf("Line: %d token KW_STRING: %s\n", line_num, yytext); }
-continue 				{ printf("Line: %d token KW_CONTINUE: %s\n", line_num, yytext); }
-for						{ printf("Line: %d token KW_FOR: %s\n", line_num, yytext); }
-mod						{ printf("Line: %d token KW_MOD: %s\n", line_num, yytext); }
-character				{ printf("Line: %d token KW_CHARACTER: %s\n", line_num, yytext); }
-void					{ printf("Line: %d token KW_VOID: %s\n", line_num, yytext); }
-return 					{ printf("Line: %d token KW_RETURN: %s\n", line_num, yytext); }
-end						{ printf("Line: %d token KW_END: %s\n", line_num, yytext); }
-begin 					{ printf("Line: %d token KW_BEGIN: %s\n", line_num, yytext); }
-real					{ printf("Line: %d token KW_REAL: %s\n", line_num, yytext); }
-while					{ printf("Line: %d token KW_WHILE: %s\n", line_num, yytext); }
-or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
-
-foreach					{ printf("Line: %d token KW_FOR_EACH: %s\n", line_num, yytext); }
-until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); }
+__DATA__				{ printf("Line: %d keyword __DATA__: %s\n", line_num, yytext); }
+__END__					{ printf("Line: %d keyword __END__: %s\n", line_num, yytext); }
+__FILE__				{ printf("Line: %d keyword __FILE__: %s\n", line_num, yytext); }
+__LINE__				{ printf("Line: %d keyword __LINE__: %s\n", line_num, yytext); }
+__PACKAGE__				{ printf("Line: %d keyword __PACKAG: %s\n", line_num, yytext); }
+and						{ printf("Line: %d keyword and: %s\n", line_num, yytext); }
+cmp						{ printf("Line: %d keyword cmp: %s\n", line_num, yytext); }
+continue				{ printf("Line: %d keyword continue: %s\n", line_num, yytext); }
+CORE					{ printf("Line: %d keyword CORE: %s\n", line_num, yytext); }
+do						{ printf("Line: %d keyword do: %s\n", line_num, yytext); }
+else					{ printf("Line: %d keyword else: %s\n", line_num, yytext); }
+elsif					{ printf("Line: %d keyword elsif: %s\n", line_num, yytext); }
+eq						{ printf("Line: %d keyword eq: %s\n", line_num, yytext); }
+exp						{ printf("Line: %d keyword exp: %s\n", line_num, yytext); }
+for						{ printf("Line: %d keyword for: %s\n", line_num, yytext); }
+foreach					{ printf("Line: %d keyword foreach: %s\n", line_num, yytext); }
+ge						{ printf("Line: %d keyword ge: %s\n", line_num, yytext); }
+gt						{ printf("Line: %d keyword gt: %s\n", line_num, yytext); }
+if						{ printf("Line: %d keyword if: %s\n", line_num, yytext); }
+le						{ printf("Line: %d keyword le: %s\n", line_num, yytext); }
+lock					{ printf("Line: %d keyword lock: %s\n", line_num, yytext); }
+lt						{ printf("Line: %d keyword lt: %s\n", line_num, yytext); }
+m						{ printf("Line: %d keyword m: %s\n", line_num, yytext); }
+ne						{ printf("Line: %d keyword ne: %s\n", line_num, yytext); }
+no						{ printf("Line: %d keyword no: %s\n", line_num, yytext); }
+or						{ printf("Line: %d keyword or: %s\n", line_num, yytext); }
+package					{ printf("Line: %d keyword package: %s\n", line_num, yytext); }
+q						{ printf("Line: %d keyword q: %s\n", line_num, yytext); }
+qq						{ printf("Line: %d keyword qq: %s\n", line_num, yytext); }
+qr						{ printf("Line: %d keyword qr: %s\n", line_num, yytext); }
+qw						{ printf("Line: %d keyword qw: %s\n", line_num, yytext); }
+qx						{ printf("Line: %d keyword qx: %s\n", line_num, yytext); }
+s						{ printf("Line: %d keyword s: %s\n", line_num, yytext); }
+sub						{ printf("Line: %d keyword sub: %s\n", line_num, yytext); }
+tr						{ printf("Line: %d keyword tr: %s\n", line_num, yytext); }
+unless					{ printf("Line: %d keyword unless: %s\n", line_num, yytext); }
+until					{ printf("Line: %d keyword until: %s\n", line_num, yytext); }
+while					{ printf("Line: %d keyword while: %s\n", line_num, yytext); }
+xor						{ printf("Line: %d keyword xor: %s\n", line_num, yytext); }
+y						{ printf("Line: %d keyword y: %s\n", line_num, yytext); }
 
 
 {IDENTIFIER}|[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);
