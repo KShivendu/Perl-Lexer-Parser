@@ -2,7 +2,7 @@
 
 ## Compiling Lexer Code :
 ```bash
-./buildLexer.sh
+./rebuildLexer.sh
 ./perl2c.bin < <FILE_NAME.pl>
 ```
 
@@ -24,7 +24,8 @@ gcc -o flexDemo lex.yy.c -lfl
 
 
 ## Todo for Lexer :
-- reserved constants of perl
+- reserved constants of perl : maybe use, 
+- 
 
 
 # References : 
