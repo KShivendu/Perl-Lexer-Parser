@@ -74,33 +74,33 @@ void incr_scope(){ /* go to next scope */
 /* print to stdout by default */
 void symtab_dump(FILE * of){  
   int i;
-  fprintf(of,"------------ ------ ------------\n");
-  fprintf(of,"Name         Type   Line Numbers\n");
-  fprintf(of,"------------ ------ -------------\n");
+  fprintf(of,"============ ======== ================\n");
+  fprintf(of," Identifier    Type     Line Numbers\n");
+  fprintf(of,"============ ======== ================\n");
   for (i=0; i < SIZE; ++i){
     if (hash_table[i] != NULL){
         list_t *l = hash_table[i];
         while (l != NULL){
             RefList *t = l->lines;
             fprintf(of,"%-12s ",l->st_name);
-            if (l->st_type == INT_TYPE) fprintf(of,"%-7s","int");
-            else if (l->st_type == REAL_TYPE) fprintf(of,"%-7s","real");
-            else if (l->st_type == STR_TYPE) fprintf(of,"%-7s","string");
-            else if (l->st_type == ARRAY_TYPE){
-                fprintf(of,"array of ");
-                if (l->inf_type == INT_TYPE)           fprintf(of,"%-7s","int");
-                else if (l->inf_type  == REAL_TYPE)    fprintf(of,"%-7s","real");
-                else if (l->inf_type  == STR_TYPE)     fprintf(of,"%-7s","string");
-                else fprintf(of,"%-7s","undef");
-            }
-            else if (l->st_type == FUNCTION_TYPE){
-                fprintf(of,"%-7s %s","function returns ");
-                if (l->inf_type == INT_TYPE)           fprintf(of,"%-7s","int");
-                else if (l->inf_type  == REAL_TYPE)    fprintf(of,"%-7s","real");
-                else if (l->inf_type  == STR_TYPE)     fprintf(of,"%-7s","string");
-                else fprintf(of,"%-7s","undef");
-            }
-            else fprintf(of,"%-7s","undef"); // if UNDEF or 0
+            if (l->st_type == VARIABLE) fprintf(of,"%-7s","VARIABLE");
+            else if (l->st_type == FUNCTION) fprintf(of,"%-7s","FUNCTION");
+            // else if (l->st_type == STR_TYPE) fprintf(of,"%-7s","string");
+            // else if (l->st_type == ARRAY_TYPE){
+            //     fprintf(of,"array of ");
+            //     if (l->inf_type == INT_TYPE)           fprintf(of,"%-7s","int");
+            //     else if (l->inf_type  == REAL_TYPE)    fprintf(of,"%-7s","real");
+            //     else if (l->inf_type  == STR_TYPE)     fprintf(of,"%-7s","string");
+            //     else fprintf(of,"%-7s","undef");
+            // }
+            // else if (l->st_type == FUNCTION_TYPE){
+            //     fprintf(of,"%-7s %s","function returns ");
+            //     if (l->inf_type == INT_TYPE)           fprintf(of,"%-7s","int");
+            //     else if (l->inf_type  == REAL_TYPE)    fprintf(of,"%-7s","real");
+            //     else if (l->inf_type  == STR_TYPE)     fprintf(of,"%-7s","string");
+            //     else fprintf(of,"%-7s","undef");
+            // }
+            else fprintf(of,"%-7s","UNDEF"); // if UNDEF or 0
             while (t != NULL){
                 fprintf(of,"%4d ",t->lineno);
             t = t->next;

@@ -32,3 +32,7 @@ gcc -o flexDemo lex.yy.c -lfl
 - Geeksforgeeks
 - `info flex`
 - [Flex Notes](https://github.com/ifding/flex-bison/blob/master/flex-learning-notes.md)
+- Tutorials Point
+- [Implementing Symbol Table](https://steemit.com/programming/@drifter1/writing-a-simple-compiler-on-my-own-using-symbol-tables-in-the-lexer)
+
+

@@ -49,82 +49,94 @@ MULTILINECOMMENTEND ^"=cut"$
 %x comment
 %x line_comment
 
+
 %%
 
-true|false				{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext);}
-do 						{ printf("Line: %d token KW_DO: %s\n", line_num, yytext); }
-if 						{ printf("Line: %d token KW_IF: %s\n", line_num, yytext); }
-not						{ printf("Line: %d token KW_NOT: %s\n", line_num, yytext); }
-break					{ printf("Line: %d token KW_BREAK: %s\n", line_num, yytext); }
-else					{ printf("Line: %d token KW_ELSE: %s\n", line_num, yytext); }
-and						{ printf("Line: %d token KW_AND: %s\n", line_num, yytext); }
-continue 				{ printf("Line: %d token KW_CONTINUE: %s\n", line_num, yytext); }
-for						{ printf("Line: %d token KW_FOR: %s\n", line_num, yytext); }
-void					{ printf("Line: %d token KW_VOID: %s\n", line_num, yytext); }
-return 					{ printf("Line: %d token KW_RETURN: %s\n", line_num, yytext); }
-end						{ printf("Line: %d token KW_END: %s\n", line_num, yytext); }
-while					{ printf("Line: %d token KW_WHILE: %s\n", line_num, yytext); }
-or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); }
+__DATA__								{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+__END__									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+__FILE__								{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+__LINE__								{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+__PACKAGE__								{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+and										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+cmp										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+continue								{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+CORE									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+do										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+else									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+elsif									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+eq										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+exp										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+for										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+foreach									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+ge										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+gt										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+if										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+le										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+lock									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+lt										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+m										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+ne										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+no										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+or										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+package									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+q										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+qq										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+qr										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+qw										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+qx										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+s										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+sub										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+tr										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+use										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+unless									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+until									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+while									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+xor										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+y										{ printf("Line: %d keyword: %s\n", line_num, yytext); }
+return									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
 
-foreach					{ printf("Line: %d token KW_FOR_EACH: %s\n", line_num, yytext); }
-until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); }
 
-
-
-
-{IDENTIFIER}|[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);}
-                    			insert(yytext, strlen(yytext), UNDEF, lineno);
-                    			ret_print("ID");
-
-
-{CONSTANT_STRING}		{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext);}
-{POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: %s\n", line_num, yytext);}
-{REAL}					{printf("Line: %d token REAL: %s\n", line_num, yytext); }
-
-
-"+"         			{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); }
-"-"        				{printf("Line: %d token OP_MINUS: %s\n", line_num, yytext); }
-"*"         			{printf("Line: %d token OP_MULT: %s\n", line_num, yytext); }
-"/"         			{printf("Line: %d token OP_DIVIS: %s\n", line_num, yytext); }
-">="        			{printf("Line: %d token OP_GREATEROREQUAL: %s\n", line_num, yytext); }
-"="         			{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); }
-"<="        			{printf("Line: %d token OP_LESSOREQUAL: %s\n", line_num, yytext); }
-"<"						{printf("Line: %d token OP_LESS: %s\n", line_num, yytext); }
-">"         			{printf("Line: %d token OP_GREATER: %s\n", line_num, yytext); }
-"!="					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); }
-":="					{printf("Line: %d token ASSIGNMENT: %s\n", line_num, yytext); }
-";"         			{printf("Line: %d token SEMICOLON: %s\n", line_num, yytext); }
-"("         			{printf("Line: %d token LEFT_PARENTHESIS: %s\n", line_num, yytext); }
-")"         			{printf("Line: %d token RIGHT_PARENTHESIS: %s\n", line_num, yytext); }
-","         			{printf("Line: %d token COMMA: %s\n", line_num, yytext); }
-"["         			{printf("Line: %d token LEFT_BRACKET %s\n:", line_num, yytext); }
-"]"         			{printf("Line: %d token RIGHT_BRACKET: %s\n", line_num, yytext); }
-"&&" 					{printf("Line: %d token and: %s\n", line_num, yytext); }
-"||" 					{printf("Line: %d token or: %s\n", line_num, yytext); }
-"!" 					{printf("Line: %d token not: %s\n", line_num, yytext); }
-
-"{"         			{printf("Line: %d token LEFT_CURLY_BRACKET: %s\n", line_num, yytext); }
-"}"         			{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); }
-"=~"					{printf("Line: %d token REGEX_OPERATOR: %s\n", line_num, yytext); }
-"!~"					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); }
-"."						{printf("Line: %d token DOT_OPERATOR: %s\n", line_num, yytext); }
-"$_"					{printf("Line: %d token SPL_LIST_ARR_VAR: %s\n", line_num, yytext); } /* Not sure how to handle this one 
-
-/* 
-integer 				{ printf("Line: %d token KW_INTEGER: %s\n", line_num, yytext); } 
-character				{ printf("Line: %d token KW_CHARACTER: %s\n", line_num, yytext); }
-string 					{ printf("Line: %d token KW_STRING: %s\n", line_num, yytext); }
-begin 					{ printf("Line: %d token KW_BEGIN: %s\n", line_num, yytext); }
-real					{ printf("Line: %d token KW_REAL: %s\n", line_num, yytext); }
-boolean					{ printf("Line: %d token KW_BOOLEAN: %s\n", line_num, yytext); }
-mod						{ printf("Line: %d token KW_MOD: %s\n", line_num, yytext); }
-static 					{ printf("Line: %d token KW_STATIC: %s\n", line_num, yytext); }
-*/
-
-*/
+"sub"{WHITESPACE}+{IDENTIFIER}			{yytext += 4; printf("Line: %d token FUNCTION: %s\n", line_num, yytext);
+                    					insert(yytext, strlen(yytext), FUNCTION, line_num);}
+[$@%]+{IDENTIFIER} 						{printf("Line: %d token VARIABLE: %s\n", line_num, yytext);
+                    					insert(yytext, strlen(yytext), VARIABLE, line_num);}
+{IDENTIFIER}							{printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext);
+                    					insert(yytext, strlen(yytext), UNDEF, line_num);}
 
 
 
+{CONSTANT_STRING}						{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext);}
+{POSITIVE_INT}							{printf("Line: %d token POSITIVE_INT: %s\n", line_num, yytext);}
+{REAL}									{printf("Line: %d token REAL: %s\n", line_num, yytext); }
+
+
+"+"         							{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); }
+"-"        								{printf("Line: %d token OP_MINUS: %s\n", line_num, yytext); }
+"*"         							{printf("Line: %d token OP_MULT: %s\n", line_num, yytext); }
+"/"         							{printf("Line: %d token OP_DIVIS: %s\n", line_num, yytext); }
+">="        							{printf("Line: %d token OP_GREATEROREQUAL: %s\n", line_num, yytext); }
+"="         							{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); }
+"<="        							{printf("Line: %d token OP_LESSOREQUAL: %s\n", line_num, yytext); }
+"<"										{printf("Line: %d token OP_LESS: %s\n", line_num, yytext); }
+">"         							{printf("Line: %d token OP_GREATER: %s\n", line_num, yytext); }
+"!="									{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); }
+":="									{printf("Line: %d token ASSIGNMENT: %s\n", line_num, yytext); }
+";"         							{printf("Line: %d token SEMICOLON: %s\n", line_num, yytext); }
+"("         							{printf("Line: %d token LEFT_PARENTHESIS: %s\n", line_num, yytext); }
+")"         							{printf("Line: %d token RIGHT_PARENTHESIS: %s\n", line_num, yytext); }
+","         							{printf("Line: %d token COMMA: %s\n", line_num, yytext); }
+"["         							{printf("Line: %d token LEFT_BRACKET %s\n:", line_num, yytext); }
+"]"         							{printf("Line: %d token RIGHT_BRACKET: %s\n", line_num, yytext); }
+"&&" 									{printf("Line: %d token and: %s\n", line_num, yytext); }
+"||" 									{printf("Line: %d token or: %s\n", line_num, yytext); }
+"!" 									{printf("Line: %d token not: %s\n", line_num, yytext); }
+
+"{"         							{printf("Line: %d token LEFT_CURLY_BRACKET: %s\n", line_num, yytext); }
+"}"         							{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); }
+"=~"									{printf("Line: %d token REGEX_OPERATOR: %s\n", line_num, yytext); }
+"!~"									{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); }
+"."										{printf("Line: %d token DOT_OPERATOR: %s\n", line_num, yytext); }
+"$_"									{printf("Line: %d token SPL_LIST_ARR_VAR: %s\n", line_num, yytext); } /* Not sure how to handle this one */
 
 {MULTILINECOMMENTBEGIN}					{ BEGIN(comment);} /* printf("Starting multi line commenting\n"); */ 
 <comment>[^=\n]*        /* eat anything that's not a '=' */
@@ -144,13 +156,12 @@ static 					{ printf("Line: %d token KW_STATIC: %s\n", line_num, yytext); }
 
 .        				return ERROR_MESSAGE;
 
-
-
 %%
-/* user code */
-int main ()
+/*user code*/
+int main (int argc, char *argv[])
 {
-
+	init_hash_table();
+	yyin = fopen(argv[1], "r");
 	int token;
 	while ( (token = yylex()) != TK_EOF )
 	{	
@@ -161,4 +172,10 @@ int main ()
 			exit(1);
 		}
 	}
+	fclose(yyin);
+
+	// symbol table dump
+    yyout = fopen("symbol_table.out", "w");
+    symtab_dump(yyout);
+    fclose(yyout); 
 }

@@ -1,8 +1,0 @@
------------- ------ ------------
-Name         Type   Line Numbers
------------- ------ -------------
-printf       undef    10 
-a            undef     6    7    9 
-b            undef     6    8    9 
-c            undef     6    9   10 
-main         undef     4 

@@ -6,12 +6,12 @@
  
 /* token types */
 #define UNDEF 0
-#define INT_TYPE 1
-#define REAL_TYPE 2
-#define STR_TYPE 3
-#define LOGIC_TYPE 4
-#define ARRAY_TYPE 5
-#define FUNCTION_TYPE 6
+#define VARIABLE 1
+#define FUNCTION 2
+// #define STR_TYPE 3
+// #define LOGIC_TYPE 4
+// #define ARRAY_TYPE 5
+// #define FUNCTION_TYPE 6
  
 /* how parameter is passed */
 #define BY_VALUE 1
