@@ -23,6 +23,7 @@ char* mactable[32][2];
 
 /* Return def for macro, or NULL if no such macro is defined. */
 // char* get_macro(char* name);
+int yyval;
 %}
 %option yylineno
 
@@ -43,6 +44,7 @@ WHITESPACE 		[ \t\r]
 
 MULTILINECOMMENTBEGIN ^=[a-zA-Z]
 MULTILINECOMMENTEND ^"=cut"$
+ASSIGNMENT_OPERATOR (([<>][<>]|[*\/%+\-&^|])[=]|[=])
 
 %x comment
 %x line_comment
@@ -59,7 +61,7 @@ not						{ printf("Line: %d token KW_NOT: %s\n", line_num, yytext); KW_NOT;}
 boolean					{ printf("Line: %d token KW_BOOLEAN: %s\n", line_num, yytext); KW_NOT;}
 break					{ printf("Line: %d token KW_BREAK: %s\n", line_num, yytext); return KW_BREAK; }
 else					{ printf("Line: %d token KW_ELSE: %s\n", line_num, yytext); return KW_ELSE; }
-and						{ printf("Line: %d token KW_AND: %s\n", line_num, yytext); return KW_AND; }
+(and|&&) 						{ printf("Line: %d token KW_AND: %s\n", line_num, yytext); return KW_AND; }
 integer 				{ printf("Line: %d token KW_INTEGER: %s\n", line_num, yytext); return KW_INTEGER; }
 string 					{ printf("Line: %d token KW_STRING: %s\n", line_num, yytext); return KW_STRING; }
 continue 				{ printf("Line: %d token KW_CONTINUE: %s\n", line_num, yytext); return KW_CONTINUE; }
@@ -71,48 +73,55 @@ return 					{ printf("Line: %d token KW_RETURN: %s\n", line_num, yytext); return
 end						{ printf("Line: %d token KW_END: %s\n", line_num, yytext); return KW_END; }
 begin 					{ printf("Line: %d token KW_BEGIN: %s\n", line_num, yytext); return KW_BEGIN; }
 real					{ printf("Line: %d token KW_REAL: %s\n", line_num, yytext); return KW_REAL; }
-while					{ printf("Line: %d token KW_WHILE: %s\n", line_num, yytext); return KW_WHILE; }
-or						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); return KW_OR; }
+while				{ printf("Line: %d token KW_WHILE: %s\n", line_num, yytext); return KW_WHILE; }
+(or|\|\|)						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); return KW_OR; }
+sub                        { printf("Line: %d token KW_SUB: %s\n", line_num, yytext); return KW_SUB; }
 
 foreach					{ printf("Line: %d token KW_FOR_EACH: %s\n", line_num, yytext);  return KW_FOR_EACH;}
 until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW_UNTIL;}
 
 
-{IDENTIFIER}|[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return IDENTIFIER;}
+[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return VARIABLE;}
 
+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return IDENTIFIER;}
 
 {CONSTANT_STRING}		{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext); return CONSTANT_STRING;}
-{POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: '%s'\n",line_num,yytext); yylval = atoi(yytext) ;return POSITIVE_INT;}
-{REAL}					{printf("Line: %d token REAL: %s\n", line_num, yytext); return REAL;}
+{POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: %s\n",line_num,yytext); yyval = atoi(yytext);return POSITIVE_INT;}
+{REAL}					{printf("Line: %d token REAL: %s\n", line_num, yytext);  return REAL;}
 
 
-"+"         			{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_PLUS;}
-"-"        				{printf("Line: %d token OP_MINUS: %s\n", line_num, yytext); return OP_MINUS; }
-"*"         			{printf("Line: %d token OP_MULT: %s\n", line_num, yytext); return OP_MULT; }
-"/"         			{printf("Line: %d token OP_DIVIS: %s\n", line_num, yytext); return OP_DIVIS; }
-">="        			{printf("Line: %d token OP_GREATEROREQUAL: %s\n", line_num, yytext); return OP_GREATEROREQUAL; }
-"="         			{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); return OP_EQUAL; }
-"<="        			{printf("Line: %d token OP_LESSOREQUAL: %s\n", line_num, yytext); return OP_LESSOREQUAL; }
-"<"						{printf("Line: %d token OP_LESS: %s\n", line_num, yytext); return OP_LESS; }
-">"         			{printf("Line: %d token OP_GREATER: %s\n", line_num, yytext); return OP_GREATER; }
-"!="					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); return OP_DIFFERENT; }
-":="					{printf("Line: %d token OP_ASSIGNMENT: %s\n", line_num, yytext); return OP_ASSIGNMENT; }
-";"         			{printf("Line: %d token OP_SEMICOLON: %s\n", line_num, yytext); return OP_SEMICOLON; }
-"("         			{printf("Line: %d token OP_LEFT_PARENTHESIS: %s\n", line_num, yytext); return OP_LEFT_PARENTHESIS; }
-")"         			{printf("Line: %d token OP_RIGHT_PARENTHESIS: %s\n", line_num, yytext); return OP_RIGHT_PARENTHESIS; }
-","         			{printf("Line: %d token OP_COMMA: %s\n", line_num, yytext); return OP_COMMA; }
-"["         			{printf("Line: %d token OP_LEFT_BRACKET %s\n:", line_num, yytext); } return OP_LEFT_BRACKET;
-"]"         			{printf("Line: %d token OP_RIGHT_BRACKET: %s\n", line_num, yytext); return OP_RIGHT_BRACKET; }
-"&&" 					{printf("Line: %d token and: %s\n", line_num, yytext); return OP_AND; }
-"||" 					{printf("Line: %d token or: %s\n", line_num, yytext); return OP_OR; }
-"!" 					{printf("Line: %d token not: %s\n", line_num, yytext); return OP_NOT; }
+[+-]         			{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_ADDSUB;}
+[:]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_COLON;}
+[?]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_QUESTION;}
+(\+\+|--)                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_INCDEC;}
+[\|]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_BITWISE_OR;}
+[\^]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_XOR;}
+[&]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_BITWISE_AND;}
+[*]         			{printf("Line: %d token OP_MULT: %s\n", line_num, yytext); return OP_MULT; }
+[/]         			{printf("Line: %d token OP_DIVIS: %s\n", line_num, yytext); return OP_DIVIS; }
+[%]		{ return OP_REM; }
+[=]         			{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); return OP_EQUAL; }
+[=][=]                             {printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); return OP_EQUALITY; }
+([<>][=])|[<>] 			 { return OP_RELTIONAL; }
+(<<|>>)				 { return OP_SHIFT;}
+[!=]					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); return OP_DIFFERENT; }
+[:][=]					{printf("Line: %d token OP_ASSIGNMENT: %s\n", line_num, yytext); return OP_ASSIGNMENT; }
+[;]         			{printf("Line: %d token OP_SEMICOLON: %s\n", line_num, yytext); VARIABLEreturn OP_SEMICOLON; }
+[(]         			{printf("Line: %d token OP_LEFT_PARENTHESIS: %s\n", line_num, yytext); return OP_LEFT_PARENTHESIS; }
+[)]         			{printf("Line: %d token OP_RIGHT_PARENTHESIS: %s\n", line_num, yytext); return OP_RIGHT_PARENTHESIS; }
+[~]		{ return OP_TILDE; }
+[,]         			{printf("Line: %d token OP_COMMA: %s\n", line_num, yytext); return OP_COMMA; }
+[[]         			{printf("Line: %d token OP_LEFT_BRACKET %s\n:", line_num, yytext); } return OP_LEFT_BRACKET;
+[]]         			{printf("Line: %d token OP_RIGHT_BRACKET: %s\n", line_num, yytext); return OP_RIGHT_BRACKET; }
+[!] 					{printf("Line: %d token not: %s\n", line_num, yytext); return OP_NOT; }
 
-"{"         			{printf("Line: %d token LEFT_CURLY_BRACKET: %s\n", line_num, yytext); return LEFT_CURLY_BRACKET; }
-"}"         			{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); return RIGHT_CURLY_BRACKET; }
-"=~"					{printf("Line: %d token REGEX_OPERATOR: %s\n", line_num, yytext); return REGEX_OPERATOR; }
-"!~"					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); return NEG_REGEX_OPERATOR; }
-"."						{printf("Line: %d token DOT_OPERATOR: %s\n", line_num, yytext); return DOT_OPERATOR; }
-"$_"					{printf("Line: %d token SPL_LIST_ARR_VAR: %s\n", line_num, yytext); return SPL_LIST_ARR_VAR; } /* Not sure how to handle this one */
+[{]         			{printf("Line: %d token LEFT_CURLY_BRACKET: %s\n", line_num, yytext); return LEFT_CURLY_BRACKET; }
+[}]         			{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); return RIGHT_CURLY_BRACKET; }
+[=][~]					{printf("Line: %d token REGEX_OPERATOR: %s\n", line_num, yytext); return REGEX_OPERATOR; }
+[!][~]					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); return NEG_REGEX_OPERATOR; }
+[.]						{printf("Line: %d token DOT_OPERATOR: %s\n", line_num, yytext); return DOT_OPERATOR; }
+[$][_]					{printf("Line: %d token SPL_LIST_ARR_VAR: %s\n", line_num, yytext); return SPL_LIST_ARR_VAR; } /* Not sure how to handle this one */
+{ASSIGNMENT_OPERATOR} { yylval.string = new std::string(yytext); return T_ASSIGN_OPER; }
 
 {MULTILINECOMMENTBEGIN}					{ BEGIN(comment);} /* printf("Starting multi line commenting\n"); */ 
 <comment>[^=\n]*        /* eat anything that's not a '=' */
@@ -138,9 +147,6 @@ void yyerror(char const *s, ...) {
      fprintf (stderr, "Parse error : %s\n", s);
      exit(1);
 }
-
-
-
 /*user code
 *int main ()
 *{
