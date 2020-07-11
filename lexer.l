@@ -8,7 +8,7 @@
 
 
 int line_num = 1;
-// int yylval = 0;
+// int yylval = 0; // don't declare here since you have already done in the parser
 // #define KW_PROGRAM 300
 #define KW_BEGIN 301
 #define KW_END 302
@@ -24,6 +24,8 @@ char* mactable[32][2];
 /* Return def for macro, or NULL if no such macro is defined. */
 // char* get_macro(char* name);
 %}
+%option yylineno
+
 
 IDENTIFIER 		[a-zA-Z][0-9a-zA-Z_]*
 
@@ -47,6 +49,7 @@ MULTILINECOMMENTEND ^"=cut"$
 
 %%
 
+sub 					{ printf("Line: %d token KW_SUB: %s\n", line_num, yytext); return KW_SUB; }
 static 					{ printf("Line: %d token KW_STATIC: %s\n", line_num, yytext); return KW_STATIC; }
 true					{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext); return KW_TRUE;}
 false					{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext); return KW_FALSE;}
@@ -130,10 +133,13 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 
 %%
 
+
 void yyerror(char const *s, ...) {
      fprintf (stderr, "Parse error : %s\n", s);
      exit(1);
 }
+
+
 
 /*user code
 *int main ()

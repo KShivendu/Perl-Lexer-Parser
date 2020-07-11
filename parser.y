@@ -6,20 +6,23 @@
 #include "cgen.h"
 #define YYSTYPE int
 extern int yylex(void);
-void yyerror(char const* , ...);
 extern int line_num;
-int yylval; // imports yyval from lexer.l
+extern FILE *yyin;
+extern int yylineno;
+int yylval; // declare yylval which is to be used in lexer.l
 #include "parser.tab.h"
 %}
 
 // %union {
 //   int i;
+//   std::string *string;
 // }
 
 
 %token TK_EOF 0
 %token ERROR_MESSAGE
 /* keywords */
+%token KW_SUB
 %token KW_STATIC
 %token KW_TRUE
 %token KW_FALSE
@@ -106,30 +109,50 @@ int yylval; // imports yyval from lexer.l
 // Type declaration
 // %type <i> exp
 // %type <i> POSITIVE_INT
-// %type <i> program
+// %type <string> program
+
+// Maths evaluation
+// |exp { printf("program -> exp = %d \n", $1);};
+// exp : {printf("EMPTY EXPRESSION");}
+// |exp OP_PLUS exp {$$= $3 + $1;}
+// |exp OP_MINUS exp {$$= $3 - $1;}
+// |exp OP_MULT exp {$$= $3 * $1;}
+// |exp OP_DIVIS exp {if($3==0)
+// yyerror("Divide by Zero");
+// else
+// $$=$1/$3;}
+// |POSITIVE_INT {$$ = $1; printf("(yyval) : (%d) \n", yyval);}
+// ;
 
 %start program
 
-
 %%
-program : exp { printf("program -> exp = %d \n", $1);};
-exp : {printf("EMPTY EXPRESSION");}
-|exp OP_PLUS exp {$$= $3 + $1;}
-|exp OP_MINUS exp {$$= $3 - $1;}
-|exp OP_MULT exp {$$= $3 * $1;}
-|exp OP_DIVIS exp {if($3==0)
-yyerror("Divide by Zero");
-else
-$$=$1/$3;}
-|POSITIVE_INT {$$ = $1; printf("(yyval) : (%d) \n", yyval);}
-;
+program : {printf("EMPTY !!\n"); } 
+| KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS {printf("subroutine found, $$ : %d!!\n", $$);} ;
 %%
 
-int main ()
+char* filename;
+int main (int argc, char* argv[])
 {
-  if( yyparse() == 0) // 0 means TK_EOF
+  if (argc == 2) {
+    filename = argv[1];
+    yyin = fopen(argv[1], "r");
+  } else if (argc > 2) {
+    printf("Usage: %s filename\n", argv[0]);
+    return 1;
+  } else {
+    filename = "line";
+  }
+  int tok = yyparse();
+  
+  if( tok == 0) // 0 means TK_EOF
      printf("Accepted!\n");
   else
      printf("Rejected!\n");
   return 0;
 } 
+
+// void yyerror(char const *s, ...) {
+//   fprintf(stderr, "%s:%d Parse error:%s\n", filename, yylineno, s);
+//   exit(1);
+// }
