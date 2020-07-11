@@ -1,7 +1,7 @@
 %code requires{
 
 // #include "ast.hpp"
-extern ast_Top *g_root; // A way of getting the AST out
+// extern ast_Top *g_root; // A way of getting the AST out
 
 //! This is to fix problems when generating C++
 // We are declaring the functions provided by Flex, so
@@ -13,16 +13,23 @@ void yyerror(const char *);
 
 // Represents the value associated with any kind of
 // AST node.
-%union{
-    const Base *stmnt;
-    double number;
-    std::string *string;
-}
+// %union{
+//     const Base *stmnt;
+//     double number;
+//     std::string *string;
+// }
 
 %token T_TYPE_SPEC T_TYPE_QUAL T_STRG_SPEC T_IDENTIFIER
 %token T_SC T_CMA T_LRB T_LCB T_RCB T_LSB T_RSB T_QU T_COL T_LOG_OR T_LOG_AND T_OR T_XOR T_AND T_EQUALITY_OP T_REL_OP T_SHIFT_OP T_MULT T_DIV T_REM T_TILDE T_NOT T_DOT T_ARROW T_INCDEC T_ADDSUB_OP T_ASSIGN_OPER T_EQ T_SIZEOF
 %token T_INT_CONST
 %token T_IF T_WHILE T_DO T_FOR T_RETURN T_DEF T_PRINT
+
+// New added
+%token ASSIGN_OPER AdditiveExpression AndExpression ArgumentExpressionList AssignmentExpression CastExpression ConditionalExpression 
+// 
+%token Constant Declaration DeclarationList DeclarationSpec DeclarationSpec_T Declarator EqualityExpression ExclusiveOrExpression Expression ExtDeclaration ExtDef FuncDef InclusiveOrExpression InitDeclarator InitDeclaratorList LogicalAndExpression LogicalOrExpression MultDivRemOP MultiplicativeExpression ParamDeclarator Parameter ParameterList PostfixExpression PostfixExpression2 PrimaryExpression RelationalExpression ShiftExpression UnaryExpression UnaryOperator
+
+
 %nonassoc T_RRB
 %nonassoc T_ELSE
 
@@ -45,6 +52,9 @@ void yyerror(const char *);
 %start ROOT
 
 %%
+ROOT:
+	        ExtDef { ; }
+		;
 
 
 // Statement
