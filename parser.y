@@ -105,11 +105,12 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %token DeclarationList
 %token OP_RELATIONAL
 
-%left OP_OR KW_OR
-%left OP_AND KW_AND
+%left OP_BITWISE_OR KW_OR
+%left OP_BITWISE_AND KW_AND
 %left OP_EQUAL OP_NOTEQUAL OP_GREATER OP_GREATEROREQUAL OP_LESSOREQUAL OP_LESS
 %left OP_PLUS OP_MINUS
 %left OP_MULT OP_DIVIS KW_MOD KW_DIV
+%left OP_EQUALITY OP_RELTIONAL OP_SHIFT
 
 %right OP_NOT
 %right KW_NOT
