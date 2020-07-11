@@ -201,7 +201,8 @@ StatementList:
 
 Statement:  
     CompoundStatement      /* Incomplete */
-   |  SelectionStatement   /* Not Working. Grammar of if else might be ambiguous */
+   |  SelectionStatement   /* Not Working. Grammar given of if else might be ambiguous */
+                           /* So I implemented Abhishek's if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part*/ 
   | ExpressionStatement    /* Working :) */
   | IterationStatement     /* Working :) */
   //| PrintStatement       /* Not working. Maybe we can use print() to show demonstration instead of using print as a keyword*/
@@ -219,8 +220,21 @@ CompoundStatement_2:
 SelectionStatement:   
 //Notice that this grammer is similar to while statement's grammar.
 //But this doesn't works. Don't know why.
+if_main else_if_expr else_expr
+//KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
+//|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement KW_ELSE Statement
+;
+
+if_main:
 KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
-|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement KW_ELSE Statement
+;
+
+else_expr:
+| KW_ELSE Statement
+;
+
+else_if_expr:
+| else_if_expr KW_ELSE if_main
 ;
 
 ExpressionStatement:
