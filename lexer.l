@@ -77,6 +77,7 @@ while				{ printf("Line: %d token KW_WHILE: %s\n", line_num, yytext); return KW_
 
 foreach					{ printf("Line: %d token KW_FOR_EACH: %s\n", line_num, yytext);  return KW_FOR_EACH;}
 until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW_UNTIL;}
+then                          { printf("Line: %d token KW_THEN: %s\n", line_num, yytext); return KW_THEN;}
 
 
 [$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return VARIABLE;}
