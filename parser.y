@@ -50,7 +50,7 @@ extern int line_num;
 %token KW_WRITESTRING
 %token KW_WRITEINTEGER
 %token KW_WRITEREAL
-
+%token KW_SUB
 
 %token IDENTIFIER
 %token CONSTANT_STRING
@@ -140,7 +140,7 @@ ExtDeclaration:
 // FUNCTION DEFINITION
 
 FuncDef:
-                T_FUNCTION/**/
+                KW_SUB IDENTIFIER CompoundStatement
                 ;
 
 // DECLARATION
