@@ -43,110 +43,90 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
-/* "%code requires" blocks.  */
-#line 1 "parser.y" /* yacc.c:1921  */
-
-
-// #include "ast.hpp"
-// extern ast_Top *g_root; // A way of getting the AST out
-
-//! This is to fix problems when generating C++
-// We are declaring the functions provided by Flex, so
-// that Bison generated code can call them.
-int yylex(void);
-void yyerror(const char *);
-
-
-#line 61 "parser.tab.h" /* yacc.c:1921  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    T_TYPE_SPEC = 258,
-    T_TYPE_QUAL = 259,
-    T_STRG_SPEC = 260,
-    T_IDENTIFIER = 261,
-    T_SC = 262,
-    T_CMA = 263,
-    T_LRB = 264,
-    T_LCB = 265,
-    T_RCB = 266,
-    T_LSB = 267,
-    T_RSB = 268,
-    T_QU = 269,
-    T_COL = 270,
-    T_LOG_OR = 271,
-    T_LOG_AND = 272,
-    T_OR = 273,
-    T_XOR = 274,
-    T_AND = 275,
-    T_EQUALITY_OP = 276,
-    T_REL_OP = 277,
-    T_SHIFT_OP = 278,
-    T_MULT = 279,
-    T_DIV = 280,
-    T_REM = 281,
-    T_TILDE = 282,
-    T_NOT = 283,
-    T_DOT = 284,
-    T_ARROW = 285,
-    T_INCDEC = 286,
-    T_ADDSUB_OP = 287,
-    T_ASSIGN_OPER = 288,
-    T_EQ = 289,
-    T_SIZEOF = 290,
-    T_INT_CONST = 291,
-    T_IF = 292,
-    T_WHILE = 293,
-    T_DO = 294,
-    T_FOR = 295,
-    T_RETURN = 296,
-    T_DEF = 297,
-    T_PRINT = 298,
-    ASSIGN_OPER = 299,
-    AdditiveExpression = 300,
-    AndExpression = 301,
-    ArgumentExpressionList = 302,
-    AssignmentExpression = 303,
-    CastExpression = 304,
-    ConditionalExpression = 305,
-    Constant = 306,
-    Declaration = 307,
-    DeclarationList = 308,
-    DeclarationSpec = 309,
-    DeclarationSpec_T = 310,
-    Declarator = 311,
-    EqualityExpression = 312,
-    ExclusiveOrExpression = 313,
-    Expression = 314,
-    ExtDeclaration = 315,
-    ExtDef = 316,
-    FuncDef = 317,
-    InclusiveOrExpression = 318,
-    InitDeclarator = 319,
-    InitDeclaratorList = 320,
-    LogicalAndExpression = 321,
-    LogicalOrExpression = 322,
-    MultDivRemOP = 323,
-    MultiplicativeExpression = 324,
-    ParamDeclarator = 325,
-    Parameter = 326,
-    ParameterList = 327,
-    PostfixExpression = 328,
-    PostfixExpression2 = 329,
-    PrimaryExpression = 330,
-    RelationalExpression = 331,
-    ShiftExpression = 332,
-    UnaryExpression = 333,
-    UnaryOperator = 334,
-    T_RRB = 335,
-    T_ELSE = 336
+    TK_EOF = 0,
+    ERROR_MESSAGE = 258,
+    KW_STATIC = 259,
+    KW_TRUE = 260,
+    KW_FALSE = 261,
+    KW_DO = 262,
+    KW_IF = 263,
+    KW_NOT = 264,
+    KW_BOOLEAN = 265,
+    KW_BREAK = 266,
+    KW_ELSE = 267,
+    KW_AND = 268,
+    KW_INTEGER = 269,
+    KW_STRING = 270,
+    KW_CONTINUE = 271,
+    KW_FOR = 272,
+    KW_MOD = 273,
+    KW_CHARACTER = 274,
+    KW_VOID = 275,
+    KW_RETURN = 276,
+    KW_END = 277,
+    KW_BEGIN = 278,
+    KW_REAL = 279,
+    KW_WHILE = 280,
+    KW_OR = 281,
+    KW_MAIN = 282,
+    KW_READSTRING = 283,
+    KW_READINTEGER = 284,
+    KW_READREAL = 285,
+    KW_WRITESTRING = 286,
+    KW_WRITEINTEGER = 287,
+    KW_WRITEREAL = 288,
+    IDENTIFIER = 289,
+    CONSTANT_STRING = 290,
+    POSITIVEINT = 291,
+    REAL = 292,
+    OP_PLUS = 293,
+    OP_MINUS = 294,
+    OP_MULT = 295,
+    OP_DIV = 296,
+    OP_EQUAL = 297,
+    OP_NOTEQUAL = 298,
+    OP_LESS = 299,
+    OP_LESSOREQUAL = 300,
+    OP_GREATER = 301,
+    OP_GREATEROREQUAL = 302,
+    OP_ASSIGNMENT = 303,
+    OP_SEMICOLON = 304,
+    OP_LEFT_PARENTHESIS = 305,
+    OP_RIGHT_PARENTHESIS = 306,
+    OP_COMMA = 307,
+    OP_LEFT_BRACKET = 308,
+    OP_RIGHT_BRACKET = 309,
+    OP_AND = 310,
+    OP_OR = 311,
+    OP_NOT = 312,
+    LEFT_CURLY_BRACKET = 313,
+    RIGHT_CURLY_BRACKET = 314,
+    KW_FOR_EACH = 315,
+    KW_UNTIL = 316,
+    POSITIVE_INT = 317,
+    OP_DIFFERENT = 318,
+    REGEX_OPERATOR = 319,
+    NEG_REGEX_OPERATOR = 320,
+    DOT_OPERATOR = 321,
+    SPL_LIST_ARR_VAR = 322,
+    OP_DIVIS = 323,
+    KW_DIV = 324,
+    KW_THEN = 325
   };
 #endif
 
 /* Value type.  */
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef int YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
+#endif
 
 
 extern YYSTYPE yylval;

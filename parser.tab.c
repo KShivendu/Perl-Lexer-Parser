@@ -65,7 +65,20 @@
 
 
 
+/* First part of user prologue.  */
+#line 1 "parser.y" /* yacc.c:337  */
 
+#include <string.h>
+#include <stdarg.h>
+#include <stdio.h>	
+#include <stdlib.h>
+#include "cgen.h"
+#define YYSTYPE float
+extern int yylex(void);
+extern int line_num;
+#include "parser.tab.h"
+
+#line 82 "parser.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -97,110 +110,90 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
-/* "%code requires" blocks.  */
-#line 1 "parser.y" /* yacc.c:352  */
-
-
-// #include "ast.hpp"
-// extern ast_Top *g_root; // A way of getting the AST out
-
-//! This is to fix problems when generating C++
-// We are declaring the functions provided by Flex, so
-// that Bison generated code can call them.
-int yylex(void);
-void yyerror(const char *);
-
-
-#line 115 "parser.tab.c" /* yacc.c:352  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    T_TYPE_SPEC = 258,
-    T_TYPE_QUAL = 259,
-    T_STRG_SPEC = 260,
-    T_IDENTIFIER = 261,
-    T_SC = 262,
-    T_CMA = 263,
-    T_LRB = 264,
-    T_LCB = 265,
-    T_RCB = 266,
-    T_LSB = 267,
-    T_RSB = 268,
-    T_QU = 269,
-    T_COL = 270,
-    T_LOG_OR = 271,
-    T_LOG_AND = 272,
-    T_OR = 273,
-    T_XOR = 274,
-    T_AND = 275,
-    T_EQUALITY_OP = 276,
-    T_REL_OP = 277,
-    T_SHIFT_OP = 278,
-    T_MULT = 279,
-    T_DIV = 280,
-    T_REM = 281,
-    T_TILDE = 282,
-    T_NOT = 283,
-    T_DOT = 284,
-    T_ARROW = 285,
-    T_INCDEC = 286,
-    T_ADDSUB_OP = 287,
-    T_ASSIGN_OPER = 288,
-    T_EQ = 289,
-    T_SIZEOF = 290,
-    T_INT_CONST = 291,
-    T_IF = 292,
-    T_WHILE = 293,
-    T_DO = 294,
-    T_FOR = 295,
-    T_RETURN = 296,
-    T_DEF = 297,
-    T_PRINT = 298,
-    ASSIGN_OPER = 299,
-    AdditiveExpression = 300,
-    AndExpression = 301,
-    ArgumentExpressionList = 302,
-    AssignmentExpression = 303,
-    CastExpression = 304,
-    ConditionalExpression = 305,
-    Constant = 306,
-    Declaration = 307,
-    DeclarationList = 308,
-    DeclarationSpec = 309,
-    DeclarationSpec_T = 310,
-    Declarator = 311,
-    EqualityExpression = 312,
-    ExclusiveOrExpression = 313,
-    Expression = 314,
-    ExtDeclaration = 315,
-    ExtDef = 316,
-    FuncDef = 317,
-    InclusiveOrExpression = 318,
-    InitDeclarator = 319,
-    InitDeclaratorList = 320,
-    LogicalAndExpression = 321,
-    LogicalOrExpression = 322,
-    MultDivRemOP = 323,
-    MultiplicativeExpression = 324,
-    ParamDeclarator = 325,
-    Parameter = 326,
-    ParameterList = 327,
-    PostfixExpression = 328,
-    PostfixExpression2 = 329,
-    PrimaryExpression = 330,
-    RelationalExpression = 331,
-    ShiftExpression = 332,
-    UnaryExpression = 333,
-    UnaryOperator = 334,
-    T_RRB = 335,
-    T_ELSE = 336
+    TK_EOF = 0,
+    ERROR_MESSAGE = 258,
+    KW_STATIC = 259,
+    KW_TRUE = 260,
+    KW_FALSE = 261,
+    KW_DO = 262,
+    KW_IF = 263,
+    KW_NOT = 264,
+    KW_BOOLEAN = 265,
+    KW_BREAK = 266,
+    KW_ELSE = 267,
+    KW_AND = 268,
+    KW_INTEGER = 269,
+    KW_STRING = 270,
+    KW_CONTINUE = 271,
+    KW_FOR = 272,
+    KW_MOD = 273,
+    KW_CHARACTER = 274,
+    KW_VOID = 275,
+    KW_RETURN = 276,
+    KW_END = 277,
+    KW_BEGIN = 278,
+    KW_REAL = 279,
+    KW_WHILE = 280,
+    KW_OR = 281,
+    KW_MAIN = 282,
+    KW_READSTRING = 283,
+    KW_READINTEGER = 284,
+    KW_READREAL = 285,
+    KW_WRITESTRING = 286,
+    KW_WRITEINTEGER = 287,
+    KW_WRITEREAL = 288,
+    IDENTIFIER = 289,
+    CONSTANT_STRING = 290,
+    POSITIVEINT = 291,
+    REAL = 292,
+    OP_PLUS = 293,
+    OP_MINUS = 294,
+    OP_MULT = 295,
+    OP_DIV = 296,
+    OP_EQUAL = 297,
+    OP_NOTEQUAL = 298,
+    OP_LESS = 299,
+    OP_LESSOREQUAL = 300,
+    OP_GREATER = 301,
+    OP_GREATEROREQUAL = 302,
+    OP_ASSIGNMENT = 303,
+    OP_SEMICOLON = 304,
+    OP_LEFT_PARENTHESIS = 305,
+    OP_RIGHT_PARENTHESIS = 306,
+    OP_COMMA = 307,
+    OP_LEFT_BRACKET = 308,
+    OP_RIGHT_BRACKET = 309,
+    OP_AND = 310,
+    OP_OR = 311,
+    OP_NOT = 312,
+    LEFT_CURLY_BRACKET = 313,
+    RIGHT_CURLY_BRACKET = 314,
+    KW_FOR_EACH = 315,
+    KW_UNTIL = 316,
+    POSITIVE_INT = 317,
+    OP_DIFFERENT = 318,
+    REGEX_OPERATOR = 319,
+    NEG_REGEX_OPERATOR = 320,
+    DOT_OPERATOR = 321,
+    SPL_LIST_ARR_VAR = 322,
+    OP_DIVIS = 323,
+    KW_DIV = 324,
+    KW_THEN = 325
   };
 #endif
 
 /* Value type.  */
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef int YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
+#endif
 
 
 extern YYSTYPE yylval;
@@ -440,21 +433,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  3
+#define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   1
+#define YYLAST   31
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  82
+#define YYNTOKENS  71
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  2
+#define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  2
+#define YYNRULES  8
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  4
+#define YYNSTATES  13
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   336
+#define YYMAXUTOK   325
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -497,15 +490,14 @@ static const yytype_uint8 yytranslate[] =
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
       55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
-      65,    66,    67,    68,    69,    70,    71,    72,    73,    74,
-      75,    76,    77,    78,    79,    80,    81
+      65,    66,    67,    68,    69,    70
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    58,    58
+       0,   106,   106,   107,   108,   109,   110,   111,   112
 };
 #endif
 
@@ -514,25 +506,22 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "T_TYPE_SPEC", "T_TYPE_QUAL",
-  "T_STRG_SPEC", "T_IDENTIFIER", "T_SC", "T_CMA", "T_LRB", "T_LCB",
-  "T_RCB", "T_LSB", "T_RSB", "T_QU", "T_COL", "T_LOG_OR", "T_LOG_AND",
-  "T_OR", "T_XOR", "T_AND", "T_EQUALITY_OP", "T_REL_OP", "T_SHIFT_OP",
-  "T_MULT", "T_DIV", "T_REM", "T_TILDE", "T_NOT", "T_DOT", "T_ARROW",
-  "T_INCDEC", "T_ADDSUB_OP", "T_ASSIGN_OPER", "T_EQ", "T_SIZEOF",
-  "T_INT_CONST", "T_IF", "T_WHILE", "T_DO", "T_FOR", "T_RETURN", "T_DEF",
-  "T_PRINT", "ASSIGN_OPER", "AdditiveExpression", "AndExpression",
-  "ArgumentExpressionList", "AssignmentExpression", "CastExpression",
-  "ConditionalExpression", "Constant", "Declaration", "DeclarationList",
-  "DeclarationSpec", "DeclarationSpec_T", "Declarator",
-  "EqualityExpression", "ExclusiveOrExpression", "Expression",
-  "ExtDeclaration", "ExtDef", "FuncDef", "InclusiveOrExpression",
-  "InitDeclarator", "InitDeclaratorList", "LogicalAndExpression",
-  "LogicalOrExpression", "MultDivRemOP", "MultiplicativeExpression",
-  "ParamDeclarator", "Parameter", "ParameterList", "PostfixExpression",
-  "PostfixExpression2", "PrimaryExpression", "RelationalExpression",
-  "ShiftExpression", "UnaryExpression", "UnaryOperator", "T_RRB", "T_ELSE",
-  "$accept", "ROOT", YY_NULLPTR
+  "TK_EOF", "error", "$undefined", "ERROR_MESSAGE", "KW_STATIC",
+  "KW_TRUE", "KW_FALSE", "KW_DO", "KW_IF", "KW_NOT", "KW_BOOLEAN",
+  "KW_BREAK", "KW_ELSE", "KW_AND", "KW_INTEGER", "KW_STRING",
+  "KW_CONTINUE", "KW_FOR", "KW_MOD", "KW_CHARACTER", "KW_VOID",
+  "KW_RETURN", "KW_END", "KW_BEGIN", "KW_REAL", "KW_WHILE", "KW_OR",
+  "KW_MAIN", "KW_READSTRING", "KW_READINTEGER", "KW_READREAL",
+  "KW_WRITESTRING", "KW_WRITEINTEGER", "KW_WRITEREAL", "IDENTIFIER",
+  "CONSTANT_STRING", "POSITIVEINT", "REAL", "OP_PLUS", "OP_MINUS",
+  "OP_MULT", "OP_DIV", "OP_EQUAL", "OP_NOTEQUAL", "OP_LESS",
+  "OP_LESSOREQUAL", "OP_GREATER", "OP_GREATEROREQUAL", "OP_ASSIGNMENT",
+  "OP_SEMICOLON", "OP_LEFT_PARENTHESIS", "OP_RIGHT_PARENTHESIS",
+  "OP_COMMA", "OP_LEFT_BRACKET", "OP_RIGHT_BRACKET", "OP_AND", "OP_OR",
+  "OP_NOT", "LEFT_CURLY_BRACKET", "RIGHT_CURLY_BRACKET", "KW_FOR_EACH",
+  "KW_UNTIL", "POSITIVE_INT", "OP_DIFFERENT", "REGEX_OPERATOR",
+  "NEG_REGEX_OPERATOR", "DOT_OPERATOR", "SPL_LIST_ARR_VAR", "OP_DIVIS",
+  "KW_DIV", "KW_THEN", "$accept", "program", "exp", YY_NULLPTR
 };
 #endif
 
@@ -548,15 +537,14 @@ static const yytype_uint16 yytoknum[] =
      295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
      305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
      315,   316,   317,   318,   319,   320,   321,   322,   323,   324,
-     325,   326,   327,   328,   329,   330,   331,   332,   333,   334,
-     335,   336
+     325
 };
 # endif
 
-#define YYPACT_NINF -62
+#define YYPACT_NINF -55
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-62)))
+  (!!((Yystate) == (-55)))
 
 #define YYTABLE_NINF -1
 
@@ -567,7 +555,8 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -61,   -62,     1,   -62
+     -54,   -55,     9,   -38,   -55,   -54,   -54,   -54,   -54,   -37,
+     -37,   -55,   -55
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -575,19 +564,20 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     2,     0,     1
+       3,     8,     0,     2,     1,     3,     3,     3,     3,     4,
+       5,     6,     7
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -62,   -62
+     -55,   -55,    -1
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2
+      -1,     2,     3
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -595,31 +585,38 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       1,     3
+       5,     6,     7,     7,     9,    10,    11,    12,     1,     4,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       8,     8
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-      61,     0
+      38,    39,    40,    40,     5,     6,     7,     8,    62,     0,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      68,    68
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    61,    83,     0
+       0,    62,    72,    73,     0,    38,    39,    40,    68,    73,
+      73,    73,    73
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    82,    83
+       0,    71,    72,    73,    73,    73,    73,    73,    73
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1
+       0,     2,     1,     0,     3,     3,     3,     3,     1
 };
 
 
@@ -1305,13 +1302,49 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 58 "parser.y" /* yacc.c:1652  */
-    { ; }
-#line 1311 "parser.tab.c" /* yacc.c:1652  */
+#line 106 "parser.y" /* yacc.c:1652  */
+    { printf("program -> exp = %d\n", (int)yyvsp[0]);}
+#line 1308 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 3:
+#line 107 "parser.y" /* yacc.c:1652  */
+    {printf("EMPTY EXPRESSION");}
+#line 1314 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 4:
+#line 108 "parser.y" /* yacc.c:1652  */
+    {yyval= yyvsp[0] + yyvsp[-2];}
+#line 1320 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 5:
+#line 109 "parser.y" /* yacc.c:1652  */
+    {yyval= yyvsp[0] - yyvsp[-2];}
+#line 1326 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 6:
+#line 110 "parser.y" /* yacc.c:1652  */
+    {yyval= yyvsp[0] * yyvsp[-2];}
+#line 1332 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 7:
+#line 111 "parser.y" /* yacc.c:1652  */
+    {yyval= yyvsp[0] / yyvsp[-2];}
+#line 1338 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 8:
+#line 112 "parser.y" /* yacc.c:1652  */
+    {yyval = yyvsp[-1] ;printf("POSITIVE_INT = %s", yyvsp[0]);}
+#line 1344 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1315 "parser.tab.c" /* yacc.c:1652  */
+#line 1348 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1541,4 +1574,20 @@ yyreturn:
     YYSTACK_FREE (yymsg);
 #endif
   return yyresult;
+}
+#line 114 "parser.y" /* yacc.c:1918  */
+
+
+int main ()
+{
+  if( yyparse() == 0)
+     printf("Accepted!\n");
+  else
+     printf("Rejected!\n");
+  return 0;
+} 
+
+void yyerror(char const* s, ...)
+{
+   printf("Line %d: %s\n", line_num, s);
 }

@@ -1,104 +1,128 @@
-%code requires{
-
-// #include "ast.hpp"
-// extern ast_Top *g_root; // A way of getting the AST out
-
-//! This is to fix problems when generating C++
-// We are declaring the functions provided by Flex, so
-// that Bison generated code can call them.
-int yylex(void);
-void yyerror(const char *);
-
-}
-
-// Represents the value associated with any kind of
-// AST node.
-// %union{
-//     const Base *stmnt;
-//     double number;
-//     std::string *string;
-// }
-
-%token T_TYPE_SPEC T_TYPE_QUAL T_STRG_SPEC T_IDENTIFIER
-%token T_SC T_CMA T_LRB T_LCB T_RCB T_LSB T_RSB T_QU T_COL T_LOG_OR T_LOG_AND T_OR T_XOR T_AND T_EQUALITY_OP T_REL_OP T_SHIFT_OP T_MULT T_DIV T_REM T_TILDE T_NOT T_DOT T_ARROW T_INCDEC T_ADDSUB_OP T_ASSIGN_OPER T_EQ T_SIZEOF
-%token T_INT_CONST
-%token T_IF T_WHILE T_DO T_FOR T_RETURN T_DEF T_PRINT
-
-// New added
-%token ASSIGN_OPER AdditiveExpression AndExpression ArgumentExpressionList AssignmentExpression CastExpression ConditionalExpression 
-// 
-%token Constant Declaration DeclarationList DeclarationSpec DeclarationSpec_T Declarator EqualityExpression ExclusiveOrExpression Expression ExtDeclaration ExtDef FuncDef InclusiveOrExpression InitDeclarator InitDeclaratorList LogicalAndExpression LogicalOrExpression MultDivRemOP MultiplicativeExpression ParamDeclarator Parameter ParameterList PostfixExpression PostfixExpression2 PrimaryExpression RelationalExpression ShiftExpression UnaryExpression UnaryOperator
+%{
+#include <string.h>
+#include <stdarg.h>
+#include <stdio.h>	
+#include <stdlib.h>
+#include "cgen.h"
+#define YYSTYPE float
+extern int yylex(void);
+extern int line_num;
+#include "parser.tab.h"
+%}
 
 
-%nonassoc T_RRB
-%nonassoc T_ELSE
+%token TK_EOF 0
+%token ERROR_MESSAGE
+/* keywords */
+%token KW_STATIC
+%token KW_TRUE
+%token KW_FALSE
+%token KW_DO
+%token KW_IF
+%token KW_NOT
+%token KW_BOOLEAN
+%token KW_BREAK
+%token KW_ELSE
+%token KW_AND
+%token KW_INTEGER
+%token KW_STRING
+%token KW_CONTINUE
+%token KW_FOR
+%token KW_MOD
+%token KW_CHARACTER
+%token KW_VOID
+%token KW_RETURN
+%token KW_END
+%token KW_BEGIN
+%token KW_REAL
+%token KW_WHILE
+%token KW_OR
+%token KW_MAIN
+%token KW_READSTRING
+%token KW_READINTEGER
+%token KW_READREAL
+%token KW_WRITESTRING
+%token KW_WRITEINTEGER
+%token KW_WRITEREAL
 
 
-%type <stmnt> ExtDef ExtDeclaration
+%token IDENTIFIER
+%token CONSTANT_STRING
+%token POSITIVEINT
+%token REAL
 
-%type <stmnt> FuncDef ParameterList Parameter ParamDeclarator
+%token OP_PLUS
+%token OP_MINUS
+%token OP_MULT
+%token OP_DIV
+%token OP_EQUAL
+%token OP_NOTEQUAL
+%token OP_LESS
+%token OP_LESSOREQUAL
+%token OP_GREATER
+%token OP_GREATEROREQUAL
+%token OP_ASSIGNMENT
+%token OP_SEMICOLON
+%token OP_LEFT_PARENTHESIS
+%token OP_RIGHT_PARENTHESIS
+%token OP_COMMA
+%token OP_LEFT_BRACKET
+%token OP_RIGHT_BRACKET
 
-%type <stmnt> DeclarationList Declaration DeclarationSpec DeclarationSpec_T InitDeclarator InitDeclaratorList Declarator
+%token OP_AND
+%token OP_OR
+%token OP_NOT
 
-%type <stmnt> StatementList Statement CompoundStatement CompoundStatement_2 SelectionStatement ExpressionStatement JumpStatement IterationStatement
+// New for perl
+%token LEFT_CURLY_BRACKET
+%token RIGHT_CURLY_BRACKET
+%token KW_FOR_EACH
+%token KW_UNTIL
+%token POSITIVE_INT
+%token OP_DIFFERENT
+%token REGEX_OPERATOR
+%token NEG_REGEX_OPERATOR
+%token DOT_OPERATOR
+%token SPL_LIST_ARR_VAR
 
-%type <stmnt> Expression AssignmentExpression ConditionalExpression LogicalOrExpression LogicalAndExpression InclusiveOrExpression ExclusiveOrExpression AndExpression EqualityExpression RelationalExpression ShiftExpression AdditiveExpression MultiplicativeExpression CastExpression UnaryExpression PostfixExpression PostfixExpression2 ArgumentExpressionList PrimaryExpression
-
-%type <number> Constant T_INT_CONST
 
 
-%type <string> T_IDENTIFIER MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER T_EQ T_AND T_ADDSUB_OP T_TILDE T_NOT T_MULT T_DIV T_REM //T_Operator
 
-%start ROOT
+%left OP_OR KW_OR
+%left OP_AND KW_AND
+%left OP_EQUAL OP_NOTEQUAL OP_GREATER OP_GREATEROREQUAL OP_LESSOREQUAL OP_LESS
+%left OP_PLUS OP_MINUS
+%left OP_MULT OP_DIVIS KW_MOD KW_DIV
+
+%right OP_NOT
+%right KW_NOT
+%right KW_WHILE
+%right KW_THEN KW_ELSE
+
+%start program
+
 
 %%
-ROOT:
-	        ExtDef { ; }
-		;
+program : exp { printf("program -> exp = %d\n", (int)$1);}
+exp : {printf("EMPTY EXPRESSION");}
+|exp OP_PLUS exp {$$= $3 + $1;}
+|exp OP_MINUS exp {$$= $3 - $1;}
+|exp OP_MULT exp {$$= $3 * $1;}
+|exp OP_DIVIS exp {$$= $3 / $1;}
+|POSITIVE_INT {$$ = $1 ;printf("POSITIVE_INT = %s", $1);}
+;
+%%
 
+int main ()
+{
+  if( yyparse() == 0)
+     printf("Accepted!\n");
+  else
+     printf("Rejected!\n");
+  return 0;
+} 
 
-// Statement
-
-StatementList:
-                Statement { $$ = new StatementList($1); }
-        |       StatementList Statement { $$->push($2); }
-                ;
-
-Statement:
-                CompoundStatement { $$ = $1; }
-        |       SelectionStatement { $$ = $1; }
-        |       ExpressionStatement { $$ = $1; }
-        |       JumpStatement { $$ = $1; }
-        |       IterationStatement { $$ = $1; }
-                ;
-
-CompoundStatement:
-                T_LCB CompoundStatement_2 { $$ = $2; }
-                ;
-
-CompoundStatement_2:
-                T_RCB { $$ = new CompoundStatement; }
-        |       DeclarationList T_RCB { $$ = new CompoundStatement($1); }
-        |       DeclarationList StatementList T_RCB { $$ = new CompoundStatement($1, $2); }
-        |       StatementList T_RCB { $$ = new CompoundStatement($1); }
-                ;
-
-SelectionStatement:
-                T_IF T_LRB Expression T_RRB Statement { $$ = new SelectionStatement($5); }
-|       T_IF T_LRB Expression T_RRB Statement T_ELSE Statement { $$ = new SelectionStatement($5, $7); }
-                ;
-
-ExpressionStatement:
-                T_SC { $$ = new ExpressionStatement(); }
-        |       Expression T_SC { $$ = $1; }
-                ;
-
-JumpStatement:
-                T_RETURN ExpressionStatement { $$ = $2; }
-                ;
-
-IterationStatement:
-                T_WHILE T_LRB Expression T_RRB Statement { $$ = $5; }
-        |       T_DO Statement T_WHILE T_LRB Expression T_RRB T_SC { $$ = $2; }
-        |       T_FOR T_LRB Expression T_SC Expression T_SC Expression T_RRB Statement { $$ = $9; }
-                ;
+void yyerror(char const* s, ...)
+{
+   printf("Line %d: %s\n", line_num, s);
+}
