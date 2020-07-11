@@ -55,7 +55,7 @@ int yylval; // declare yylval which is to be used in lexer.l
 %token KW_WRITESTRING
 %token KW_WRITEINTEGER
 %token KW_WRITEREAL
-%token KW_SUB
+
 
 %token IDENTIFIER
 %token CONSTANT_STRING
