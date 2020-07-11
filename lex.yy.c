@@ -1074,7 +1074,7 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 83 "lexer.l"
-{printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return VARIABLE;}
+{printf("Line: %d token VARIABLE %s\n", line_num, yytext); return VARIABLE;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP

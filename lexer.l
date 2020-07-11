@@ -80,7 +80,7 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 then                          { printf("Line: %d token KW_THEN: %s\n", line_num, yytext); return KW_THEN;}
 
 
-[$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return VARIABLE;}
+[$@%]+{IDENTIFIER} {printf("Line: %d token VARIABLE %s\n", line_num, yytext); return VARIABLE;}
 
 {IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); yylval.string = yytext; return IDENTIFIER;}
 
