@@ -50,7 +50,7 @@ ASSIGNMENT_OPERATOR (([<>][<>]|[*\/%+\-&^|])[=]|[=])
 %x line_comment
 
 %%
-sub 					{ printf("Line: %d token KW_SUB: %s\n", line_num, yytext); return KW_SUB; }
+sub 					{ printf("Line: %d token KW_SUB: '%s'\n", line_num, yytext); return KW_SUB; }
 static 					{ printf("Line: %d token KW_STATIC: %s\n", line_num, yytext); return KW_STATIC; }
 true					{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext); return KW_TRUE;}
 false					{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext); return KW_FALSE;}
@@ -85,7 +85,7 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 {IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return IDENTIFIER;}
 
 {CONSTANT_STRING}		{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext); return CONSTANT_STRING;}
-{POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: %s\n",line_num,yytext); yylval = atoi(yytext);return POSITIVE_INT;}
+{POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: %s\n",line_num,yytext); yylval.integer = atoi(yytext);return POSITIVE_INT;}
 {REAL}					{printf("Line: %d token REAL: %s\n", line_num, yytext);  return REAL;}
 
 [+-]         			{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_ADDSUB;}

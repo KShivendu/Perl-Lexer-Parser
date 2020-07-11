@@ -15,7 +15,6 @@ exp : {printf("EMPTY EXPRESSION");}
 |POSITIVE_INT {$$ = $1;}
 ;*/
 
-
 ROOT:
 ExtDef { ; }
 ;
@@ -23,7 +22,7 @@ ExtDef { ; }
 // EXTERNAL DEFINITION
 
 ExtDef:
-ExtDeclaration { g_root->push($1); }
+ExtDeclaration { g_root->push($1); printf("$0 : %d", $0);}
 |ExtDef ExtDeclaration {g_root->push($2); }
 ;
 
@@ -43,17 +42,22 @@ KW_SUB IDENTIFIER CompoundStatement
 Declaration:
 IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
 ;
+// in sahu_conversion_parser.y
 
 ParameterList:
-Parameter
-|ParameterList OP_COMMA Parameter ParameterList"'";
+                Parameter
+        |       ParameterList OP_COMMA Parameter ParameterList_1
+                ;
 
-ParameterList"'" : 
-|OP_COMMA Parameter ParameterList"'";
+ParameterList_1:
+                %empty
+        |       OP_COMMA Parameter ParameterList_1
+                ;
 Parameter:
-VARIABLE
-;
+                VARIABLE
+                ;
 
+// ParameterList: "a,b,c"
 
 // CALLING
 
