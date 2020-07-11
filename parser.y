@@ -21,7 +21,6 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %token TK_EOF 0
 %token ERROR_MESSAGE
 /* keywords */
-%token KW_SUB
 %token KW_STATIC
 %token KW_TRUE
 %token KW_FALSE
@@ -52,36 +51,55 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %token KW_WRITESTRING
 %token KW_WRITEINTEGER
 %token KW_WRITEREAL
+
+%token VARIABLE
 %token IDENTIFIER
 %token CONSTANT_STRING
 %token POSITIVEINT
 %token REAL
 
-%token OP_PLUS
-%token OP_MINUS
+%token OP_ADDSUB
+%token OP_COLON
+%token OP_QUESTION
+%token OP_INCDEC
+%token OP_BITWISE_OR
+%token OP_XOR
+%token OP_BITWISE_AND
+
+//%token OP_PLUS
+//%token OP_MINUS
+
 %token OP_MULT
-%token OP_DIV
+%token OP_DIVIS
+%token OP_REM
 %token OP_EQUAL
-%token OP_NOTEQUAL
-%token OP_LESS
-%token OP_LESSOREQUAL
-%token OP_GREATER
-%token OP_GREATEROREQUAL
+%token OP_EQUALITY
+%token OP_RELTIONAL
+%token OP_SHIFT
+%token 
+
+//%token OP_NOTEQUAL
+//%token OP_LESS
+//%token OP_LESSOREQUAL
+//%token OP_GREATER
+//%token OP_GREATEROREQUAL
 %token OP_ASSIGNMENT
 %token OP_SEMICOLON
 %token OP_LEFT_PARENTHESIS
 %token OP_RIGHT_PARENTHESIS
+%token OP_TILDE
 %token OP_COMMA
 %token OP_LEFT_BRACKET
 %token OP_RIGHT_BRACKET
 
-%token OP_AND
-%token OP_OR
+//%token OP_AND
+//%token OP_OR
 %token OP_NOT
 
 // New for perl
 %token LEFT_CURLY_BRACKET
 %token RIGHT_CURLY_BRACKET
+%token KW_SUB
 %token KW_FOR_EACH
 %token KW_UNTIL
 %token POSITIVE_INT
@@ -90,6 +108,7 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %token NEG_REGEX_OPERATOR
 %token DOT_OPERATOR
 %token SPL_LIST_ARR_VAR
+%token T_ASSIGN_OPER
 
 // New from sahu
 %token VARIABLE
@@ -176,8 +195,20 @@ IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
 ;
 // in sahu_conversion_parser.y
 
+ParameterList:
+                Parameter
+        |       ParameterList OP_COMMA Parameter ParameterList_1
+                ;
 
-ParameterList: "a,b,c"
+ParameterList_1:
+                %empty
+        |       OP_COMMA Parameter ParameterList_1
+                ;
+Parameter:
+                VARIABLE
+                ;
+
+// ParameterList: "a,b,c"
 
 // CALLING
 
