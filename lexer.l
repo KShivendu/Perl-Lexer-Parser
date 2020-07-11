@@ -87,7 +87,6 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 {POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: %s\n",line_num,yytext); yylval = atoi(yytext);return POSITIVE_INT;}
 {REAL}					{printf("Line: %d token REAL: %s\n", line_num, yytext);  return REAL;}
 
-
 [+-]         			{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_ADDSUB;}
 [:]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_COLON;}
 [?]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_QUESTION;}
@@ -103,6 +102,8 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 ([<>][=])|[<>] 			 { return OP_RELTIONAL; }
 (<<|>>)				 { return OP_SHIFT;}
 [!=]					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); return OP_DIFFERENT; }
+[!][~]					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); return NEG_REGEX_OPERATOR; }
+\! 					{printf("Line: %d token not: %s\n", line_num, yytext); return OP_NOT; }
 [:][=]					{printf("Line: %d token OP_ASSIGNMENT: %s\n", line_num, yytext); return OP_ASSIGNMENT; }
 [;]         			{printf("Line: %d token OP_SEMICOLON: %s\n", line_num, yytext); return OP_SEMICOLON; }
 [(]         			{printf("Line: %d token OP_LEFT_PARENTHESIS: %s\n", line_num, yytext); return OP_LEFT_PARENTHESIS; }
@@ -111,12 +112,10 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 [,]         			{printf("Line: %d token OP_COMMA: %s\n", line_num, yytext); return OP_COMMA; }
 [[]         			{printf("Line: %d token OP_LEFT_BRACKET %s\n:", line_num, yytext); } return OP_LEFT_BRACKET;
 []]         			{printf("Line: %d token OP_RIGHT_BRACKET: %s\n", line_num, yytext); return OP_RIGHT_BRACKET; }
-[!] 					{printf("Line: %d token not: %s\n", line_num, yytext); return OP_NOT; }
 
 [{]         			{printf("Line: %d token LEFT_CURLY_BRACKET: %s\n", line_num, yytext); return LEFT_CURLY_BRACKET; }
 [}]         			{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); return RIGHT_CURLY_BRACKET; }
 [=][~]					{printf("Line: %d token REGEX_OPERATOR: %s\n", line_num, yytext); return REGEX_OPERATOR; }
-[!][~]					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); return NEG_REGEX_OPERATOR; }
 [.]						{printf("Line: %d token DOT_OPERATOR: %s\n", line_num, yytext); return DOT_OPERATOR; }
 [$][_]					{printf("Line: %d token SPL_LIST_ARR_VAR: %s\n", line_num, yytext); return SPL_LIST_ARR_VAR; } /* Not sure how to handle this one */
 
@@ -144,7 +143,7 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 
 void yyerror(char const *s, ...) {
      fprintf (stderr, "Parse error : %s\n", s);
-     exit(1);
+     // exit(1);
 }
 /*user code
 *int main ()

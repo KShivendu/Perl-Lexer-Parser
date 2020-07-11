@@ -129,9 +129,13 @@ extern int yydebug;
     OP_RELTIONAL = 334,
     OP_SHIFT = 335,
     OP_TILDE = 336,
-    OP_DIVIS = 337,
-    KW_DIV = 338,
-    KW_THEN = 339
+    KW_PRINT = 337,
+    DeclarationList = 338,
+    OP_RELATIONAL = 339,
+    OP_DIVIS = 340,
+    KW_DIV = 341,
+    KW_THEN = 342,
+    T_ASSIGN_OPER = 343
   };
 #endif
 
