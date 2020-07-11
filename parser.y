@@ -170,12 +170,12 @@ Declaration:
 
 ParameterList:
                 Parameter
-        |       ParameterList OP_COMMA Parameter ParameterList'
+        |       ParameterList OP_COMMA Parameter ParameterList_1
                 ;
 
-ParameterList':
+ParameterList_1:
                 %empty
-        |       OP_COMMA Parameter ParameterList'
+        |       OP_COMMA Parameter ParameterList_1
                 ;
 Parameter:
                 VARIABLE
