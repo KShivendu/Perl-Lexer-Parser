@@ -48,13 +48,16 @@ int yylval; // declare yylval which is to be used in lexer.l
 %token KW_REAL
 %token KW_WHILE
 %token KW_OR
-%token KW_MAIN
-%token KW_READSTRING
-%token KW_READINTEGER
-%token KW_READREAL
-%token KW_WRITESTRING
-%token KW_WRITEINTEGER
-%token KW_WRITEREAL
+%token KW_FOR_EACH
+%token KW_UNTIL
+
+//%token KW_MAIN
+//%token KW_READSTRING
+//%token KW_READINTEGER
+//%token KW_READREAL
+//%token KW_WRITESTRING
+//%token KW_WRITEINTEGER
+//%token KW_WRITEREAL
 
 
 %token IDENTIFIER
