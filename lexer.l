@@ -14,7 +14,7 @@ int line_num = 1;
 #define KW_END 302
 #define ERROR_MESSAGE 303
 #define TK_EOF 0
-#define IDENTIFIER 304
+// #define IDENTIFIER 304
 /* A primitive macro facility: just one macro is allowed to be defined! */
 char* mactable[32][2];
 
@@ -82,7 +82,7 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 
 [$@%]+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return VARIABLE;}
 
-{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return IDENTIFIER;}
+{IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); yylval.string = yytext; return IDENTIFIER;}
 
 {CONSTANT_STRING}		{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext); return CONSTANT_STRING;}
 {POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: %s\n",line_num,yytext); yylval.integer = atoi(yytext);return POSITIVE_INT;}
@@ -135,9 +135,9 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 
 {WHITESPACE}*			{	/* skip whitespaces */}
 \n 						{printf(">> "); ++line_num; };
-<<EOF>> 				return TK_EOF;
+<<EOF>> 				{printf("EOF detected \n"); return TK_EOF;};
 
-.        				return ERROR_MESSAGE;
+.        				{printf("UNKNOWN %s", yytext); return ERROR_MESSAGE;}
 
 %%
 

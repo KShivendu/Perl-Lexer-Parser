@@ -632,7 +632,7 @@ int line_num = 1;
 #define KW_END 302
 #define ERROR_MESSAGE 303
 #define TK_EOF 0
-#define IDENTIFIER 304
+// #define IDENTIFIER 304
 /* A primitive macro facility: just one macro is allowed to be defined! */
 char* mactable[32][2];
 
@@ -1079,7 +1079,7 @@ YY_RULE_SETUP
 case 29:
 YY_RULE_SETUP
 #line 85 "lexer.l"
-{printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); return IDENTIFIER;}
+{printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); yylval.string = yytext; return IDENTIFIER;}
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
@@ -1307,12 +1307,12 @@ case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(comment):
 case YY_STATE_EOF(line_comment):
 #line 138 "lexer.l"
-return TK_EOF;
+{printf("EOF detected \n"); return TK_EOF;};
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
 #line 140 "lexer.l"
-return ERROR_MESSAGE;
+{printf("UNKNOWN %s", yytext); return ERROR_MESSAGE;}
 	YY_BREAK
 case 74:
 YY_RULE_SETUP

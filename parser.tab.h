@@ -124,17 +124,15 @@ extern int yydebug;
     KW_PRINT = 329,
     DeclarationList = 330,
     OP_RELATIONAL = 331,
-    OP_OR = 332,
-    OP_AND = 333,
-    OP_NOTEQUAL = 334,
-    OP_GREATER = 335,
-    OP_GREATEROREQUAL = 336,
-    OP_LESSOREQUAL = 337,
-    OP_LESS = 338,
-    OP_PLUS = 339,
-    OP_MINUS = 340,
-    KW_DIV = 341,
-    KW_THEN = 342
+    OP_NOTEQUAL = 332,
+    OP_GREATER = 333,
+    OP_GREATEROREQUAL = 334,
+    OP_LESSOREQUAL = 335,
+    OP_LESS = 336,
+    OP_PLUS = 337,
+    OP_MINUS = 338,
+    KW_DIV = 339,
+    KW_THEN = 340
   };
 #endif
 
@@ -143,14 +141,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 141 "parser.y" /* yacc.c:1921  */
+#line 142 "parser.y" /* yacc.c:1921  */
 
     // const Base *stmnt;
     double number;
     int integer;
+    char* string;
     // std::string *string;
 
-#line 154 "parser.tab.h" /* yacc.c:1921  */
+#line 153 "parser.tab.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -143,6 +143,7 @@ extern int yylineno;
     // const Base *stmnt;
     double number;
     int integer;
+    char* string;
     // std::string *string;
 }
 
@@ -156,13 +157,12 @@ extern int yylineno;
 // %type <string> T_IDENTIFIER MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER T_EQ T_AND T_ADDSUB_OP T_TILDE T_NOT T_MULT T_DIV T_REM //T_Operator
 
 
-%type <number> ROOT IDENTIFIER KW_SUB;
+%type <string> ROOT IDENTIFIER KW_SUB;
 %start ROOT // program
 
 %%
 
-ROOT : KW_SUB {printf("$$ : %d \n", yylval.integer );}
-
+ROOT : KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS   {printf("$$ : %s \n", yylval.string );}
 
 %%
 
