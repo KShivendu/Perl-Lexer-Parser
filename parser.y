@@ -1,6 +1,6 @@
 %code requires{
 
-#include "ast.hpp"
+// #include "ast.hpp"
 extern ast_Top *g_root; // A way of getting the AST out
 
 //! This is to fix problems when generating C++
