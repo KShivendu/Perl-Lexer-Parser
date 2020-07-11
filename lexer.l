@@ -50,7 +50,6 @@ ASSIGNMENT_OPERATOR (([<>][<>]|[*\/%+\-&^|])[=]|[=])
 %x line_comment
 
 %%
-
 sub 					{ printf("Line: %d token KW_SUB: %s\n", line_num, yytext); return KW_SUB; }
 static 					{ printf("Line: %d token KW_STATIC: %s\n", line_num, yytext); return KW_STATIC; }
 true					{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext); return KW_TRUE;}
@@ -106,7 +105,7 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 (<<|>>)				 { return OP_SHIFT;}
 [!=]					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); return OP_DIFFERENT; }
 [:][=]					{printf("Line: %d token OP_ASSIGNMENT: %s\n", line_num, yytext); return OP_ASSIGNMENT; }
-[;]         			{printf("Line: %d token OP_SEMICOLON: %s\n", line_num, yytext); VARIABLEreturn OP_SEMICOLON; }
+[;]         			{printf("Line: %d token OP_SEMICOLON: %s\n", line_num, yytext); return OP_SEMICOLON; }
 [(]         			{printf("Line: %d token OP_LEFT_PARENTHESIS: %s\n", line_num, yytext); return OP_LEFT_PARENTHESIS; }
 [)]         			{printf("Line: %d token OP_RIGHT_PARENTHESIS: %s\n", line_num, yytext); return OP_RIGHT_PARENTHESIS; }
 [~]		{ return OP_TILDE; }

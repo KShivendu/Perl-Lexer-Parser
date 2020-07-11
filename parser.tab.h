@@ -116,26 +116,28 @@ extern int yydebug;
     NEG_REGEX_OPERATOR = 321,
     DOT_OPERATOR = 322,
     SPL_LIST_ARR_VAR = 323,
-    OP_DIVIS = 324,
-    KW_DIV = 325,
-    KW_THEN = 326
+    VARIABLE = 324,
+    OP_ADDSUB = 325,
+    OP_COLON = 326,
+    OP_QUESTION = 327,
+    OP_INCDEC = 328,
+    OP_BITWISE_OR = 329,
+    OP_BITWISE_AND = 330,
+    OP_REM = 331,
+    OP_EQUALITY = 332,
+    OP_XOR = 333,
+    OP_RELTIONAL = 334,
+    OP_SHIFT = 335,
+    OP_TILDE = 336,
+    OP_DIVIS = 337,
+    KW_DIV = 338,
+    KW_THEN = 339
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
-union YYSTYPE
-{
-#line 16 "parser.y" /* yacc.c:1921  */
-
-  int i;
-  std::string *string;
-
-#line 136 "parser.tab.h" /* yacc.c:1921  */
-};
-
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

@@ -70,16 +70,16 @@
 
 #include <string.h>
 #include <stdarg.h>
-#include <stdio.h>	
+#include <stdio.h>
 #include <stdlib.h>
 #include "cgen.h"
-#define YYSTYPE int
+#define YYSTYPE float
 extern int yylex(void);
 extern int line_num;
 extern FILE *yyin;
 extern int yylineno;
 int yylval; // declare yylval which is to be used in lexer.l
-#include "parser.tab.h"
+
 
 #line 85 "parser.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
@@ -186,26 +186,28 @@ extern int yydebug;
     NEG_REGEX_OPERATOR = 321,
     DOT_OPERATOR = 322,
     SPL_LIST_ARR_VAR = 323,
-    OP_DIVIS = 324,
-    KW_DIV = 325,
-    KW_THEN = 326
+    VARIABLE = 324,
+    OP_ADDSUB = 325,
+    OP_COLON = 326,
+    OP_QUESTION = 327,
+    OP_INCDEC = 328,
+    OP_BITWISE_OR = 329,
+    OP_BITWISE_AND = 330,
+    OP_REM = 331,
+    OP_EQUALITY = 332,
+    OP_XOR = 333,
+    OP_RELTIONAL = 334,
+    OP_SHIFT = 335,
+    OP_TILDE = 336,
+    OP_DIVIS = 337,
+    KW_DIV = 338,
+    KW_THEN = 339
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
-union YYSTYPE
-{
-#line 16 "parser.y" /* yacc.c:352  */
-
-  int i;
-  std::string *string;
-
-#line 206 "parser.tab.c" /* yacc.c:352  */
-};
-
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -453,7 +455,7 @@ union yyalloc
 #define YYLAST   5
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  72
+#define YYNTOKENS  85
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  2
 /* YYNRULES -- Number of rules.  */
@@ -462,7 +464,7 @@ union yyalloc
 #define YYNSTATES  7
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   326
+#define YYMAXUTOK   339
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -505,14 +507,15 @@ static const yytype_uint8 yytranslate[] =
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
       55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
-      65,    66,    67,    68,    69,    70,    71
+      65,    66,    67,    68,    69,    70,    71,    72,    73,    74,
+      75,    76,    77,    78,    79,    80,    81,    82,    83,    84
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   130,   130,   131
+       0,   144,   144,   145
 };
 #endif
 
@@ -535,8 +538,11 @@ static const char *const yytname[] =
   "OP_COMMA", "OP_LEFT_BRACKET", "OP_RIGHT_BRACKET", "OP_AND", "OP_OR",
   "OP_NOT", "LEFT_CURLY_BRACKET", "RIGHT_CURLY_BRACKET", "KW_FOR_EACH",
   "KW_UNTIL", "POSITIVE_INT", "OP_DIFFERENT", "REGEX_OPERATOR",
-  "NEG_REGEX_OPERATOR", "DOT_OPERATOR", "SPL_LIST_ARR_VAR", "OP_DIVIS",
-  "KW_DIV", "KW_THEN", "$accept", "program", YY_NULLPTR
+  "NEG_REGEX_OPERATOR", "DOT_OPERATOR", "SPL_LIST_ARR_VAR", "VARIABLE",
+  "OP_ADDSUB", "OP_COLON", "OP_QUESTION", "OP_INCDEC", "OP_BITWISE_OR",
+  "OP_BITWISE_AND", "OP_REM", "OP_EQUALITY", "OP_XOR", "OP_RELTIONAL",
+  "OP_SHIFT", "OP_TILDE", "OP_DIVIS", "KW_DIV", "KW_THEN", "$accept",
+  "program", YY_NULLPTR
 };
 #endif
 
@@ -552,7 +558,8 @@ static const yytype_uint16 yytoknum[] =
      295,   296,   297,   298,   299,   300,   301,   302,   303,   304,
      305,   306,   307,   308,   309,   310,   311,   312,   313,   314,
      315,   316,   317,   318,   319,   320,   321,   322,   323,   324,
-     325,   326
+     325,   326,   327,   328,   329,   330,   331,   332,   333,   334,
+     335,   336,   337,   338,   339
 };
 # endif
 
@@ -610,13 +617,13 @@ static const yytype_int8 yycheck[] =
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     4,    73,    35,     0,    51,    52
+       0,     4,    86,    35,     0,    51,    52
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    72,    73,    73
+       0,    85,    86,    86
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -1308,19 +1315,19 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 130 "parser.y" /* yacc.c:1652  */
+#line 144 "parser.y" /* yacc.c:1652  */
     {printf("EMPTY !!\n"); }
-#line 1314 "parser.tab.c" /* yacc.c:1652  */
+#line 1321 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 131 "parser.y" /* yacc.c:1652  */
-    {printf("subroutine found, $$ : %d!!\n", (yyval.string));}
-#line 1320 "parser.tab.c" /* yacc.c:1652  */
+#line 145 "parser.y" /* yacc.c:1652  */
+    {printf("subroutine found, $$ : %d!!\n", yyval);}
+#line 1327 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1324 "parser.tab.c" /* yacc.c:1652  */
+#line 1331 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1551,7 +1558,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 132 "parser.y" /* yacc.c:1918  */
+#line 148 "parser.y" /* yacc.c:1918  */
 
 
 char* filename;
@@ -1566,9 +1573,9 @@ int main (int argc, char* argv[])
   } else {
     filename = "line";
   }
-  yyparse();
-
-  if( yyparse() == 0) // 0 means TK_EOF
+  int tok = yyparse();
+  
+  if( tok == 0) // 0 means TK_EOF
      printf("Accepted!\n");
   else
      printf("Rejected!\n");
