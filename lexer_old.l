@@ -5,7 +5,6 @@
 /*#include "ptucc_parser.tab.h"*/
 #include "cgen.h"
 #include "symtab.c"
-#include "parser.tab.h"
 
 
 int line_num = 1;
@@ -29,7 +28,6 @@ int set_macro(char* name, char* def);
 /* Return def for macro, or NULL if no such macro is defined. */
 char* get_macro(char* name);
 
-int f(int);
 %}
 
 IDENTIFIER 		[a-zA-Z][0-9a-zA-Z_]*
@@ -113,18 +111,16 @@ return									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
 {REAL}									{printf("Line: %d token REAL: %s\n", line_num, yytext); }
 
 
-"+"|"-"|"*"|"/"|"%"|"="|">"|"<"|"&"|"|"|"!"|"^" return f(yytext[0]);
-"&&" return f(LOG_AND);
-"||" return f(LOG_OR);
-"==" return f(EQ);
-"!=" return f(NEQ);
-"<=" return f(LTE);
-">=" return f(GTE);
-"<<" return f(LSHIFT);
-">>" return f(RSHIFT);
-"&^" return f(BIT_CLEAR);
-
-
+"+"         							{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); }
+"-"        								{printf("Line: %d token OP_MINUS: %s\n", line_num, yytext); }
+"*"         							{printf("Line: %d token OP_MULT: %s\n", line_num, yytext); }
+"/"         							{printf("Line: %d token OP_DIVIS: %s\n", line_num, yytext); }
+">="        							{printf("Line: %d token OP_GREATEROREQUAL: %s\n", line_num, yytext); }
+"="         							{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); }
+"<="        							{printf("Line: %d token OP_LESSOREQUAL: %s\n", line_num, yytext); }
+"<"										{printf("Line: %d token OP_LESS: %s\n", line_num, yytext); }
+">"         							{printf("Line: %d token OP_GREATER: %s\n", line_num, yytext); }
+"!="									{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); }
 ":="									{printf("Line: %d token ASSIGNMENT: %s\n", line_num, yytext); }
 ";"         							{printf("Line: %d token SEMICOLON: %s\n", line_num, yytext); }
 "("         							{printf("Line: %d token LEFT_PARENTHESIS: %s\n", line_num, yytext); }
@@ -132,6 +128,9 @@ return									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
 ","         							{printf("Line: %d token COMMA: %s\n", line_num, yytext); }
 "["         							{printf("Line: %d token LEFT_BRACKET %s\n:", line_num, yytext); }
 "]"         							{printf("Line: %d token RIGHT_BRACKET: %s\n", line_num, yytext); }
+"&&" 									{printf("Line: %d token and: %s\n", line_num, yytext); }
+"||" 									{printf("Line: %d token or: %s\n", line_num, yytext); }
+"!" 									{printf("Line: %d token not: %s\n", line_num, yytext); }
 
 "{"         							{printf("Line: %d token LEFT_CURLY_BRACKET: %s\n", line_num, yytext); }
 "}"         							{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); }
@@ -159,33 +158,25 @@ return									{ printf("Line: %d keyword: %s\n", line_num, yytext); }
 .        				return ERROR_MESSAGE;
 
 %%
-int insert_semi = 0;
+/*user code*/
+int main (int argc, char *argv[])
+{
+	init_hash_table();
+	yyin = fopen(argv[1], "r");
+	int token;
+	while ( (token = yylex()) != TK_EOF )
+	{	
+	if (token==303)
+		{
+			printf("Unrecognized token %s in line %u\n", yytext, line_num);
+			printf("Exiting !! \n");
+			exit(1);
+		}
+	}
+	fclose(yyin);
 
-/**
-* Insert ';' at end of statement
-*/
-int f(int token) {
-  if (insert_semi && token == '\n') {
-    insert_semi = 0;
-    return ';';
-  } else {
-    insert_semi = (
-      token == IDENT
-      || token == INT_LTR
-      || token == BOOL_LTR
-      || token == STRING_LTR
-      || token == BREAK
-      || token == CONTINUE
-      || token == FALLTHROUGH
-      || token == RETURN
-      || token == INCR
-      || token == DECR
-      || token == ')'
-      || token == '}'
-    );
-    return token;
-  }
+	// symbol table dump
+    yyout = fopen("symbol_table.out", "w");
+    symtab_dump(yyout);
+    fclose(yyout); 
 }
-
-
-
