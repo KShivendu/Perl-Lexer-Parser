@@ -497,7 +497,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   106,   106,   107,   108,   109,   110,   111,   112
+       0,   114,   114,   115,   116,   117,   118,   119,   120
 };
 #endif
 
@@ -1302,44 +1302,44 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 106 "parser.y" /* yacc.c:1652  */
-    { printf("program -> exp = %d\n", (int)yyvsp[0]);}
+#line 114 "parser.y" /* yacc.c:1652  */
+    { printf("program -> exp = %d\n", yyvsp[0]);}
 #line 1308 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 107 "parser.y" /* yacc.c:1652  */
+#line 115 "parser.y" /* yacc.c:1652  */
     {printf("EMPTY EXPRESSION");}
 #line 1314 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 108 "parser.y" /* yacc.c:1652  */
+#line 116 "parser.y" /* yacc.c:1652  */
     {yyval= yyvsp[0] + yyvsp[-2];}
 #line 1320 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 109 "parser.y" /* yacc.c:1652  */
+#line 117 "parser.y" /* yacc.c:1652  */
     {yyval= yyvsp[0] - yyvsp[-2];}
 #line 1326 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 110 "parser.y" /* yacc.c:1652  */
+#line 118 "parser.y" /* yacc.c:1652  */
     {yyval= yyvsp[0] * yyvsp[-2];}
 #line 1332 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 111 "parser.y" /* yacc.c:1652  */
+#line 119 "parser.y" /* yacc.c:1652  */
     {yyval= yyvsp[0] / yyvsp[-2];}
 #line 1338 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 112 "parser.y" /* yacc.c:1652  */
-    {yyval = yyvsp[-1] ;printf("POSITIVE_INT = %s", yyvsp[0]);}
+#line 120 "parser.y" /* yacc.c:1652  */
+    {yyval = yyvsp[0];}
 #line 1344 "parser.tab.c" /* yacc.c:1652  */
     break;
 
@@ -1575,7 +1575,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 114 "parser.y" /* yacc.c:1918  */
+#line 122 "parser.y" /* yacc.c:1918  */
 
 
 int main ()

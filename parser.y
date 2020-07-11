@@ -11,6 +11,11 @@ extern int line_num;
 %}
 
 
+// %union {
+//   int i;
+// }
+
+
 %token TK_EOF 0
 %token ERROR_MESSAGE
 /* keywords */
@@ -85,9 +90,6 @@ extern int line_num;
 %token DOT_OPERATOR
 %token SPL_LIST_ARR_VAR
 
-
-
-
 %left OP_OR KW_OR
 %left OP_AND KW_AND
 %left OP_EQUAL OP_NOTEQUAL OP_GREATER OP_GREATEROREQUAL OP_LESSOREQUAL OP_LESS
@@ -99,17 +101,23 @@ extern int line_num;
 %right KW_WHILE
 %right KW_THEN KW_ELSE
 
+
+// Type declaration
+// %type <i> exp
+// %type <i> POSITIVE_INT
+// %type <i> program
+
 %start program
 
 
 %%
-program : exp { printf("program -> exp = %d\n", (int)$1);}
+program : exp { printf("program -> exp = %d\n", $1);}
 exp : {printf("EMPTY EXPRESSION");}
 |exp OP_PLUS exp {$$= $3 + $1;}
 |exp OP_MINUS exp {$$= $3 - $1;}
 |exp OP_MULT exp {$$= $3 * $1;}
 |exp OP_DIVIS exp {$$= $3 / $1;}
-|POSITIVE_INT {$$ = $1 ;printf("POSITIVE_INT = %s", $1);}
+|POSITIVE_INT {$$ = $1;}
 ;
 %%
 
