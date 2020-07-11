@@ -58,7 +58,7 @@ false					{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext); return KW_
 do 						{ printf("Line: %d token KW_DO: %s\n", line_num, yytext); return KW_DO;}
 if 						{ printf("Line: %d token KW_IF: %s\n", line_num, yytext); KW_IF;}
 not						{ printf("Line: %d token KW_NOT: %s\n", line_num, yytext); KW_NOT;}
-boolean					{ printf("Line: %d token KW_BOOLEAN: %s\n", line_num, yytext); KW_NOT;}
+boolean					{ printf("Line: %d token KW_BOOLEAN: %s\n", line_num, yytext); KW_BOOLEAN;}
 break					{ printf("Line: %d token KW_BREAK: %s\n", line_num, yytext); return KW_BREAK; }
 else					{ printf("Line: %d token KW_ELSE: %s\n", line_num, yytext); return KW_ELSE; }
 (and|&&) 						{ printf("Line: %d token KW_AND: %s\n", line_num, yytext); return KW_AND; }
