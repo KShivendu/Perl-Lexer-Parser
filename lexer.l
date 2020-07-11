@@ -71,7 +71,7 @@ begin 					{ printf("Line: %d token KW_BEGIN: %s\n", line_num, yytext); return K
 real					{ printf("Line: %d token KW_REAL: %s\n", line_num, yytext); return KW_REAL; }
 while				{ printf("Line: %d token KW_WHILE: %s\n", line_num, yytext); return KW_WHILE; }
 (or|\|\|)						{ printf("Line: %d token KW_OR: %s\n", line_num, yytext); return KW_OR; }
-sub                    { printf("Line: %d token KW_SUB: %s\n", line_num, yytext); return KW_SUB; }
+sub                        { printf("Line: %d token KW_SUB: %s\n", line_num, yytext); return KW_SUB; }
 
 foreach					{ printf("Line: %d token KW_FOR_EACH: %s\n", line_num, yytext);  return KW_FOR_EACH;}
 until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW_UNTIL;}
