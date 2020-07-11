@@ -102,7 +102,6 @@ int yylval; // declare yylval which is to be used in lexer.l
 %token OP_REM
 %token OP_EQUALITY
 %token OP_XOR
-%token OP_EQUALITY
 %token OP_RELTIONAL
 %token OP_SHIFT
 %token OP_TILDE
@@ -134,14 +133,14 @@ int yylval; // declare yylval which is to be used in lexer.l
 // yyerror("Divide by Zero");
 // else
 // $$=$1/$3;}
-// |POSITIVE_INT {$$ = $1; printf("(yyval) : (%d) \n", yyval);}
+// |POSITIVE_INT {$$ = $1; printf("(yylval) : (%d) \n", yylval);}
 // ;
 
 %start program
 
 %%
 program : {printf("EMPTY !!\n"); } 
-| KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS {printf("subroutine found, $$ : %d!!\n", $$);} ;
+|KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS { printf("subroutine found, $$ : %d!!\n", $$);} ;
 
 
 %%
