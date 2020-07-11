@@ -1,3 +1,5 @@
 lex.yy.c
 a.out
 perl2c.bin
+symbol_table.out
+perl2c.bin

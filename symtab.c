@@ -100,7 +100,7 @@ void symtab_dump(FILE * of){
             //     else if (l->inf_type  == STR_TYPE)     fprintf(of,"%-7s","string");
             //     else fprintf(of,"%-7s","undef");
             // }
-            else fprintf(of,"%-7s","UNDEF"); // if UNDEF or 0
+            else fprintf(of,"%-7s","FUNCTION"); // UNDEF // if UNDEF or 0 , 
             while (t != NULL){
                 fprintf(of,"%4d ",t->lineno);
             t = t->next;

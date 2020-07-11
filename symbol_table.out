@@ -1,6 +1,5 @@
 ============ ======== ================
  Identifier    Type     Line Numbers
 ============ ======== ================
-@data        VARIABLE   5    8 
-$word        VARIABLE   8   10 
-print        UNDEF    10 
+$a           VARIABLE   4   10   10   11 
+print        FUNCTION   9 
