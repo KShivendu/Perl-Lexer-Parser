@@ -165,8 +165,8 @@ Parameter:
 
 // CALLING
 
-Calling:		Declaration
-                VARIABLE OP_EQUAL Declaration
+Calling:        Declaration
+        |        VARIABLE OP_EQUAL Declaration
                 ;
 
 
@@ -338,7 +338,6 @@ PrimaryExpression:
 		VARIABLE { $$ = new Expression(); }
 	|       Constant { $$ = new Expression(); }
 	|	OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS { $$ = $2; }
-	|	T_FUNCTION_CALL/**/
 		;
 
 Constant:
