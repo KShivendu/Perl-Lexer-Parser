@@ -20,6 +20,7 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 
 %token TK_EOF 0
 %token ERROR_MESSAGE
+
 /* keywords */
 %token KW_STATIC
 %token KW_TRUE
@@ -59,15 +60,10 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %token REAL
 
 %token OP_ADDSUB
-%token OP_COLON
-%token OP_QUESTION
 %token OP_INCDEC
 %token OP_BITWISE_OR
 %token OP_XOR
 %token OP_BITWISE_AND
-
-//%token OP_PLUS
-//%token OP_MINUS
 
 %token OP_MULT
 %token OP_DIVIS
@@ -76,13 +72,7 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %token OP_EQUALITY
 %token OP_RELTIONAL
 %token OP_SHIFT
-%token 
 
-//%token OP_NOTEQUAL
-//%token OP_LESS
-//%token OP_LESSOREQUAL
-//%token OP_GREATER
-//%token OP_GREATEROREQUAL
 %token OP_ASSIGNMENT
 %token OP_SEMICOLON
 %token OP_LEFT_PARENTHESIS
@@ -92,8 +82,6 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %token OP_LEFT_BRACKET
 %token OP_RIGHT_BRACKET
 
-//%token OP_AND
-//%token OP_OR
 %token OP_NOT
 
 // New for perl
@@ -111,19 +99,8 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %token T_ASSIGN_OPER
 
 // New from sahu
-%token VARIABLE
-%token OP_ADDSUB
 %token OP_COLON
 %token OP_QUESTION
-%token OP_INCDEC
-%token OP_BITWISE_OR
-%token OP_BITWISE_AND
-%token OP_REM
-%token OP_EQUALITY
-%token OP_XOR
-%token OP_RELTIONAL
-%token OP_SHIFT
-%token OP_TILDE
 %token KW_PRINT
 %token DeclarationList
 %token OP_RELATIONAL
@@ -139,8 +116,6 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 %right KW_WHILE
 %right KW_THEN KW_ELSE
 
-
-%token T_ASSIGN_OPER
 
 // Type declaration
 // %type <i> exp
@@ -160,11 +135,14 @@ YYSTYPE yylval; // declare yylval which is to be used in lexer.l
 // |POSITIVE_INT {$$ = $1; printf("(yylval) : (%d) \n", yylval);}
 // ;
 
-%start ROOT
+
+// program : {printf("EMPTY !!\n"); } 
+// |KW_SUB IDENTIFIER '(' OP_RIGHT_PARENTHESIS { printf("subroutine found, $$ : %d!!\n", $$);} ;
+
+
+%start ROOT // program
 
 %%
-program : {printf("EMPTY !!\n"); } 
-|KW_SUB IDENTIFIER '(' OP_RIGHT_PARENTHESIS { printf("subroutine found, $$ : %d!!\n", $$);} ;
 
 ROOT:
 ExtDef { ; }
@@ -388,6 +366,7 @@ VARIABLE { $$ = new Expression(); }
 Constant:
 POSITIVE_INT { $$ = $1; }
 ;
+
 
 %%
 

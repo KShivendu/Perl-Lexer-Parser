@@ -974,7 +974,7 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 60 "lexer.l"
-{ printf("Line: %d token KW_BOOLEAN: %s\n", line_num, yytext); KW_NOT;}
+{ printf("Line: %d token KW_BOOLEAN: %s\n", line_num, yytext); KW_BOOLEAN;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
