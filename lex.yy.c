@@ -587,6 +587,7 @@ char *yytext;
 
 
 int line_num = 1;
+// int yylval = 0;
 // #define KW_PROGRAM 300
 #define KW_BEGIN 301
 #define KW_END 302
@@ -601,7 +602,6 @@ char* mactable[32][2];
 
 /* Return def for macro, or NULL if no such macro is defined. */
 // char* get_macro(char* name);
-int yyval;
 #line 606 "lex.yy.c"
 
 #line 608 "lex.yy.c"
@@ -1026,12 +1026,12 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 82 "lexer.l"
-{printf("Line: %d token POSITIVE_INT: %s\n",line_num,yytext); yyval = atoi(yytext);return POSITIVE_INT;}
+{printf("Line: %d token POSITIVE_INT: '%s'\n",line_num,yytext); yylval = atoi(yytext) ;return POSITIVE_INT;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 83 "lexer.l"
-{printf("Line: %d token REAL: %s\n", line_num, yytext);  return REAL;}
+{printf("Line: %d token REAL: %s\n", line_num, yytext); return REAL;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
@@ -2237,6 +2237,12 @@ void yyfree (void * ptr )
 #define YYTABLES_NAME "yytables"
 
 #line 131 "lexer.l"
+
+
+void yyerror(char const *s, ...) {
+     fprintf (stderr, "Parse error : %s\n", s);
+     exit(1);
+}
 
 /*user code
 *int main ()

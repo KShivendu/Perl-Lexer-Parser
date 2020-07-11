@@ -73,12 +73,14 @@
 #include <stdio.h>	
 #include <stdlib.h>
 #include "cgen.h"
-#define YYSTYPE float
+#define YYSTYPE int
 extern int yylex(void);
+void yyerror(char const* , ...);
 extern int line_num;
+int yylval; // imports yyval from lexer.l
 #include "parser.tab.h"
 
-#line 82 "parser.tab.c" /* yacc.c:337  */
+#line 84 "parser.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -497,7 +499,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   114,   114,   115,   116,   117,   118,   119,   120
+       0,   115,   115,   116,   117,   118,   119,   120,   124
 };
 #endif
 
@@ -1302,49 +1304,52 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 114 "parser.y" /* yacc.c:1652  */
-    { printf("program -> exp = %d\n", yyvsp[0]);}
-#line 1308 "parser.tab.c" /* yacc.c:1652  */
+#line 115 "parser.y" /* yacc.c:1652  */
+    { printf("program -> exp = %d \n", yyvsp[0] );}
+#line 1310 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 115 "parser.y" /* yacc.c:1652  */
+#line 116 "parser.y" /* yacc.c:1652  */
     {printf("EMPTY EXPRESSION");}
-#line 1314 "parser.tab.c" /* yacc.c:1652  */
+#line 1316 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 116 "parser.y" /* yacc.c:1652  */
+#line 117 "parser.y" /* yacc.c:1652  */
     {yyval= yyvsp[0] + yyvsp[-2];}
-#line 1320 "parser.tab.c" /* yacc.c:1652  */
+#line 1322 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 117 "parser.y" /* yacc.c:1652  */
+#line 118 "parser.y" /* yacc.c:1652  */
     {yyval= yyvsp[0] - yyvsp[-2];}
-#line 1326 "parser.tab.c" /* yacc.c:1652  */
+#line 1328 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 118 "parser.y" /* yacc.c:1652  */
+#line 119 "parser.y" /* yacc.c:1652  */
     {yyval= yyvsp[0] * yyvsp[-2];}
-#line 1332 "parser.tab.c" /* yacc.c:1652  */
+#line 1334 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 119 "parser.y" /* yacc.c:1652  */
-    {yyval= yyvsp[0] / yyvsp[-2];}
-#line 1338 "parser.tab.c" /* yacc.c:1652  */
+#line 120 "parser.y" /* yacc.c:1652  */
+    {if(yyvsp[0]==0)
+yyerror("Divide by Zero");
+else
+yyval=yyvsp[-2]/yyvsp[0];}
+#line 1343 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 120 "parser.y" /* yacc.c:1652  */
-    {yyval = yyvsp[0];}
-#line 1344 "parser.tab.c" /* yacc.c:1652  */
+#line 124 "parser.y" /* yacc.c:1652  */
+    {yyval = yyvsp[0]; printf("(yyval) : (%d) \n", yyval);}
+#line 1349 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1348 "parser.tab.c" /* yacc.c:1652  */
+#line 1353 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1575,19 +1580,14 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 122 "parser.y" /* yacc.c:1918  */
+#line 126 "parser.y" /* yacc.c:1918  */
 
 
 int main ()
 {
-  if( yyparse() == 0)
+  if( yyparse() == 0) // 0 means TK_EOF
      printf("Accepted!\n");
   else
      printf("Rejected!\n");
   return 0;
 } 
-
-void yyerror(char const* s, ...)
-{
-   printf("Line %d: %s\n", line_num, s);
-}

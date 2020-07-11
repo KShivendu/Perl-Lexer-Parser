@@ -8,6 +8,7 @@
 
 
 int line_num = 1;
+// int yylval = 0;
 // #define KW_PROGRAM 300
 #define KW_BEGIN 301
 #define KW_END 302
@@ -22,7 +23,6 @@ char* mactable[32][2];
 
 /* Return def for macro, or NULL if no such macro is defined. */
 // char* get_macro(char* name);
-int yyval;
 %}
 
 IDENTIFIER 		[a-zA-Z][0-9a-zA-Z_]*
@@ -79,8 +79,8 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 
 
 {CONSTANT_STRING}		{printf("Line: %d token CONSTANT_STRING: %s\n", line_num, yytext); return CONSTANT_STRING;}
-{POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: %s\n",line_num,yytext); yyval = atoi(yytext);return POSITIVE_INT;}
-{REAL}					{printf("Line: %d token REAL: %s\n", line_num, yytext);  return REAL;}
+{POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: '%s'\n",line_num,yytext); yylval = atoi(yytext) ;return POSITIVE_INT;}
+{REAL}					{printf("Line: %d token REAL: %s\n", line_num, yytext); return REAL;}
 
 
 "+"         			{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_PLUS;}
@@ -129,6 +129,12 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 .        				return ERROR_MESSAGE;
 
 %%
+
+void yyerror(char const *s, ...) {
+     fprintf (stderr, "Parse error : %s\n", s);
+     exit(1);
+}
+
 /*user code
 *int main ()
 *{

@@ -4,12 +4,13 @@
 #include <stdio.h>	
 #include <stdlib.h>
 #include "cgen.h"
-#define YYSTYPE float
+#define YYSTYPE int
 extern int yylex(void);
+void yyerror(char const* , ...);
 extern int line_num;
+int yylval; // imports yyval from lexer.l
 #include "parser.tab.h"
 %}
-
 
 // %union {
 //   int i;
@@ -111,26 +112,24 @@ extern int line_num;
 
 
 %%
-program : exp { printf("program -> exp = %d\n", $1);}
+program : exp { printf("program -> exp = %d \n", $1);};
 exp : {printf("EMPTY EXPRESSION");}
 |exp OP_PLUS exp {$$= $3 + $1;}
 |exp OP_MINUS exp {$$= $3 - $1;}
 |exp OP_MULT exp {$$= $3 * $1;}
-|exp OP_DIVIS exp {$$= $3 / $1;}
-|POSITIVE_INT {$$ = $1;}
+|exp OP_DIVIS exp {if($3==0)
+yyerror("Divide by Zero");
+else
+$$=$1/$3;}
+|POSITIVE_INT {$$ = $1; printf("(yyval) : (%d) \n", yyval);}
 ;
 %%
 
 int main ()
 {
-  if( yyparse() == 0)
+  if( yyparse() == 0) // 0 means TK_EOF
      printf("Accepted!\n");
   else
      printf("Rejected!\n");
   return 0;
 } 
-
-void yyerror(char const* s, ...)
-{
-   printf("Line %d: %s\n", line_num, s);
-}
