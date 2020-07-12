@@ -144,46 +144,40 @@ extern int yylineno;
     double number;
     int integer;
     char* string;
-    // const Base *stmnt;
     // std::string *string;
 }
 
-// ROOT : KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS OP_LEFT_BRACKET FunctionBody OP_RIGHT_BRACKET  {printf("$$ : %s \n", yylval.string );}
-
-%type <string> ROOT IDENTIFIER KW_SUB; // FunctionBody;
-%start ROOT // program
-
-
-// C-Compilere type declaration
-// These all are staments
+// TYPE Declarations
 // %type <stmnt> ExtDef ExtDeclaration
-// %type <stmnt> FuncDef ParameterList Parameter // ParamDeclarator
-// %type <stmnt> DeclarationList Declaration  // InitDeclarator InitDeclaratorList Declarator DeclarationSpec DeclarationSpec_T
+// %type <stmnt> FuncDef ParameterList Parameter ParamDeclarator
+// %type <stmnt> DeclarationList Declaration DeclarationSpec DeclarationSpec_T InitDeclarator InitDeclaratorList Declarator
 // %type <stmnt> StatementList Statement CompoundStatement CompoundStatement_2 SelectionStatement ExpressionStatement JumpStatement IterationStatement
 // %type <stmnt> Expression AssignmentExpression ConditionalExpression LogicalOrExpression LogicalAndExpression InclusiveOrExpression ExclusiveOrExpression AndExpression EqualityExpression RelationalExpression ShiftExpression AdditiveExpression MultiplicativeExpression CastExpression UnaryExpression PostfixExpression PostfixExpression2 ArgumentExpressionList PrimaryExpression
+// %type <number> Constant T_INT_CONST
+// %type <string> T_IDENTIFIER MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER T_EQ T_AND T_ADDSUB_OP T_TILDE T_NOT T_MULT T_DIV T_REM //T_Operator
 
-%type <number> Constant // T_INT_CONST
-%type <string>  MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER     // T_REM T_Operator T_TILDE T_NOT T_MULT T_IDENTIFIER T_EQ T_DIV T_AND T_ADDSUB_OP
 
+%type <string> ROOT IDENTIFIER KW_SUB;
+%start ROOT // program
 
 %%
 
 ROOT : 
-    ExtDef    {printf("$$ : %s \n", yylval.string );}
+    ExtDeclaration    {printf("$$ : %s \n", yylval.string );}
     ;
     
-ExtDef :
-    ExtDeclaration
-  | ExtDef ExtDeclaration
-    ;
+//ExtDef :
+//    ExtDeclaration
+//  | ExtDef ExtDeclaration
+//    ;
 
 ExtDeclaration:
-    Declaration
-  | FuncDef
+    StatementList
+  |  Declaration FuncDef
   ;
 
 Declaration:
-    KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
+    KW_SUB IDENTIFIER
   ;
 
 ParameterList:
@@ -200,43 +194,47 @@ FuncDef:
     ;
 
 StatementList:  
+   Statement StatementList
   | Statement
-  | StatementList Statement
     ;
 
-
+  
 Statement:  
-    CompoundStatement      /* Incomplete */
+    CompoundStatement      /* Working :) */
    |  SelectionStatement   /* Not Working. Grammar given of if else might be ambiguous */
-                           /* So I implemented Abhishek's if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part*/ 
+                           /* So I implemented Abhishek's if else statement. Doesn't works either.*/ 
+  | FunctionCalling OP_SEMICOLON	/* Working :) */
   | ExpressionStatement    /* Working :) */
   | IterationStatement     /* Working :) */
   //| PrintStatement       /* Not working. Maybe we can use print() to show demonstration instead of using print as a keyword*/
       ;
 
-CompoundStatement:      //Tested only in case of {}. Remaining part is incomplete
+FunctionCalling:
+    IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
+  |  IDENTIFIER OP_LEFT_PARENTHESIS CONSTANT_STRING OP_RIGHT_PARENTHESIS
+    ;
+
+CompoundStatement:
     LEFT_CURLY_BRACKET CompoundStatement_2
     ;
 
 CompoundStatement_2:
     RIGHT_CURLY_BRACKET
+    |StatementList RIGHT_CURLY_BRACKET
     ;
-  //| Dec
 
 SelectionStatement:   
-//Notice that this grammer is similar to while statement's grammar.
-//But this doesn't works. Don't know why.
 if_main else_if_expr else_expr
 //KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
 //|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement KW_ELSE Statement
 ;
 
 if_main:
-KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
+KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS LEFT_CURLY_BRACKET Statement RIGHT_CURLY_BRACKET
 ;
 
 else_expr:
-| KW_ELSE Statement
+| KW_ELSE LEFT_CURLY_BRACKET Statement RIGHT_CURLY_BRACKET
 ;
 
 else_if_expr:
