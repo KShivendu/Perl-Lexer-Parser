@@ -5,6 +5,6 @@
 $count = 3; 
 while (5) 
 { 
-    # $count = $count - 1; 
+    $count = $count - 1; 
     print("GeeksForGeeks\n"); 
 } 

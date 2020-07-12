@@ -271,7 +271,7 @@ AssignmentExpression {printf("Expression : AssignmentExpression\n"); }
 ;
 
 AssignmentExpression:
-VARIABLE OP_EQUAL POSITIVE_INT {printf("AssignmentExpression : VARIABLE OP_EQUAL POSITIVE_INT \n" ); }
+VARIABLE OP_EQUAL Expression {printf("AssignmentExpression : VARIABLE OP_EQUAL Expression \n" ); } // Not sure if Expression should be here or something else
 |ConditionalExpression  {printf("AssignmentExpression: ConditionalExpression\n"); }
 |UnaryExpression ASSIGN_OPER AssignmentExpression {printf("AssignmentExpression: UnaryExp ASSIGN_OPER AssignmentExpression\n"); }
 ;
