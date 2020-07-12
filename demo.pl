@@ -2,7 +2,7 @@
   
 # Modules used 
 # use strict; 
-# use warnings; 
+use warnings; 
 
 # Print function  
 print("Hello World\n"); # Prints hello world 

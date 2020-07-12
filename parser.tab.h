@@ -122,17 +122,16 @@ extern int yydebug;
     OP_COLON = 327,
     OP_QUESTION = 328,
     KW_PRINT = 329,
-    DeclarationList = 330,
-    OP_RELATIONAL = 331,
-    OP_NOTEQUAL = 332,
-    OP_GREATER = 333,
-    OP_GREATEROREQUAL = 334,
-    OP_LESSOREQUAL = 335,
-    OP_LESS = 336,
-    OP_PLUS = 337,
-    OP_MINUS = 338,
-    KW_DIV = 339,
-    KW_THEN = 340
+    OP_RELATIONAL = 330,
+    OP_NOTEQUAL = 331,
+    OP_GREATER = 332,
+    OP_GREATEROREQUAL = 333,
+    OP_LESSOREQUAL = 334,
+    OP_LESS = 335,
+    OP_PLUS = 336,
+    OP_MINUS = 337,
+    KW_DIV = 338,
+    KW_THEN = 339
   };
 #endif
 
@@ -149,7 +148,7 @@ union YYSTYPE
     char* string;
     // std::string *string;
 
-#line 153 "parser.tab.h" /* yacc.c:1921  */
+#line 152 "parser.tab.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

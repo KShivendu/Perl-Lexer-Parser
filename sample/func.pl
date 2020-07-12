@@ -6,7 +6,7 @@
   
 # defining subroutine 
 sub ask_user { 
-   print("Hello Geeks!\n"); 
+   print("Hello Geeks!\n");
 } 
   
 # calling subroutine 

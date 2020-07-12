@@ -82,6 +82,7 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 
 
 {VARIABLE} {printf("Line: %d token VARIABLE %s\n", line_num, yytext); return VARIABLE;}
+[$][_][[]{POSITIVE_INT}[]]					{printf("Line: %d token SPL_LIST_ARR_VAR: %s\n", line_num, yytext); return SPL_LIST_ARR_VAR; } /* Not sure how to handle this one */
 
 {IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); yylval.string = yytext; return IDENTIFIER;}
 
@@ -103,10 +104,10 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 [=]         			{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); return OP_EQUAL; }
 [=][=]                             {printf("Line: %d token OP_EQUALITY: %s\n", line_num, yytext); return OP_EQUALITY; }
 ([<>][=])|[<>] 			 { printf("Line: %d token OP_RELTIONAL: %s\n", line_num, yytext); return OP_RELTIONAL; }
-(<<|>>)				 {return OP_SHIFT;}
-[!=]					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); return OP_DIFFERENT; }
-[!][~]					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); return NEG_REGEX_OPERATOR; }
+(<<|>>)				 {printf("Line: %d token OP_SHIFT: %s\n", line_num, yytext);  return OP_SHIFT;}
 [!] 					{printf("Line: %d token not: %s\n", line_num, yytext); return OP_NOT; }
+[!][~]					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); return NEG_REGEX_OPERATOR; }
+[!][=]					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); return OP_DIFFERENT; }
 [:][=]					{printf("Line: %d token OP_ASSIGNMENT: %s\n", line_num, yytext); return OP_ASSIGNMENT; }
 [;]         			{printf("Line: %d token OP_SEMICOLON: %s\n", line_num, yytext); return OP_SEMICOLON; }
 [(]         			{printf("Line: %d token OP_LEFT_PARENTHESIS: %s\n", line_num, yytext); return OP_LEFT_PARENTHESIS; }
@@ -120,7 +121,6 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 [}]         			{printf("Line: %d token RIGHT_CURLY_BRACKET: %s\n", line_num, yytext); return RIGHT_CURLY_BRACKET; }
 [=][~]					{printf("Line: %d token REGEX_OPERATOR: %s\n", line_num, yytext); return REGEX_OPERATOR; }
 [.]						{printf("Line: %d token DOT_OPERATOR: %s\n", line_num, yytext); return DOT_OPERATOR; }
-[$][_]					{printf("Line: %d token SPL_LIST_ARR_VAR: %s\n", line_num, yytext); return SPL_LIST_ARR_VAR; } /* Not sure how to handle this one */
 
 {ASSIGNMENT_OPERATOR} {  return T_ASSIGN_OPER; } /* yylval.string = new std::string(yytext); */
 

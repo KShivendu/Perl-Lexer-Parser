@@ -8,12 +8,12 @@ sub area
 { 
     # passing argument     
     $side = $_[0]; 
-      
-    return ($side * $side); 
+    return $side * $side; 
 } 
-  
+
+printf("Hi");
 # calling function 
-$totalArea = area(4); 
+$totalArea = area(4);
   
 # displaying result 
-printf $totalArea; 
+print($totalArea); 
