@@ -163,12 +163,12 @@ extern int yylineno;
 %%
 
 ROOT : 
-    ExtDeclaration    {printf("$$ : %s \n", yylval.string );}
+    ExtDeclaration   {printf("$$ : %s \n", yylval.string );}
     ;
     
 //ExtDef :
-//    ExtDeclaration
-//  | ExtDef ExtDeclaration
+//    ExtDeclaration ExtDef 
+//  | ExtDeclaration
 //    ;
 
 ExtDeclaration:
@@ -368,7 +368,8 @@ AssignmentExpression
 PrimaryExpression:
 VARIABLE 
 |Constant 
-|OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS
+| CONSTANT_STRING
+//|OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS
 |SPL_LIST_ARR_VAR {printf("PrimaryExp: SPL_LIST_ARR_VAR\n"); } 
 ;
 
