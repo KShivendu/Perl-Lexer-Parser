@@ -149,7 +149,7 @@ extern int yylineno;
 
 // ROOT : KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS OP_LEFT_BRACKET FunctionBody OP_RIGHT_BRACKET  {printf("$$ : %s \n", yylval.string );}
 
-%type <string> ROOT IDENTIFIER KW_SUB FunctionCallStatement AssignmentExpression;
+%type <string> ROOT IDENTIFIER KW_SUB  AssignmentExpression FunctionCallStatement; // 
 %start ROOT // program
 
 
@@ -165,72 +165,69 @@ extern int yylineno;
 // %type <string> T_IDENTIFIER MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER T_EQ T_AND T_ADDSUB_OP T_TILDE T_NOT T_MULT T_DIV T_REM //T_Operator
 
 
-%type <string> ROOT IDENTIFIER KW_SUB;
-%start ROOT // program
 
 %%
 
 ROOT: 
-    ExtDef    {printf("ROOT : %s \n", yylval.string );}
+    ExtDef // {printf("ROOT : ExtDef\n"); printf("ROOT : %s \n", yylval.string );} // Gives core dump in do_while_loop.pl
     ;
 
 ExtDef:
-    ExtDeclaration
-  | ExtDef ExtDeclaration
+    ExtDeclaration {printf("ExtDef : ExtDeclaration\n"); }
+  | ExtDef ExtDeclaration {printf("ExtDef : ExtDef  ExtDeclaration\n"); }; 
     ;
 
 ExtDeclaration:
-    StatementList
-  |  Declaration FuncDef
-  ;
+StatementList  {printf("ExtDef : ExtDef  ExtDeclaration\n"); }
+|Declaration FuncDef  {printf("ExtDeclaration : Declaration FuncDef\n");} 
+;
 
 Declaration:
-    KW_SUB IDENTIFIER
+    KW_SUB IDENTIFIER { printf("Declaration : KW_SUB IDENTIFIER\n"); }
   ;
 
 ParameterList:
-	| Parameter
-	| ParameterList OP_COMMA Parameter
+	| Parameter { printf("ParameterList : Parameter\n"); }
+	| ParameterList OP_COMMA Parameter { printf("ParameterList : ParameterList OP_COMMA Parameter\n"); }
 		;
 
 Parameter:
-    VARIABLE
+    VARIABLE { printf("Parameter : Variable\n"); }
     ;
 
 FuncDef:
-    LEFT_CURLY_BRACKET StatementList RIGHT_CURLY_BRACKET
+    LEFT_CURLY_BRACKET StatementList RIGHT_CURLY_BRACKET { printf("FuncDef : { StatementList } \n"); }
     ;
 
 StatementList:  
-   Statement StatementList
-  | Statement
+   Statement StatementList { printf("StatementList : Statement StatementList \n"); }
+  | Statement { printf("StatementList : Statement \n"); }
     ;
 
-  
 Statement:  
-    CompoundStatement      /* Working :) */
-   |  SelectionStatement   /* Not Working. Grammar given of if else might be ambiguous */
-                           /* So I implemented Abhisheks if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part */ 
-  | FunctionCalling OP_SEMICOLON	/* Working :) */
-  | ExpressionStatement    /* Working :) */
-  | IterationStatement     /* Working :) */
-  | FunctionCallStatement  /* Cant retrive only the name of the function */
-      ;
+    CompoundStatement   { printf("Statement : CompoundStatement \n"); }    /* Working :) */
+   |SelectionStatement  { printf("Statement : SelectionStatement \n"); } /* Not Working. Grammar given of if else might be ambiguous. So I implemented Abhisheks if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part */ 
+  | FunctionCalling OP_SEMICOLON { printf("Statement : FunctionCalling; \n"); }	/* Working :) */
+  | ExpressionStatement { printf("Statement : ExpressionStatement \n"); }    /* Working :) */
+  | IterationStatement   { printf("Statement : IterationStatement \n"); }  /* Working :) */
+  | FunctionCallStatement { printf("Statement : FunctionCallStatement \n"); }  /* Cant retrive only the name of the function */
+  ;
 //
+
 FunctionCallStatement: IDENTIFIER OP_LEFT_PARENTHESIS CONSTANT_STRING OP_RIGHT_PARENTHESIS  {printf("Calling function %s \n", $$ );};
 
 FunctionCalling:
-    IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
-  |  IDENTIFIER OP_LEFT_PARENTHESIS CONSTANT_STRING OP_RIGHT_PARENTHESIS
+    IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS { printf("FunctionCalling: IDENTIFIER (ParameterList) \n"); } // Accepts functions without parameter as well
+  // |  IDENTIFIER OP_LEFT_PARENTHESIS CONSTANT_STRING OP_RIGHT_PARENTHESIS { printf("FunctionCalling : IDENTIFIER(CONSTANT_STRING) \n"); }
     ;
 
 CompoundStatement:
-    LEFT_CURLY_BRACKET CompoundStatement_2
+    LEFT_CURLY_BRACKET CompoundStatement_2 { printf("CompoundStatement : { CompoundStatment_2 \n"); }
     ;
 
 CompoundStatement_2:
-    RIGHT_CURLY_BRACKET
-    |StatementList RIGHT_CURLY_BRACKET
+    RIGHT_CURLY_BRACKET { printf("CompoundStatement_2 : } \n"); }
+    |StatementList RIGHT_CURLY_BRACKET { printf("CompoundStatement_2 : StatementList } \n"); }
     ;
 
 SelectionStatement:   
@@ -260,32 +257,33 @@ OP_SEMICOLON
 ;
 
 IterationStatement:
-KW_WHILE OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
-|KW_DO Statement KW_WHILE OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS OP_SEMICOLON
-|KW_FOR OP_LEFT_PARENTHESIS Expression OP_SEMICOLON Expression OP_SEMICOLON Expression OP_RIGHT_PARENTHESIS Statement
+KW_WHILE OP_LEFT_PARENTHESIS ConditionalExpression OP_RIGHT_PARENTHESIS Statement {printf("IterationStatement : while-loop");}
+|KW_DO LEFT_CURLY_BRACKET StatementList RIGHT_CURLY_BRACKET KW_WHILE OP_LEFT_PARENTHESIS ConditionalExpression OP_RIGHT_PARENTHESIS {printf("IterationStatent : do-while"); }
+|KW_FOR OP_LEFT_PARENTHESIS Expression OP_SEMICOLON Expression OP_SEMICOLON Expression OP_RIGHT_PARENTHESIS Statement {printf("IterationStatement : for loop");}
 ;
 
 // Expressions
 
 Expression:
 //|VARIABLE KW_OR VARIABLE // Not in use
-AssignmentExpression
+AssignmentExpression {printf("Expression : AssignmentExpression\n"); }
 ;
 
 AssignmentExpression:
-VARIABLE OP_EQUAL POSITIVE_INT {printf("Assignment Expression :  %s \n", $$ ); }
-| ConditionalExpression 
-|UnaryExpression ASSIGN_OPER AssignmentExpression
+VARIABLE OP_EQUAL POSITIVE_INT {printf("AssignmentExpression : VARIABLE OP_EQUAL POSITIVE_INT \n" ); }
+|ConditionalExpression  {printf("AssignmentExpression: ConditionalExpression\n"); }
+|UnaryExpression ASSIGN_OPER AssignmentExpression {printf("AssignmentExpression: UnaryExp ASSIGN_OPER AssignmentExpression\n"); }
 ;
 
 ASSIGN_OPER:
-T_ASSIGN_OPER
-|OP_EQUAL
+T_ASSIGN_OPER {printf("ASSIGN_OPER : T_ASSIGN_OPER\n");}
+|OP_EQUAL {printf("ASSIGN_OPER : OP_EQUAL\n");}
 ;
 
 ConditionalExpression:
-LogicalOrExpression
-|LogicalOrExpression OP_QUESTION Expression OP_COLON ConditionalExpression
+PrimaryExpression OP_RELTIONAL PrimaryExpression {printf("ConditionalExpression: PrimaryExpression OP_RELTIONAL PrimaryExpression\n");}
+|LogicalOrExpression {printf("ConditionalExpression: LogicalOrExpression\n");}
+|LogicalOrExpression OP_QUESTION Expression OP_COLON ConditionalExpression {printf("ConditionalExpression: LogionOrExp OP_QUESTION Expression OP_COLON ConditionalExp\n");}
 ;
 
 LogicalOrExpression:

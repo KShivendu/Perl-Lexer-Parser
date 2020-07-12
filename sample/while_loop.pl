@@ -3,8 +3,8 @@
   
 # while loop 
 $count = 3; 
-while ($count >= 0) 
+while (5) 
 { 
-    $count = $count - 1; 
-    print "GeeksForGeeks\n"; 
+    # $count = $count - 1; 
+    print("GeeksForGeeks\n"); 
 } 

@@ -1,3 +1,5 @@
-sub something(){
-    $a = 5;
+
+sub area{
+    print("Hii")
+    
 }

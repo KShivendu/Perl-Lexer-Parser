@@ -2,7 +2,7 @@
   
 # Modules used 
 # use strict; 
-use warnings; 
+# use warnings; 
 
 # Print function  
 print("Hello World\n"); # Prints hello world 
@@ -13,18 +13,18 @@ Perl2c will ignore this !!
 # Variables
 $a = 5;
 $b = 15;
-print($a + $b);
+print($a, $b);
 print("\n");
 
 # Whitespace demo
-print "Geeks       for
-                Geeks\n";
+# print "Geeks       for
+#                 Geeks\n";
 
 {
-    print "hi-";
+    # print("hi-");
     print("bye\n");
 }
 
 # Multiple line command
-$x = $a + $b + $c + 
-     $d + $e + $f;
+# $x = $a + $b + $c + 
+#      $d + $e + $f;

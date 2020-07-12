@@ -5,7 +5,6 @@ $a = 10;
   
 # do..While loop 
 do { 
-  
-    print "$a "; 
-    $a = $a - 1; 
-} while ($a > 0); 
+    print($a); 
+    # $a = $a - 1; 
+} while ($a > 0);

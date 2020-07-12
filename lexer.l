@@ -101,9 +101,9 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 [/]         			{printf("Line: %d token OP_DIVIS: %s\n", line_num, yytext); return OP_DIVIS; }
 [%]		{ return OP_REM; }
 [=]         			{printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); return OP_EQUAL; }
-[=][=]                             {printf("Line: %d token OP_EQUAL: %s\n", line_num, yytext); return OP_EQUALITY; }
-([<>][=])|[<>] 			 { return OP_RELTIONAL; }
-(<<|>>)				 { return OP_SHIFT;}
+[=][=]                             {printf("Line: %d token OP_EQUALITY: %s\n", line_num, yytext); return OP_EQUALITY; }
+([<>][=])|[<>] 			 { printf("Line: %d token OP_RELTIONAL: %s\n", line_num, yytext); return OP_RELTIONAL; }
+(<<|>>)				 {return OP_SHIFT;}
 [!=]					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); return OP_DIFFERENT; }
 [!][~]					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); return NEG_REGEX_OPERATOR; }
 [!] 					{printf("Line: %d token not: %s\n", line_num, yytext); return OP_NOT; }
@@ -136,7 +136,7 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 
 
 {WHITESPACE}*			{	/* skip whitespaces */}
-\n 						{printf(">> "); ++line_num; };
+\n 						{printf("____NEW LINE___ \n"); ++line_num; };
 <<EOF>> 				{printf("EOF detected \n"); return TK_EOF;};
 
 .        				{printf("UNKNOWN %s", yytext); return ERROR_MESSAGE;}
