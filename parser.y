@@ -102,7 +102,7 @@ extern int yylineno;
 %token OP_COLON
 %token OP_QUESTION
 %token KW_PRINT
-// %token DeclarationList
+%token DeclarationList
 %token OP_RELATIONAL
 
 %left OP_BITWISE_OR KW_OR
@@ -147,14 +147,6 @@ extern int yylineno;
     // std::string *string;
 }
 
-// ROOT : KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS OP_LEFT_BRACKET FunctionBody OP_RIGHT_BRACKET  {printf("$$ : %s \n", yylval.string );}
-
-%type <string> ROOT IDENTIFIER KW_SUB  AssignmentExpression FunctionCalling ; //FunctionCallStatement 
-%start ROOT // program
-
-
-// C-Compilere type declaration
-// These all are staments
 // TYPE Declarations
 // %type <stmnt> ExtDef ExtDeclaration
 // %type <stmnt> FuncDef ParameterList Parameter ParamDeclarator
@@ -165,25 +157,27 @@ extern int yylineno;
 // %type <string> T_IDENTIFIER MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER T_EQ T_AND T_ADDSUB_OP T_TILDE T_NOT T_MULT T_DIV T_REM //T_Operator
 
 
+%type <string> ROOT IDENTIFIER KW_SUB;
+%start ROOT // program
 
 %%
 
-ROOT: 
-    ExtDef {printf("ROOT : ExtDef\n"); } // printf("ROOT : %s \n", yylval.string );}
+ROOT : 
+    ExtDeclaration    {printf("$$ : %s \n", yylval.string );}
     ;
-
-ExtDef:
-    ExtDeclaration {printf("ExtDef : ExtDeclaration\n"); }
-  | ExtDef ExtDeclaration {printf("ExtDef : ExtDef  ExtDeclaration\n"); }; 
-    ;
+    
+//ExtDef :
+//    ExtDeclaration
+//  | ExtDef ExtDeclaration
+//    ;
 
 ExtDeclaration:
-StatementList  {printf("ExtDef : ExtDef  ExtDeclaration\n"); } // This one handles statements other than func declaration
-|FuncDeclaration CompoundStatement  {printf("Function - ExtDeclaration : FuncDeclaration CompoundStatement\n");}  // This one is for function declaration
-;
+    StatementList  {printf("ExtDef : ExtDef  ExtDeclaration\n"); } // This one handles statements other than func declaration
+  |  Declaration FuncDef  {printf("Function - ExtDeclaration : FuncDeclaration CompoundStatement\n");}  // This one is for function declaration
+  ;
 
-FuncDeclaration:
-    KW_SUB IDENTIFIER { printf("FuncDeclaration : KW_SUB IDENTIFIER\n"); }
+Declaration:
+    KW_SUB IDENTIFIER
   ;
 
 ParameterList:
@@ -198,40 +192,42 @@ Parameter:
     | REAL {printf("Parameter : REAL\n");}
     ;
 
+FuncDef:
+    LEFT_CURLY_BRACKET StatementList RIGHT_CURLY_BRACKET
+    ;
 
 StatementList:  
    Statement StatementList { printf("StatementList : Statement StatementList \n"); }
   | Statement { printf("StatementList : Statement \n"); }
     ;
 
+  
 Statement:  
-    CompoundStatement   { printf("Statement : CompoundStatement \n"); }    /* Working :) Statement(s) inside curly brackets */
-   |SelectionStatement  { printf("Statement : SelectionStatement \n"); } /* Not Working. Grammar given of if else might be ambiguous. So I implemented Abhisheks if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part */ 
-  | FunctionCalling OP_SEMICOLON { printf("Statement : FunctionCalling; \n"); }	/* Working :) FunctionalCall  */
-  | ExpressionStatement { printf("Statement : ExpressionStatement \n"); }    /* Working :) Statements which end with semicolon*/
-  | IterationStatement   { printf("Statement : IterationStatement \n"); }  /* Working :) Handles until, do-whiile, while and for loop*/
-  ;
-//
-
+    CompoundStatement   { printf("Statement : CompoundStatement \n"); }    /* Working :) */
+   |  SelectionStatement   /* Not Working. Grammar given of if else might be ambiguous */
+                           /* So I implemented Abhishek's if else statement. Doesn't works either.*/ 
+  | FunctionCalling OP_SEMICOLON	/* Working :) */
+  | ExpressionStatement    /* Working :) */
+  | IterationStatement     /* Working :) */
+  //| PrintStatement       /* Not working. Maybe we can use print() to show demonstration instead of using print as a keyword*/
+      ;
 
 FunctionCalling:
-    IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS { printf("FunctionCalling %s : IDENTIFIER (ParameterList) \n", $$); }
+    IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
     ;
 
 CompoundStatement:
-    LEFT_CURLY_BRACKET CompoundStatement_2 { printf("CompoundStatement : { CompoundStatment_2 \n"); }
+    LEFT_CURLY_BRACKET CompoundStatement_2
     ;
 
 CompoundStatement_2:
-    RIGHT_CURLY_BRACKET { printf("CompoundStatement_2 : } \n"); }
-    |StatementList RIGHT_CURLY_BRACKET { printf("CompoundStatement_2 : StatementList } \n"); }
+    RIGHT_CURLY_BRACKET
+    |StatementList RIGHT_CURLY_BRACKET
     ;
 
 SelectionStatement:   
-//Notice that this grammer is similar to while statements grammar.
-//But this doesnt works. Dont know why.
-if_main else_if_expr else_expr {printf("SelectionStatement: if_main else_if_expr else_expr");}
-//| KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
+if_main else_if_expr else_expr
+//KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
 //|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement KW_ELSE Statement
 ;
 
@@ -248,40 +244,37 @@ else_if_expr:
 ;
 
 ExpressionStatement:
-OP_SEMICOLON  {printf("ExpStatement: ;\n");}
-|Expression OP_SEMICOLON {printf("ExpStatement: Expression ;\n");}
-|KW_RETURN ExpressionStatement {printf("ExpStatement: return ExprStatement ;\n");}
+OP_SEMICOLON 
+|Expression OP_SEMICOLON
+|KW_RETURN ExpressionStatement
 ;
 
 IterationStatement:
-KW_WHILE OP_LEFT_PARENTHESIS ConditionalExpression OP_RIGHT_PARENTHESIS Statement {printf("IterationStatement : while-loop\n");}
-|KW_DO LEFT_CURLY_BRACKET StatementList RIGHT_CURLY_BRACKET KW_WHILE OP_LEFT_PARENTHESIS ConditionalExpression OP_RIGHT_PARENTHESIS {printf("IterationStatent : do-while"); }
-|KW_FOR OP_LEFT_PARENTHESIS Expression OP_SEMICOLON Expression OP_SEMICOLON Expression OP_RIGHT_PARENTHESIS Statement {printf("IterationStatement : for loop");}
-|KW_UNTIL OP_LEFT_PARENTHESIS ConditionalExpression OP_RIGHT_PARENTHESIS Statement {printf("IterationStatement : conditional-loop\n");}
+KW_WHILE OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
+|KW_DO Statement KW_WHILE OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS OP_SEMICOLON
+|KW_FOR OP_LEFT_PARENTHESIS Expression OP_SEMICOLON Expression OP_SEMICOLON Expression OP_RIGHT_PARENTHESIS Statement
+|KW_UNTIL OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement {printf("IterationStatement : conditional-loop\n");}
 ;
 
 // Expressions
-
 Expression:
-//|VARIABLE KW_OR VARIABLE // Not in use
-AssignmentExpression {printf("Expression : AssignmentExpression\n"); }
+//|VARIABLE KW_OR VARIABLE
+AssignmentExpression
 ;
 
 AssignmentExpression:
-VARIABLE OP_EQUAL PrimaryExpression {printf("AssignmentExp : VARIABLE OP_EQUAL PrimaryExp \n" ); } // Not sure if Expression should be here or something else
-|ConditionalExpression  {printf("AssignmentExpression: ConditionalExpression\n"); }
-|UnaryExpression ASSIGN_OPER AssignmentExpression {printf("AssignmentExpression: UnaryExp ASSIGN_OPER AssignmentExpression\n"); }
+ConditionalExpression 
+|UnaryExpression ASSIGN_OPER AssignmentExpression
 ;
 
 ASSIGN_OPER:
-T_ASSIGN_OPER {printf("ASSIGN_OPER : T_ASSIGN_OPER\n");}
-|OP_EQUAL {printf("ASSIGN_OPER : OP_EQUAL\n");}
+T_ASSIGN_OPER
+|OP_EQUAL
 ;
 
 ConditionalExpression:
-PrimaryExpression OP_RELTIONAL PrimaryExpression {printf("ConditionalExpression: PrimaryExpression OP_RELTIONAL PrimaryExpression\n");}
-|LogicalOrExpression {printf("ConditionalExpression: LogicalOrExpression\n");}
-|LogicalOrExpression OP_QUESTION Expression OP_COLON ConditionalExpression {printf("ConditionalExpression: LogionOrExp OP_QUESTION Expression OP_COLON ConditionalExp\n");}
+LogicalOrExpression
+|LogicalOrExpression OP_QUESTION Expression OP_COLON ConditionalExpression
 ;
 
 LogicalOrExpression:
@@ -311,27 +304,27 @@ EqualityExpression
 
 EqualityExpression:
 RelationalExpression
-|EqualityExpression OP_EQUALITY RelationalExpression {printf("EqualityExp : EqualityExp OP_EQUALITY RelationalExp\n");}
+|EqualityExpression OP_EQUALITY RelationalExpression
 ;
 
 RelationalExpression:
-ShiftExpression {printf("RelationalExpression: ShiftExpression\n");}
-|RelationalExpression OP_RELATIONAL ShiftExpression {printf("RelationalExpression : RelationalExpression OP_RELATIONAL ShiftExpression\n");}
+ShiftExpression
+|RelationalExpression OP_RELATIONAL ShiftExpression
 ;
 
 ShiftExpression:
-AdditiveExpression {printf("ShiftExp: AdditiveExp\n");}
-|ShiftExpression OP_SHIFT AdditiveExpression {printf("ShiftExp: ShiftExp OP_SHIFT AdditiveExp\n");}
+AdditiveExpression
+|ShiftExpression OP_SHIFT AdditiveExpression
 ;
 
 AdditiveExpression:
-MultiplicativeExpression {printf("AdditiveExp: MultiplicativeExp \n");}
-|AdditiveExpression OP_ADDSUB MultiplicativeExpression {printf("AdditiveExp: AdditiveExp OP_ADDSUB MultiplicativeExp \n");}
+MultiplicativeExpression
+|AdditiveExpression OP_ADDSUB MultiplicativeExpression
 ;
 
 MultiplicativeExpression:
-UnaryExpression {printf("MultiplicativeExp: UnaryExp \n");}
-|MultiplicativeExpression MultDivRemOP UnaryExpression {printf("MultiplicativeExp: MultiplicativeExp MultDivRemOP UnaryExp \n");}
+UnaryExpression
+|MultiplicativeExpression MultDivRemOP UnaryExpression
 ;
 
 MultDivRemOP:
@@ -373,11 +366,10 @@ AssignmentExpression
 ;
 
 PrimaryExpression:
-FunctionCalling OP_SEMICOLON{printf("PrimaryExp: FunctionCalling\n");}
-| VARIABLE {printf("PrimaryExp: VARIABLE\n"); }
-|Constant  {printf("PrimaryExp: Constant\n"); }
-|SPL_LIST_ARR_VAR {printf("PrimaryExp: SPL_LIST_ARR_VAR\n"); }
-// |OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS 
+VARIABLE 
+|Constant 
+|OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS
+|SPL_LIST_ARR_VAR {printf("PrimaryExp: SPL_LIST_ARR_VAR\n"); } 
 ;
 
 Constant:
