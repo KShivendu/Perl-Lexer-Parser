@@ -144,25 +144,31 @@ extern int yylineno;
     double number;
     int integer;
     char* string;
+    // const Base *stmnt;
     // std::string *string;
 }
 
-// TYPE Declarations
+// ROOT : KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS OP_LEFT_BRACKET FunctionBody OP_RIGHT_BRACKET  {printf("$$ : %s \n", yylval.string );}
+
+%type <string> ROOT IDENTIFIER KW_SUB; // FunctionBody;
+%start ROOT // program
+
+
+// C-Compilere type declaration
+// These all are staments
 // %type <stmnt> ExtDef ExtDeclaration
-// %type <stmnt> FuncDef ParameterList Parameter ParamDeclarator
-// %type <stmnt> DeclarationList Declaration DeclarationSpec DeclarationSpec_T InitDeclarator InitDeclaratorList Declarator
+// %type <stmnt> FuncDef ParameterList Parameter // ParamDeclarator
+// %type <stmnt> DeclarationList Declaration  // InitDeclarator InitDeclaratorList Declarator DeclarationSpec DeclarationSpec_T
 // %type <stmnt> StatementList Statement CompoundStatement CompoundStatement_2 SelectionStatement ExpressionStatement JumpStatement IterationStatement
 // %type <stmnt> Expression AssignmentExpression ConditionalExpression LogicalOrExpression LogicalAndExpression InclusiveOrExpression ExclusiveOrExpression AndExpression EqualityExpression RelationalExpression ShiftExpression AdditiveExpression MultiplicativeExpression CastExpression UnaryExpression PostfixExpression PostfixExpression2 ArgumentExpressionList PrimaryExpression
-// %type <number> Constant T_INT_CONST
-// %type <string> T_IDENTIFIER MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER T_EQ T_AND T_ADDSUB_OP T_TILDE T_NOT T_MULT T_DIV T_REM //T_Operator
 
+%type <number> Constant // T_INT_CONST
+%type <string>  MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER     // T_REM T_Operator T_TILDE T_NOT T_MULT T_IDENTIFIER T_EQ T_DIV T_AND T_ADDSUB_OP
 
-%type <string> ROOT IDENTIFIER KW_SUB;
-%start ROOT // program
 
 %%
 
-ROOT : KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS   {printf("$$ : %s \n", yylval.string );}
+
 
 %%
 

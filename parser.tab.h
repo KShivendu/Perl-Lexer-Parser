@@ -147,9 +147,10 @@ union YYSTYPE
     double number;
     int integer;
     char* string;
+    // const Base *stmnt;
     // std::string *string;
 
-#line 153 "parser.tab.h" /* yacc.c:1921  */
+#line 154 "parser.tab.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;
