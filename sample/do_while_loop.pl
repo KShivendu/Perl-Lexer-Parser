@@ -3,7 +3,7 @@
   
 $a = 10; 
   
-# do..While loop 
+# do..While loop - 1
 do { 
     print($a); 
 #S   $a = $a - 1; 
