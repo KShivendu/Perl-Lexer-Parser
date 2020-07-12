@@ -168,8 +168,211 @@ extern int yylineno;
 
 %%
 
+ROOT : 
+    ExtDef    {printf("$$ : %s \n", yylval.string );}
+    ;
+    
+ExtDef :
+    ExtDeclaration
+  | ExtDef ExtDeclaration
+    ;
+
+ExtDeclaration:
+    Declaration
+  | FuncDef
+  ;
+
+Declaration:
+    KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
+  ;
+
+ParameterList:
+	| Parameter
+	| ParameterList OP_COMMA Parameter
+		;
+
+Parameter:
+    VARIABLE
+    ;
+
+FuncDef:
+    LEFT_CURLY_BRACKET StatementList RIGHT_CURLY_BRACKET
+    ;
+
+StatementList:  
+  | Statement
+  | StatementList Statement
+    ;
 
 
+Statement:  
+    CompoundStatement      /* Incomplete */
+   |  SelectionStatement   /* Not Working. Grammar given of if else might be ambiguous */
+                           /* So I implemented Abhishek's if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part*/ 
+  | ExpressionStatement    /* Working :) */
+  | IterationStatement     /* Working :) */
+  //| PrintStatement       /* Not working. Maybe we can use print() to show demonstration instead of using print as a keyword*/
+      ;
+
+CompoundStatement:      //Tested only in case of {}. Remaining part is incomplete
+    LEFT_CURLY_BRACKET CompoundStatement_2
+    ;
+
+CompoundStatement_2:
+    RIGHT_CURLY_BRACKET
+    ;
+  //| Dec
+
+SelectionStatement:   
+//Notice that this grammer is similar to while statement's grammar.
+//But this doesn't works. Don't know why.
+if_main else_if_expr else_expr
+//KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
+//|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement KW_ELSE Statement
+;
+
+if_main:
+KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
+;
+
+else_expr:
+| KW_ELSE Statement
+;
+
+else_if_expr:
+| else_if_expr KW_ELSE if_main
+;
+
+ExpressionStatement:
+OP_SEMICOLON 
+|Expression OP_SEMICOLON
+|KW_RETURN ExpressionStatement
+;
+
+IterationStatement:
+KW_WHILE OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
+|KW_DO Statement KW_WHILE OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS OP_SEMICOLON
+|KW_FOR OP_LEFT_PARENTHESIS Expression OP_SEMICOLON Expression OP_SEMICOLON Expression OP_RIGHT_PARENTHESIS Statement
+;
+
+// Expressions
+Expression:
+//|VARIABLE KW_OR VARIABLE
+AssignmentExpression
+;
+
+AssignmentExpression:
+ConditionalExpression 
+|UnaryExpression ASSIGN_OPER AssignmentExpression
+;
+
+ASSIGN_OPER:
+T_ASSIGN_OPER
+|OP_EQUAL
+;
+
+ConditionalExpression:
+LogicalOrExpression
+|LogicalOrExpression OP_QUESTION Expression OP_COLON ConditionalExpression
+;
+
+LogicalOrExpression:
+LogicalAndExpression
+|LogicalOrExpression KW_OR LogicalAndExpression
+;
+
+LogicalAndExpression:
+InclusiveOrExpression
+|LogicalAndExpression KW_AND InclusiveOrExpression
+;
+
+InclusiveOrExpression:
+ExclusiveOrExpression
+|InclusiveOrExpression OP_BITWISE_OR ExclusiveOrExpression
+;
+
+ExclusiveOrExpression:
+AndExpression
+|ExclusiveOrExpression OP_XOR AndExpression
+;
+
+AndExpression:
+EqualityExpression
+|AndExpression OP_BITWISE_AND EqualityExpression
+;
+
+EqualityExpression:
+RelationalExpression
+|EqualityExpression OP_EQUALITY RelationalExpression
+;
+
+RelationalExpression:
+ShiftExpression
+|RelationalExpression OP_RELATIONAL ShiftExpression
+;
+
+ShiftExpression:
+AdditiveExpression
+|ShiftExpression OP_SHIFT AdditiveExpression
+;
+
+AdditiveExpression:
+MultiplicativeExpression
+|AdditiveExpression OP_ADDSUB MultiplicativeExpression
+;
+
+MultiplicativeExpression:
+UnaryExpression
+|MultiplicativeExpression MultDivRemOP UnaryExpression
+;
+
+MultDivRemOP:
+OP_MULT 
+|OP_DIVIS 
+|OP_REM 
+;
+
+UnaryExpression:
+PostfixExpression
+|OP_INCDEC UnaryExpression
+|UnaryOperator UnaryExpression
+;
+
+UnaryOperator:
+OP_BITWISE_AND
+|OP_ADDSUB
+|OP_MULT
+|OP_TILDE
+|OP_NOT
+;
+
+PostfixExpression:
+PrimaryExpression 
+|PostfixExpression OP_LEFT_BRACKET Expression OP_RIGHT_BRACKET 
+|PostfixExpression OP_LEFT_PARENTHESIS PostfixExpression2 
+|PostfixExpression DOT_OPERATOR IDENTIFIER 
+|PostfixExpression OP_INCDEC 
+;
+
+PostfixExpression2:
+OP_RIGHT_PARENTHESIS
+|ArgumentExpressionList OP_RIGHT_PARENTHESIS
+;
+
+ArgumentExpressionList:
+AssignmentExpression
+|ArgumentExpressionList OP_COMMA AssignmentExpression 
+;
+
+PrimaryExpression:
+VARIABLE 
+|Constant 
+|OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS 
+;
+
+Constant:
+POSITIVE_INT
+;
 %%
 
 char* filename;
