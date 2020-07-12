@@ -12,8 +12,9 @@ sub area
 } 
 
 printf("Hi");
+printf($a);
 # calling function 
-$totalArea = area(4);
-  
+# $totalArea = area(4);
+
 # displaying result 
-print($totalArea); 
+# print($totalArea); 
