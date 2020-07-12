@@ -1,7 +1,4 @@
 sub sqq{
     print("qwe");
 }
-
-sub sqq{
-    print("qwe");
-}
+$a = 5;

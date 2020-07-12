@@ -264,10 +264,11 @@ AssignmentExpression {printf("Expression : AssignmentExpression\n"); }
 ;
 
 AssignmentExpression:
-VARIABLE OP_EQUAL PrimaryExpression {printf("AssignmentExp : VARIABLE OP_EQUAL PrimaryExp \n" ); } // Not sure if Expression should be here or something else
-|ConditionalExpression  {printf("AssignmentExpression: ConditionalExpression\n"); }
+//VARIABLE OP_EQUAL PrimaryExpression {printf("AssignmentExp : VARIABLE OP_EQUAL PrimaryExp \n" ); } // Not sure if Expression should be here or something else
+ConditionalExpression  {printf("AssignmentExpression: ConditionalExpression\n"); }
 |UnaryExpression ASSIGN_OPER AssignmentExpression {printf("AssignmentExpression: UnaryExp ASSIGN_OPER AssignmentExpression\n"); }
 ;
+
 
 ASSIGN_OPER:
 T_ASSIGN_OPER {printf("ASSIGN_OPER : T_ASSIGN_OPER\n");}
