@@ -144,7 +144,6 @@ extern int yylineno;
     double number;
     int integer;
     char* string;
-    // const Base *stmnt;
     // std::string *string;
 }
 
@@ -156,15 +155,18 @@ extern int yylineno;
 
 // C-Compilere type declaration
 // These all are staments
+// TYPE Declarations
 // %type <stmnt> ExtDef ExtDeclaration
-// %type <stmnt> FuncDef ParameterList Parameter // ParamDeclarator
-// %type <stmnt> DeclarationList Declaration  // InitDeclarator InitDeclaratorList Declarator DeclarationSpec DeclarationSpec_T
+// %type <stmnt> FuncDef ParameterList Parameter ParamDeclarator
+// %type <stmnt> DeclarationList Declaration DeclarationSpec DeclarationSpec_T InitDeclarator InitDeclaratorList Declarator
 // %type <stmnt> StatementList Statement CompoundStatement CompoundStatement_2 SelectionStatement ExpressionStatement JumpStatement IterationStatement
 // %type <stmnt> Expression AssignmentExpression ConditionalExpression LogicalOrExpression LogicalAndExpression InclusiveOrExpression ExclusiveOrExpression AndExpression EqualityExpression RelationalExpression ShiftExpression AdditiveExpression MultiplicativeExpression CastExpression UnaryExpression PostfixExpression PostfixExpression2 ArgumentExpressionList PrimaryExpression
+// %type <number> Constant T_INT_CONST
+// %type <string> T_IDENTIFIER MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER T_EQ T_AND T_ADDSUB_OP T_TILDE T_NOT T_MULT T_DIV T_REM //T_Operator
 
-%type <number> Constant // T_INT_CONST
-%type <string>  MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER     // T_REM T_Operator T_TILDE T_NOT T_MULT T_IDENTIFIER T_EQ T_DIV T_AND T_ADDSUB_OP
 
+%type <string> ROOT IDENTIFIER KW_SUB;
+%start ROOT // program
 
 %%
 
@@ -178,12 +180,12 @@ ExtDef:
     ;
 
 ExtDeclaration:
-    Declaration
-  | FuncDef
+    StatementList
+  |  Declaration FuncDef
   ;
 
 Declaration:
-    KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
+    KW_SUB IDENTIFIER
   ;
 
 ParameterList:
@@ -200,30 +202,36 @@ FuncDef:
     ;
 
 StatementList:  
+   Statement StatementList
   | Statement
-  | StatementList Statement
     ;
 
-
+  
 Statement:  
-    CompoundStatement      /* Incomplete */
+    CompoundStatement      /* Working :) */
    |  SelectionStatement   /* Not Working. Grammar given of if else might be ambiguous */
                            /* So I implemented Abhisheks if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part */ 
+  | FunctionCalling OP_SEMICOLON	/* Working :) */
   | ExpressionStatement    /* Working :) */
   | IterationStatement     /* Working :) */
   | FunctionCallStatement  /* Cant retrive only the name of the function */
       ;
 //
-FunctionCallStatement: IDENTIFIER OP_LEFT_PARENTHESIS CONSTANT_STRING OP_RIGHT_PARENTHESIS  {printf("Calling function %s \n", $$ );}
+FunctionCallStatement: IDENTIFIER OP_LEFT_PARENTHESIS CONSTANT_STRING OP_RIGHT_PARENTHESIS  {printf("Calling function %s \n", $$ );};
 
-CompoundStatement:      //Tested only in case of {}. Remaining part is incomplete
+FunctionCalling:
+    IDENTIFIER OP_LEFT_PARENTHESIS ParameterList OP_RIGHT_PARENTHESIS
+  |  IDENTIFIER OP_LEFT_PARENTHESIS CONSTANT_STRING OP_RIGHT_PARENTHESIS
+    ;
+
+CompoundStatement:
     LEFT_CURLY_BRACKET CompoundStatement_2
     ;
 
 CompoundStatement_2:
     RIGHT_CURLY_BRACKET
+    |StatementList RIGHT_CURLY_BRACKET
     ;
-  //| Dec
 
 SelectionStatement:   
 //Notice that this grammer is similar to while statements grammar.
@@ -234,11 +242,11 @@ if_main else_if_expr else_expr
 ;
 
 if_main:
-KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
+KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS LEFT_CURLY_BRACKET Statement RIGHT_CURLY_BRACKET
 ;
 
 else_expr:
-| KW_ELSE Statement
+| KW_ELSE LEFT_CURLY_BRACKET Statement RIGHT_CURLY_BRACKET
 ;
 
 else_if_expr:

@@ -29,6 +29,7 @@ char* mactable[32][2];
 
 
 IDENTIFIER 		[a-zA-Z][0-9a-zA-Z_]*
+VARIABLE            [$@%]+[0-9a-zA-Z_]+
 
 DIGIT  			[0-9]
 POSITIVE_INT 	[0]|[1-9][0-9]*
@@ -80,7 +81,7 @@ until					{ printf("Line: %d token KW_UNTIL: %s\n", line_num, yytext); return KW
 then                          { printf("Line: %d token KW_THEN: %s\n", line_num, yytext); return KW_THEN;}
 
 
-[$@%]+{IDENTIFIER} {printf("Line: %d token VARIABLE %s\n", line_num, yytext); return VARIABLE;}
+{VARIABLE} {printf("Line: %d token VARIABLE %s\n", line_num, yytext); return VARIABLE;}
 
 {IDENTIFIER} {printf("Line: %d token IDENTIFIER: %s\n", line_num, yytext); yylval.string = yytext; return IDENTIFIER;}
 
@@ -105,7 +106,7 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 (<<|>>)				 { return OP_SHIFT;}
 [!=]					{printf("Line: %d token OP_DIFFERENT: %s\n", line_num, yytext); return OP_DIFFERENT; }
 [!][~]					{printf("Line: %d token NEG_REGEX_OPERATOR: %s\n", line_num, yytext); return NEG_REGEX_OPERATOR; }
-\! 					{printf("Line: %d token not: %s\n", line_num, yytext); return OP_NOT; }
+[!] 					{printf("Line: %d token not: %s\n", line_num, yytext); return OP_NOT; }
 [:][=]					{printf("Line: %d token OP_ASSIGNMENT: %s\n", line_num, yytext); return OP_ASSIGNMENT; }
 [;]         			{printf("Line: %d token OP_SEMICOLON: %s\n", line_num, yytext); return OP_SEMICOLON; }
 [(]         			{printf("Line: %d token OP_LEFT_PARENTHESIS: %s\n", line_num, yytext); return OP_LEFT_PARENTHESIS; }
