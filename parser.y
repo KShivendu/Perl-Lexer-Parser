@@ -205,7 +205,7 @@ StatementList:
 
 Statement:  
     CompoundStatement   { printf("Statement : CompoundStatement \n"); }    /* Working :) Statement(s) inside curly brackets */
-   |SelectionStatement  { printf("Statement : SelectionStatement \n"); } /* Not Working. Grammar given of if else might be ambiguous. So I implemented Abhisheks if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part */ 
+   |SelectionStatement  { printf("Statement : SelectionStatement \n"); } 
   | FunctionCalling OP_SEMICOLON { printf("Statement : FunctionCalling; \n"); }	/* Working :) FunctionalCall  */
   | ExpressionStatement { printf("Statement : ExpressionStatement \n"); }    /* Working :) Statements which end with semicolon*/
   | IterationStatement   { printf("Statement : IterationStatement \n"); }  /* Working :) Handles until, do-whiile, while and for loop*/
@@ -226,20 +226,18 @@ CompoundStatement_2:
     |StatementList RIGHT_CURLY_BRACKET { printf("CompoundStatement_2 : StatementList } \n"); }
     ;
 
-SelectionStatement:   
-//Notice that this grammer is similar to while statements grammar.
-//But this doesnt works. Dont know why.
+SelectionStatement:
 if_main else_if_expr else_expr {printf("SelectionStatement: if_main else_if_expr else_expr");}
-//| KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
-//|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement KW_ELSE Statement
+|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement {printf("SelectionStatement : KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement\n");}
+|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement KW_ELSE Statement
 ;
 
 if_main:
-KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS LEFT_CURLY_BRACKET Statement RIGHT_CURLY_BRACKET
+KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS LEFT_CURLY_BRACKET StatementList RIGHT_CURLY_BRACKET
 ;
 
 else_expr:
-| KW_ELSE LEFT_CURLY_BRACKET Statement RIGHT_CURLY_BRACKET
+| KW_ELSE LEFT_CURLY_BRACKET StatementList RIGHT_CURLY_BRACKET
 ;
 
 else_if_expr:
@@ -259,7 +257,6 @@ KW_WHILE OP_LEFT_PARENTHESIS ConditionalExpression OP_RIGHT_PARENTHESIS Statemen
 |KW_UNTIL OP_LEFT_PARENTHESIS ConditionalExpression OP_RIGHT_PARENTHESIS Statement {printf("IterationStatement : conditional-loop\n");}
 ;
 
-// Expressions
 
 Expression:
 //|VARIABLE KW_OR VARIABLE // Not in use
@@ -373,7 +370,7 @@ AssignmentExpression
 
 PrimaryExpression:
 FunctionCalling OP_SEMICOLON{printf("PrimaryExp: FunctionCalling\n");}
-| VARIABLE {printf("PrimaryExp: VARIABLE\n"); }
+|VARIABLE {printf("PrimaryExp: VARIABLE\n"); }
 |Constant  {printf("PrimaryExp: Constant\n"); }
 |SPL_LIST_ARR_VAR {printf("PrimaryExp: SPL_LIST_ARR_VAR\n"); }
 // |OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS 
@@ -381,6 +378,7 @@ FunctionCalling OP_SEMICOLON{printf("PrimaryExp: FunctionCalling\n");}
 
 Constant:
 POSITIVE_INT
+|CONSTANT_STRING
 ;
 %%
 

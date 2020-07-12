@@ -1,1 +1,7 @@
-print("Hello World\n");
+sub sqq{
+    print("qwe");
+}
+
+sub sqq{
+    print("qwe");
+}

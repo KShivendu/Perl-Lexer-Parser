@@ -56,10 +56,11 @@ static 					{ printf("Line: %d token KW_STATIC: %s\n", line_num, yytext); return
 true					{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext); return KW_TRUE;}
 false					{ printf("Line: %d token BOOLEAN: %s\n", line_num, yytext); return KW_FALSE;}
 do 						{ printf("Line: %d token KW_DO: %s\n", line_num, yytext); return KW_DO;}
-if 						{ printf("Line: %d token KW_IF: %s\n", line_num, yytext); KW_IF;}
-not						{ printf("Line: %d token KW_NOT: %s\n", line_num, yytext); KW_NOT;}
+if 						{ printf("Line: %d token KW_IF: %s\n", line_num, yytext); return KW_IF;}
+not						{ printf("Line: %d token KW_NOT: %s\n", line_num, yytext); return KW_NOT;}
 boolean					{ printf("Line: %d token KW_BOOLEAN: %s\n", line_num, yytext); KW_BOOLEAN;}
 break					{ printf("Line: %d token KW_BREAK: %s\n", line_num, yytext); return KW_BREAK; }
+if 						{ printf("Line: %d token KW_IF: %s\n", line_num, yytext); return KW_IF;}
 else					{ printf("Line: %d token KW_ELSE: %s\n", line_num, yytext); return KW_ELSE; }
 (and|&&) 						{ printf("Line: %d token KW_AND: %s\n", line_num, yytext); return KW_AND; }
 integer 				{ printf("Line: %d token KW_INTEGER: %s\n", line_num, yytext); return KW_INTEGER; }

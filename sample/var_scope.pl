@@ -5,7 +5,7 @@
 $name = "GFG"; 
   
 # printing global variable  
-print "$name\n";     
+print("$name\n");     
   
 # global variable can be used  
 # inside a block, hence the we  
@@ -15,7 +15,7 @@ print "$name\n";
 { 
   
     # here GFG will print 
-    print "$name\n";  
+    print("$name\n");  
       
     # values in global variable can be 
     # changed even within a block,  
@@ -25,10 +25,10 @@ print "$name\n";
       
     # print function prints 
     # "GeeksforGeeks" 
-    print "$name\n";  
+    print("$name\n");  
 } 
   
 # changes made inside the above block' 
 # are reflected in the whole program  
 # so here GeeksforGeeks will print 
-print "$name\n";  
+print("$name\n");  
