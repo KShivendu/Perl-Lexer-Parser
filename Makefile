@@ -1,5 +1,5 @@
 parser: lexer.l parser.y
-	bison -d parser.y 
+	bison -d --warnings=none parser.y 
 	# bison -d -t parser.y 
 	flex lexer.l
 	gcc parser.tab.c lex.yy.c -lfl -o perl2c
