@@ -1,1 +1,3 @@
-sub qweq ()
+sub something(){
+    $a = 5;
+}

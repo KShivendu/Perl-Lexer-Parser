@@ -88,6 +88,7 @@ then                          { printf("Line: %d token KW_THEN: %s\n", line_num,
 {POSITIVE_INT}			{printf("Line: %d token POSITIVE_INT: %s\n",line_num,yytext); yylval.integer = atoi(yytext);return POSITIVE_INT;}
 {REAL}					{printf("Line: %d token REAL: %s\n", line_num, yytext);  return REAL;}
 
+
 [+-]         			{printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_ADDSUB;}
 [:]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_COLON;}
 [?]                             {printf("Line: %d token OP_PLUS: %s\n", line_num, yytext); return OP_QUESTION;}

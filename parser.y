@@ -150,7 +150,7 @@ extern int yylineno;
 
 // ROOT : KW_SUB IDENTIFIER OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS OP_LEFT_BRACKET FunctionBody OP_RIGHT_BRACKET  {printf("$$ : %s \n", yylval.string );}
 
-%type <string> ROOT IDENTIFIER KW_SUB; // FunctionBody;
+%type <string> ROOT IDENTIFIER KW_SUB FunctionCallStatement AssignmentExpression;
 %start ROOT // program
 
 
@@ -168,11 +168,11 @@ extern int yylineno;
 
 %%
 
-ROOT : 
-    ExtDef    {printf("$$ : %s \n", yylval.string );}
+ROOT: 
+    ExtDef    {printf("ROOT : %s \n", yylval.string );}
     ;
-    
-ExtDef :
+
+ExtDef:
     ExtDeclaration
   | ExtDef ExtDeclaration
     ;
@@ -208,11 +208,13 @@ StatementList:
 Statement:  
     CompoundStatement      /* Incomplete */
    |  SelectionStatement   /* Not Working. Grammar given of if else might be ambiguous */
-                           /* So I implemented Abhishek's if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part*/ 
+                           /* So I implemented Abhisheks if else statement. It works, but lead to reduce reduce conflicts in CompoundStatement part */ 
   | ExpressionStatement    /* Working :) */
   | IterationStatement     /* Working :) */
-  //| PrintStatement       /* Not working. Maybe we can use print() to show demonstration instead of using print as a keyword*/
+  | FunctionCallStatement  /* Cant retrive only the name of the function */
       ;
+//
+FunctionCallStatement: IDENTIFIER OP_LEFT_PARENTHESIS CONSTANT_STRING OP_RIGHT_PARENTHESIS  {printf("Calling function %s \n", $$ );}
 
 CompoundStatement:      //Tested only in case of {}. Remaining part is incomplete
     LEFT_CURLY_BRACKET CompoundStatement_2
@@ -224,8 +226,8 @@ CompoundStatement_2:
   //| Dec
 
 SelectionStatement:   
-//Notice that this grammer is similar to while statement's grammar.
-//But this doesn't works. Don't know why.
+//Notice that this grammer is similar to while statements grammar.
+//But this doesnt works. Dont know why.
 if_main else_if_expr else_expr
 //KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
 //|KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement KW_ELSE Statement
@@ -256,13 +258,15 @@ KW_WHILE OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement
 ;
 
 // Expressions
+
 Expression:
-//|VARIABLE KW_OR VARIABLE
+//|VARIABLE KW_OR VARIABLE // Not in use
 AssignmentExpression
 ;
 
 AssignmentExpression:
-ConditionalExpression 
+VARIABLE OP_EQUAL POSITIVE_INT {printf("Assignment Expression :  %s \n", $$ ); }
+| ConditionalExpression 
 |UnaryExpression ASSIGN_OPER AssignmentExpression
 ;
 
