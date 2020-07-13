@@ -22,101 +22,28 @@ extern int yylineno;
 %token ERROR_MESSAGE
 
 /* keywords */
-%token KW_STATIC
-%token KW_TRUE
-%token KW_FALSE
-%token KW_DO
-%token KW_IF
-%token KW_NOT
-%token KW_BOOLEAN
-%token KW_BREAK
-%token KW_ELSE
-%token KW_AND
-%token KW_INTEGER
-%token KW_STRING
-%token KW_CONTINUE
-%token KW_FOR
-%token KW_MOD
-%token KW_CHARACTER
-%token KW_VOID
-%token KW_RETURN
-%token KW_END
-%token KW_BEGIN
-%token KW_REAL
-%token KW_WHILE
-%token KW_OR
-%token KW_MAIN
-%token KW_READSTRING
-%token KW_READINTEGER
-%token KW_READREAL
-%token KW_WRITESTRING
-%token KW_WRITEINTEGER
-%token KW_WRITEREAL
+%token KW_STATIC KW_TRUE KW_FALSE KW_DO KW_IF KW_NOT KW_BOOLEAN KW_BREAK KW_ELSE KW_AND KW_INTEGER KW_STRING KW_CONTINUE KW_FOR KW_MOD KW_CHARACTER KW_VOID KW_RETURN KW_END KW_BEGIN KW_REAL KW_WHILE KW_OR KW_MAIN KW_READSTRING KW_READINTEGER KW_READREAL KW_WRITESTRING KW_WRITEINTEGER KW_WRITEREAL
 
-%token VARIABLE
-%token IDENTIFIER
-%token CONSTANT_STRING
-%token POSITIVEINT
-%token REAL
+%token VARIABLE IDENTIFIER CONSTANT_STRING POSITIVEINT REAL
 
-%token OP_ADDSUB
-%token OP_INCDEC
-%token OP_BITWISE_OR
-%token OP_XOR
-%token OP_BITWISE_AND
+%token OP_ADDSUB OP_INCDEC OP_BITWISE_OR OP_XOR OP_BITWISE_AND
 
-%token OP_MULT
-%token OP_DIVIS
-%token OP_REM
-%token OP_EQUAL
-%token OP_EQUALITY
-%token OP_RELTIONAL
-%token OP_SHIFT
+%token OP_MULT OP_DIVIS OP_REM OP_EQUAL OP_EQUALITY OP_RELTIONAL OP_SHIFT
 
-%token OP_ASSIGNMENT
-%token OP_SEMICOLON
-%token OP_LEFT_PARENTHESIS
-%token OP_RIGHT_PARENTHESIS
-%token OP_TILDE
-%token OP_COMMA
-%token OP_LEFT_BRACKET
-%token OP_RIGHT_BRACKET
+%token OP_ASSIGNMENT OP_SEMICOLON OP_LEFT_PARENTHESIS OP_RIGHT_PARENTHESIS OP_TILDE OP_COMMA OP_LEFT_BRACKET OP_RIGHT_BRACKET
 
 %token OP_NOT
 
-// New for perl
-%token LEFT_CURLY_BRACKET
-%token RIGHT_CURLY_BRACKET
-%token KW_SUB
-%token KW_FOR_EACH
-%token KW_UNTIL
-%token POSITIVE_INT
-%token OP_DIFFERENT
-%token REGEX_OPERATOR
-%token NEG_REGEX_OPERATOR
-%token DOT_OPERATOR
-%token SPL_LIST_ARR_VAR
-%token T_ASSIGN_OPER
+%token LEFT_CURLY_BRACKET RIGHT_CURLY_BRACKET KW_SUB KW_FOR_EACH KW_UNTIL POSITIVE_INT OP_DIFFERENT REGEX_OPERATOR NEG_REGEX_OPERATOR DOT_OPERATOR SPL_LIST_ARR_VAR T_ASSIGN_OPER
 
 // New from sahu
-%token OP_COLON
-%token OP_QUESTION
-%token KW_PRINT
-// %token DeclarationList
-%token OP_RELATIONAL
+%token OP_COLON OP_QUESTION KW_PRINT OP_RELATIONAL
+//%token DeclarationList 
+ 
 
-%left OP_BITWISE_OR KW_OR
-%left OP_BITWISE_AND KW_AND
-%left OP_EQUAL OP_NOTEQUAL OP_GREATER OP_GREATEROREQUAL OP_LESSOREQUAL OP_LESS
-%left OP_PLUS OP_MINUS
-%left OP_MULT OP_DIVIS KW_MOD KW_DIV
-%left OP_EQUALITY OP_RELTIONAL OP_SHIFT
+%left OP_BITWISE_OR KW_OR OP_BITWISE_AND KW_AND OP_EQUAL OP_NOTEQUAL OP_GREATER OP_GREATEROREQUAL OP_LESSOREQUAL OP_LESS OP_PLUS OP_MINUS OP_MULT OP_DIVIS KW_MOD KW_DIV OP_EQUALITY OP_RELTIONAL OP_SHIFT
 
-%right OP_NOT
-%right KW_NOT
-%right KW_WHILE
-%right KW_THEN KW_ELSE
-
+%right OP_NOT KW_NOT KW_WHILE KW_THEN KW_ELSE
 
 // Type declaration
 // %type <i> exp
@@ -164,8 +91,6 @@ extern int yylineno;
 // %type <number> Constant T_INT_CONST
 // %type <string> T_IDENTIFIER MultDivRemOP UnaryOperator ASSIGN_OPER T_ASSIGN_OPER T_EQ T_AND T_ADDSUB_OP T_TILDE T_NOT T_MULT T_DIV T_REM //T_Operator
 
-
-
 %%
 
 ROOT: 
@@ -183,8 +108,8 @@ StatementList  {printf("ExtDef : ExtDef  ExtDeclaration\n"); } // This one handl
 ;
 
 FuncDeclaration:
-    KW_SUB IDENTIFIER { printf("FuncDeclaration : KW_SUB IDENTIFIER\n"); }
-  ;
+KW_SUB IDENTIFIER { printf("FuncDeclaration : KW_SUB IDENTIFIER\n"); }
+;
 
 ParameterList:
 	| Parameter { printf("ParameterList : Parameter\n"); }
@@ -210,7 +135,6 @@ Statement:
   | ExpressionStatement { printf("Statement : ExpressionStatement \n"); }    /* Working :) Statements which end with semicolon*/
   | IterationStatement   { printf("Statement : IterationStatement \n"); }  /* Working :) Handles until, do-whiile, while and for loop*/
   ;
-//
 
 
 FunctionCalling:

@@ -140,7 +140,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 142 "parser.y" /* yacc.c:1921  */
+#line 69 "parser.y" /* yacc.c:1921  */
 
     // const Base *stmnt;
     double number;

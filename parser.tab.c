@@ -209,7 +209,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 142 "parser.y" /* yacc.c:352  */
+#line 69 "parser.y" /* yacc.c:352  */
 
     // const Base *stmnt;
     double number;
@@ -528,16 +528,16 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   172,   172,   176,   177,   181,   182,   186,   189,   190,
-     191,   195,   196,   197,   198,   202,   203,   207,   208,   209,
-     210,   211,   217,   221,   225,   226,   230,   231,   232,   236,
-     239,   240,   243,   244,   248,   249,   250,   254,   255,   256,
-     257,   263,   268,   269,   274,   275,   279,   280,   281,   285,
-     286,   290,   291,   295,   296,   300,   301,   305,   306,   310,
-     311,   315,   316,   320,   321,   325,   326,   330,   331,   335,
-     336,   337,   341,   342,   343,   347,   348,   349,   350,   351,
-     355,   356,   357,   358,   359,   363,   364,   368,   369,   373,
-     374,   375,   376,   381,   382
+       0,    97,    97,   101,   102,   106,   107,   111,   114,   115,
+     116,   120,   121,   122,   123,   127,   128,   132,   133,   134,
+     135,   136,   141,   145,   149,   150,   154,   155,   156,   160,
+     163,   164,   167,   168,   172,   173,   174,   178,   179,   180,
+     181,   187,   192,   193,   198,   199,   203,   204,   205,   209,
+     210,   214,   215,   219,   220,   224,   225,   229,   230,   234,
+     235,   239,   240,   244,   245,   249,   250,   254,   255,   259,
+     260,   261,   265,   266,   267,   271,   272,   273,   274,   275,
+     279,   280,   281,   282,   283,   287,   288,   292,   293,   297,
+     298,   299,   300,   305,   306
 };
 #endif
 
@@ -1506,319 +1506,319 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 172 "parser.y" /* yacc.c:1652  */
+#line 97 "parser.y" /* yacc.c:1652  */
     {printf("ROOT : ExtDef\n"); }
 #line 1512 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 176 "parser.y" /* yacc.c:1652  */
+#line 101 "parser.y" /* yacc.c:1652  */
     {printf("ExtDef : ExtDeclaration\n"); }
 #line 1518 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 177 "parser.y" /* yacc.c:1652  */
+#line 102 "parser.y" /* yacc.c:1652  */
     {printf("ExtDef : ExtDef  ExtDeclaration\n"); }
 #line 1524 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 181 "parser.y" /* yacc.c:1652  */
+#line 106 "parser.y" /* yacc.c:1652  */
     {printf("ExtDef : ExtDef  ExtDeclaration\n"); }
 #line 1530 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 182 "parser.y" /* yacc.c:1652  */
+#line 107 "parser.y" /* yacc.c:1652  */
     {printf("Function - ExtDeclaration : FuncDeclaration CompoundStatement\n");}
 #line 1536 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 186 "parser.y" /* yacc.c:1652  */
+#line 111 "parser.y" /* yacc.c:1652  */
     { printf("FuncDeclaration : KW_SUB IDENTIFIER\n"); }
 #line 1542 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 190 "parser.y" /* yacc.c:1652  */
+#line 115 "parser.y" /* yacc.c:1652  */
     { printf("ParameterList : Parameter\n"); }
 #line 1548 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 191 "parser.y" /* yacc.c:1652  */
+#line 116 "parser.y" /* yacc.c:1652  */
     { printf("ParameterList : ParameterList OP_COMMA Parameter\n"); }
 #line 1554 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 195 "parser.y" /* yacc.c:1652  */
+#line 120 "parser.y" /* yacc.c:1652  */
     { printf("Parameter : Variable\n"); }
 #line 1560 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 196 "parser.y" /* yacc.c:1652  */
+#line 121 "parser.y" /* yacc.c:1652  */
     {printf("Parameter : Constant String\n");}
 #line 1566 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 197 "parser.y" /* yacc.c:1652  */
+#line 122 "parser.y" /* yacc.c:1652  */
     {printf("Parameter : POSITIVE_INT\n");}
 #line 1572 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 198 "parser.y" /* yacc.c:1652  */
+#line 123 "parser.y" /* yacc.c:1652  */
     {printf("Parameter : REAL\n");}
 #line 1578 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 202 "parser.y" /* yacc.c:1652  */
+#line 127 "parser.y" /* yacc.c:1652  */
     { printf("StatementList : Statement StatementList \n"); }
 #line 1584 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 203 "parser.y" /* yacc.c:1652  */
+#line 128 "parser.y" /* yacc.c:1652  */
     { printf("StatementList : Statement \n"); }
 #line 1590 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 207 "parser.y" /* yacc.c:1652  */
+#line 132 "parser.y" /* yacc.c:1652  */
     { printf("Statement : CompoundStatement \n"); }
 #line 1596 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 18:
-#line 208 "parser.y" /* yacc.c:1652  */
+#line 133 "parser.y" /* yacc.c:1652  */
     { printf("Statement : SelectionStatement \n"); }
 #line 1602 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 209 "parser.y" /* yacc.c:1652  */
+#line 134 "parser.y" /* yacc.c:1652  */
     { printf("Statement : FunctionCalling; \n"); }
 #line 1608 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 20:
-#line 210 "parser.y" /* yacc.c:1652  */
+#line 135 "parser.y" /* yacc.c:1652  */
     { printf("Statement : ExpressionStatement \n"); }
 #line 1614 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 211 "parser.y" /* yacc.c:1652  */
+#line 136 "parser.y" /* yacc.c:1652  */
     { printf("Statement : IterationStatement \n"); }
 #line 1620 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 22:
-#line 217 "parser.y" /* yacc.c:1652  */
+#line 141 "parser.y" /* yacc.c:1652  */
     { printf("FunctionCalling %s : IDENTIFIER (ParameterList) \n", (yyval.string)); }
 #line 1626 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 23:
-#line 221 "parser.y" /* yacc.c:1652  */
+#line 145 "parser.y" /* yacc.c:1652  */
     { printf("CompoundStatement : { CompoundStatment_2 \n"); }
 #line 1632 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 24:
-#line 225 "parser.y" /* yacc.c:1652  */
+#line 149 "parser.y" /* yacc.c:1652  */
     { printf("CompoundStatement_2 : } \n"); }
 #line 1638 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 25:
-#line 226 "parser.y" /* yacc.c:1652  */
+#line 150 "parser.y" /* yacc.c:1652  */
     { printf("CompoundStatement_2 : StatementList } \n"); }
 #line 1644 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 26:
-#line 230 "parser.y" /* yacc.c:1652  */
+#line 154 "parser.y" /* yacc.c:1652  */
     {printf("SelectionStatement: if_main else_if_expr else_expr");}
 #line 1650 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 27:
-#line 231 "parser.y" /* yacc.c:1652  */
+#line 155 "parser.y" /* yacc.c:1652  */
     {printf("SelectionStatement : KW_IF OP_LEFT_PARENTHESIS Expression OP_RIGHT_PARENTHESIS Statement\n");}
 #line 1656 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 34:
-#line 248 "parser.y" /* yacc.c:1652  */
+#line 172 "parser.y" /* yacc.c:1652  */
     {printf("ExpStatement: ;\n");}
 #line 1662 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 35:
-#line 249 "parser.y" /* yacc.c:1652  */
+#line 173 "parser.y" /* yacc.c:1652  */
     {printf("ExpStatement: Expression ;\n");}
 #line 1668 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 36:
-#line 250 "parser.y" /* yacc.c:1652  */
+#line 174 "parser.y" /* yacc.c:1652  */
     {printf("ExpStatement: return ExprStatement ;\n");}
 #line 1674 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 37:
-#line 254 "parser.y" /* yacc.c:1652  */
+#line 178 "parser.y" /* yacc.c:1652  */
     {printf("IterationStatement : while-loop\n");}
 #line 1680 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 38:
-#line 255 "parser.y" /* yacc.c:1652  */
+#line 179 "parser.y" /* yacc.c:1652  */
     {printf("IterationStatent : do-while"); }
 #line 1686 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 39:
-#line 256 "parser.y" /* yacc.c:1652  */
+#line 180 "parser.y" /* yacc.c:1652  */
     {printf("IterationStatement : for loop");}
 #line 1692 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 40:
-#line 257 "parser.y" /* yacc.c:1652  */
+#line 181 "parser.y" /* yacc.c:1652  */
     {printf("IterationStatement : conditional-loop\n");}
 #line 1698 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 41:
-#line 263 "parser.y" /* yacc.c:1652  */
+#line 187 "parser.y" /* yacc.c:1652  */
     {printf("Expression : AssignmentExpression\n"); }
 #line 1704 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 42:
-#line 268 "parser.y" /* yacc.c:1652  */
+#line 192 "parser.y" /* yacc.c:1652  */
     {printf("AssignmentExpression: ConditionalExpression\n"); }
 #line 1710 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 43:
-#line 269 "parser.y" /* yacc.c:1652  */
+#line 193 "parser.y" /* yacc.c:1652  */
     {printf("AssignmentExpression: UnaryExp ASSIGN_OPER AssignmentExpression\n"); }
 #line 1716 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 44:
-#line 274 "parser.y" /* yacc.c:1652  */
+#line 198 "parser.y" /* yacc.c:1652  */
     {printf("ASSIGN_OPER : T_ASSIGN_OPER\n");}
 #line 1722 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 45:
-#line 275 "parser.y" /* yacc.c:1652  */
+#line 199 "parser.y" /* yacc.c:1652  */
     {printf("ASSIGN_OPER : OP_EQUAL\n");}
 #line 1728 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 46:
-#line 279 "parser.y" /* yacc.c:1652  */
+#line 203 "parser.y" /* yacc.c:1652  */
     {printf("ConditionalExpression: PrimaryExpression OP_RELTIONAL PrimaryExpression\n");}
 #line 1734 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 47:
-#line 280 "parser.y" /* yacc.c:1652  */
+#line 204 "parser.y" /* yacc.c:1652  */
     {printf("ConditionalExpression: LogicalOrExpression\n");}
 #line 1740 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 48:
-#line 281 "parser.y" /* yacc.c:1652  */
+#line 205 "parser.y" /* yacc.c:1652  */
     {printf("ConditionalExpression: LogionOrExp OP_QUESTION Expression OP_COLON ConditionalExp\n");}
 #line 1746 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 60:
-#line 311 "parser.y" /* yacc.c:1652  */
+#line 235 "parser.y" /* yacc.c:1652  */
     {printf("EqualityExp : EqualityExp OP_EQUALITY RelationalExp\n");}
 #line 1752 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 61:
-#line 315 "parser.y" /* yacc.c:1652  */
+#line 239 "parser.y" /* yacc.c:1652  */
     {printf("RelationalExpression: ShiftExpression\n");}
 #line 1758 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 62:
-#line 316 "parser.y" /* yacc.c:1652  */
+#line 240 "parser.y" /* yacc.c:1652  */
     {printf("RelationalExpression : RelationalExpression OP_RELATIONAL ShiftExpression\n");}
 #line 1764 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 63:
-#line 320 "parser.y" /* yacc.c:1652  */
+#line 244 "parser.y" /* yacc.c:1652  */
     {printf("ShiftExp: AdditiveExp\n");}
 #line 1770 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 64:
-#line 321 "parser.y" /* yacc.c:1652  */
+#line 245 "parser.y" /* yacc.c:1652  */
     {printf("ShiftExp: ShiftExp OP_SHIFT AdditiveExp\n");}
 #line 1776 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 65:
-#line 325 "parser.y" /* yacc.c:1652  */
+#line 249 "parser.y" /* yacc.c:1652  */
     {printf("AdditiveExp: MultiplicativeExp \n");}
 #line 1782 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 66:
-#line 326 "parser.y" /* yacc.c:1652  */
+#line 250 "parser.y" /* yacc.c:1652  */
     {printf("AdditiveExp: AdditiveExp OP_ADDSUB MultiplicativeExp \n");}
 #line 1788 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 67:
-#line 330 "parser.y" /* yacc.c:1652  */
+#line 254 "parser.y" /* yacc.c:1652  */
     {printf("MultiplicativeExp: UnaryExp \n");}
 #line 1794 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 68:
-#line 331 "parser.y" /* yacc.c:1652  */
+#line 255 "parser.y" /* yacc.c:1652  */
     {printf("MultiplicativeExp: MultiplicativeExp MultDivRemOP UnaryExp \n");}
 #line 1800 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 89:
-#line 373 "parser.y" /* yacc.c:1652  */
+#line 297 "parser.y" /* yacc.c:1652  */
     {printf("PrimaryExp: FunctionCalling\n");}
 #line 1806 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 90:
-#line 374 "parser.y" /* yacc.c:1652  */
+#line 298 "parser.y" /* yacc.c:1652  */
     {printf("PrimaryExp: VARIABLE\n"); }
 #line 1812 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 91:
-#line 375 "parser.y" /* yacc.c:1652  */
+#line 299 "parser.y" /* yacc.c:1652  */
     {printf("PrimaryExp: Constant\n"); }
 #line 1818 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 92:
-#line 376 "parser.y" /* yacc.c:1652  */
+#line 300 "parser.y" /* yacc.c:1652  */
     {printf("PrimaryExp: SPL_LIST_ARR_VAR\n"); }
 #line 1824 "parser.tab.c" /* yacc.c:1652  */
     break;
@@ -2055,7 +2055,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 384 "parser.y" /* yacc.c:1918  */
+#line 308 "parser.y" /* yacc.c:1918  */
 
 
 char* filename;

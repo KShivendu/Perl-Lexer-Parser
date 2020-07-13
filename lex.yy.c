@@ -2347,7 +2347,6 @@ void yyfree (void * ptr )
 #line 145 "lexer.l"
 
 
-
 void yyerror(char const *s, ...) {
      fprintf (stderr, "Parse error : %s\n", s);
      // exit(1);
@@ -2358,7 +2357,7 @@ void yyerror(char const *s, ...) {
 *
 *	int token;
 *	while ( (token = yylex()) != TK_EOF )
-*	{	
+*	{
 *	if (token==303) 
 *		{
 *			303 is . (any other token which isn't mentioned) 
