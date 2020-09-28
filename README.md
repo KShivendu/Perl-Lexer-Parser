@@ -1,4 +1,5 @@
-# Perl lexer parser : Introduction to Language Processing - Course project
+# Perl lexer parser
+Introduction to Language Processing 
 
 ## Compiling Lexer Code :
 ```bash
