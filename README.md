@@ -1,4 +1,4 @@
-# Perl2C : Introduction to language processing course project
+# Perl lexer parser : Introduction to Language Processing - Course project
 
 ## Compiling Lexer Code :
 ```bash
