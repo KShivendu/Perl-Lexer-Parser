@@ -3,17 +3,17 @@
 ## Compiling Lexer Code :
 ```bash
 ./buildLexer.sh
-./perl2c.bin < <FILE_NAME.pl>
+./perllp.bin < <FILE_NAME.pl>
 ```
 
 ## Using Lexer :
 ```bash
-./perl2c <FILE_NAME.pl>
+./perllex <FILE_NAME.pl>
 ```
 
 
 
-## Using Flex Demo(from Amit Sir) code:
+## Using Flex code:
 ```bash
 flex classDemo.l
 gcc -o flexDemo lex.yy.c -lfl
