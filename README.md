@@ -22,11 +22,6 @@ gcc -o flexDemo lex.yy.c -lfl
 - Now, type whatever you want. Press `Ctrl + D` to get output
 
 
-
-## Todo for Lexer :
-- reserved constants of perl
-
-
 # References : 
 - Geeksforgeeks
 - `info flex`
